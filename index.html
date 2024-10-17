@@ -13,12 +13,12 @@
 
 <body class="font-sans">
     <div class="min-h-screen">
-        <div class="absolute w-full w md:h-screen h-100">
+        <div class="absolute w-full h-screen">
             <img src="./images/photo.png"
                 class="md:h-96 h-64 absolute md:left-36 md:bottom-0 bottom-auto md:top-auto top-48 rounded-full "
                 alt="Cherif Diouf">
             <a href="#projects"
-                class="absolute bottom-2 left-0 right-0 mx-auto w-1/6 py-2 px-4 bg-accent text-center text-white rounded-md hover:opacity-95">Mes
+                class="absolute bottom-2 left-0 right-0 mx-auto w-2/6 md:w-1/6 py-2 px-4 bg-accent text-center text-white rounded-md hover:opacity-95 font-semibold text-xl">Mes
                 projets</a>
         </div>
         <header class="absolute inset-x-0 top-0 z-50">
@@ -44,8 +44,8 @@
 
                 <div class="hidden lg:flex lg:gap-x-12">
                     <a href="#profil" class="text-sm font-semibold leading-6 text-gray-900">Profil</a>
-                    <a href="#skills" class="text-sm font-semibold leading-6 text-gray-900">Compétences</a>
                     <a href="#education" class="text-sm font-semibold leading-6 text-gray-900">Formation</a>
+                    <a href="#skills" class="text-sm font-semibold leading-6 text-gray-900">Compétences</a>
                     <a href="#projects" class="text-sm font-semibold leading-6 text-gray-900">Projets</a>
                     <a href="#contact" class="text-sm font-semibold leading-6 text-gray-900">Contact</a>
                 </div>
@@ -106,7 +106,8 @@
                 <div class="hidden md:mb-8 md:flex md:justify-center">
                     <div
                         class="relative rounded-full px-3 py-1 text-sm leading-6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20">
-                        <a href="./documents/Cherif Diouf.pdf" class="font-semibold text-primary">Curriculum
+                        <a download="CV-de-Cherif-Diouf" href="./documents/CV.pdf"
+                            class="font-semibold text-primary">Curriculum
                             Vitae<span aria-hidden="true">&rarr;</span></a>
                     </div>
                 </div>
@@ -133,10 +134,11 @@
     </div>
 
     <!-- Section "Profil" -->
-    <section id="profil" class="py-16">
-        <div class="container mx-auto text-center w-3/5 text-xl">
-            <h2 class="text-3xl font-bold text-accent mb-4">Profil</h2>
-            <p class="text-primary">Je suis un ingénieur expert avec des années d'expérience en informatique,
+    <section id="profil" class="py-8">
+        <div class="container mx-auto text-center w-4/5 md:w-3/5">
+            <h2 class="text-4xl md:text-3xl font-bold text-accent mb-4">Profil</h2>
+            <p class="text-primary text-xl md:text-xl">Je suis un ingénieur expert avec des années d'expérience en
+                informatique,
                 réseaux, télécommunications et développement web. Passionné par la technologie et l'innovation, je suis
                 toujours à la
                 recherche de nouveaux défis.</p>
@@ -144,11 +146,11 @@
     </section>
 
     <!-- Section "Formation" -->
-    <section id="education" class="py-8">
-        <div class="container mx-auto text-left md:w-4/5 w-1/2 md:px-0 px-5">
-            <h2 class="text-3xl font-bold text-accent mb-4 text-center">Formation</h2>
-            <div class="flex flex-row gap-5">
-                <img src="./images/estm/ESTM.png" alt="Logo de l'ESTM" class="w-32">
+    <section id="education" class="px-2 md:py-8">
+        <div class="container mx-auto text-left w-4/5 md:w-3/4 px-0 md:px-5">
+            <h2 class="text-4xl md:text-3xl  font-bold text-accent mb-4 text-center">Formation</h2>
+            <div class="flex flex-row gap-5 flex-wrap md:flex-nowrap md:h-24">
+                <img src="./images/estm/ESTM.png" alt="Logo de l'ESTM" class="w-32 h-auto mx-auto">
                 <div>
                     <h3 class="text-2xl font-semibold text-primary">Master en Génie Logiciel et Administration
                         Réseaux
@@ -168,45 +170,135 @@
     </section>
 
     <!-- Section "Compétences" -->
-    <section id="skills" class="py-16 px-32">
+    <section id="skills" class="py-6 md:py-8 px-10 md:px-32 ">
         <div class="container mx-auto text-center my-8">
-            <h2 class="text-3xl font-bold text-accent mb-4">Compétences & Technologies</h2>
-
+            <h2 class="text-4xl md:text-3xl  font-bold text-accent mb-4">Compétences & Technologies</h2>
         </div>
         <div class="flex flex-col gap-2 my-8">
-            <h3 class="text-2xl font-semibold text-primary text-center">Langages</h3>
-            <div class="place-items-center grid grid-cols-6 gap-4">
-                <img class="h-32" title="PHP" src="./images/skills-stacks/php.png" alt="Logo de PHP">
-                <img class="h-32" title="JavaScript" src="./images/skills-stacks/javascript.png"
+            <h3 class="text-3xl md:text-2xl font-semibold text-primary text-center">Langages</h3>
+            <div class="place-items-center grid grid-cols-4 md:grid-cols-6 gap-2 md:gap-4">
+                <img class="h-20 md:h-32" title="PHP" src="./images/skills-stacks/php.png" alt="Logo de PHP">
+                <img class="h-20 md:h-32" title="JavaScript" src="./images/skills-stacks/javascript.png"
                     alt="Logo de JavaScript">
-                <img class="h-32" title="Java" src="./images/skills-stacks/java.png" alt="Logo de Java">
-                <img class="h-32" title="Python" src="./images/skills-stacks/python.png" alt="Logo de Python">
-                <img class="h-32" title="Solidity" src="./images/skills-stacks/solidity.png" alt="Logo de Solidity">
+                <img class="h-20 md:h-32" title="Java" src="./images/skills-stacks/java.png" alt="Logo de Java">
+                <img class="h-20 md:h-32" title="Python" src="./images/skills-stacks/python.png" alt="Logo de Python">
+                <img class="h-20 md:h-32" title="Solidity" src="./images/skills-stacks/solidity.png"
+                    alt="Logo de Solidity">
             </div>
 
 
-            <h3 class="text-2xl font-semibold text-primary text-center">Frameworks</h3>
-            <div class="place-items-center grid grid-cols-6 gap-4">
-                <img class="h-32" title="Laravel" src="./images/skills-stacks/laravel.png" alt="Logo de Laravel">
-                <img class="h-32" title="Symfony" src="./images/skills-stacks/symfony.png" alt="Logo de Symfony">
-                <img class="h-32" title="Express JS" src="./images/skills-stacks/expressjs.png"
+            <h3 class="text-3xl md:text-2xl font-semibold text-primary text-center">Frameworks</h3>
+            <div class="place-items-center grid grid-cols-4 md:grid-cols-6 gap-2 md:gap-4">
+                <img class="h-20 md:h-32" title="Laravel" src="./images/skills-stacks/laravel.png"
+                    alt="Logo de Laravel">
+                <img class="h-20 md:h-32" title="Symfony" src="./images/skills-stacks/symfony.png"
+                    alt="Logo de Symfony">
+                <img class="h-20 md:h-32" title="Express JS" src="./images/skills-stacks/expressjs.png"
                     alt="Logo de Express JS">
-                <img class="h-32" title="Spring boot" src="./images/skills-stacks/spring.png" alt="Logo de Spring boot">
-                <img class="h-32" title="Django" src="./images/skills-stacks/django.png" alt="Logo de Django">
-                <img class="h-32" title="Flask" src="./images/skills-stacks/flask.png" alt="Logo de Flask">
-                <img class="h-32" title="React" src="./images/skills-stacks/react.png" alt="Logo de React">
-                <img class="h-32" title="Angular" src="./images/skills-stacks/angular.png" alt="Logo de Angular">
+                <img class="h-20 md:h-32" title="Spring boot" src="./images/skills-stacks/spring.png"
+                    alt="Logo de Spring boot">
+                <img class="h-20 md:h-32" title="Django" src="./images/skills-stacks/django.png" alt="Logo de Django">
+                <img class="h-20 md:h-32" title="Flask" src="./images/skills-stacks/flask.png" alt="Logo de Flask">
+                <img class="h-20 md:h-32" title="React" src="./images/skills-stacks/react.png" alt="Logo de React">
+                <img class="h-20 md:h-32" title="Angular" src="./images/skills-stacks/angular.png"
+                    alt="Logo de Angular">
             </div>
         </div>
     </section>
 
+    <!-- Section "Projets" -->
+    <section id="projects" class="py-6 md:py-8 px-10 md:px-32 ">
+        <div class="container mx-auto text-center my-8">
+            <h2 class="text-4xl md:text-3xl font-bold text-accent mb-4">Projets</h2>
+        </div>
+        <div class="place-items-center grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-4">
+            <a href="./index.html#projects"
+                class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
+                <img class="object-cover w-full rounded-t-lg h-40 md:h-auto md:w-64 md:rounded-none md:rounded-s-lg"
+                    src="./images/projets/Archive-ESTM.png" alt="Page d'accueil Archive-ESTM">
+                <div class="flex flex-col justify-between py-4 px-6 leading-normal">
+                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 hover:text-primary dark:text-white">
+                        Archive-ESTM 2023
+                    </h5>
+                    <p class="mb-3 font-normal text-gray-700 dark:text-gray-400 text-justify overflow-clip h-24">
+                        Archive-ESTM
+                        est une
+                        plateforme
+                        d'<span class="font-medium">archivage</span> et de <span class="font-bold">diffusion</span> des
+                        mémoires à l'ESTM.
+
+                        <!--C'est une
+                        plateforme permet de créer un
+                        espace numérique où les étudiants et les professeurs de l’ESTM peuvent interagir
+                        avec les mémoires de manière dynamique, en les consultant, les commentant et en établissant un
+                        dialogue direct avec
+                        leurs auteurs ou encadrants. La fonctionnalité de recherche et les filtres personnalisés
+                        améliorent l’<span class="italic font-semibold">accessibilité</span> et
+                        la diffusion des mémoires, tandis que la possibilité de téléchargement renforce la disponibilité
+                        du savoir académique.-->
+                    </p>
+                </div>
+            </a>
+
+            <a href="./index.html#projects"
+                class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
+                <img class="object-cover w-full rounded-t-lg h-40 md:h-44 md:w-64 md:rounded-none md:rounded-s-lg"
+                    src="./images/projets/TaskFlow.png" alt="Logo de TaskFlow">
+                <div class="flex flex-col justify-between py-4 px-6 leading-normal">
+                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 hover:text-primary dark:text-white">
+                        TaskFlow
+                    </h5>
+                    <p class="mb-3 font-normal text-gray-700 dark:text-gray-400 text-justify overflow-clip h-24">
+                        TaskFlow
+                        est un système de gestion de tâches avec des fonctionnalité comme la création, la modification
+                        et la suppression de tâches. Il permet aussi de définir des priorités et des deadlines pour les
+                        tâches. Il est aussi possible de filtrer les tâches par priorité et par deadline.
+
+                        <!--C'est une
+                                    plateforme permet de créer un
+                                    espace numérique où les étudiants et les professeurs de l’ESTM peuvent interagir
+                                    avec les mémoires de manière dynamique, en les consultant, les commentant et en établissant un
+                                    dialogue direct avec
+                                    leurs auteurs ou encadrants. La fonctionnalité de recherche et les filtres personnalisés
+                                    améliorent l’<span class="italic font-semibold">accessibilité</span> et
+                                    la diffusion des mémoires, tandis que la possibilité de téléchargement renforce la disponibilité
+                                    du savoir académique.-->
+                    </p>
+                </div>
+            </a>
+
+            <a href="https://cherif-diouf.me/Virtual-Assistants-avec-AliPinedaVA/"
+                class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
+                <img class="object-cover w-full rounded-t-lg h-40 md:h-auto md:w-64 md:rounded-none md:rounded-s-lg"
+                    src="./images/projets/AliPinedaVA.png" alt="Logo de TaskFlow">
+                <div class="flex flex-col justify-between py-4 px-6 leading-normal">
+                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 hover:text-primary dark:text-white">
+                        Les publications d'AliPinedaVA
+                    </h5>
+                    <p class="mb-3 font-normal text-gray-700 dark:text-gray-400 text-justify overflow-clip h-24">
+                        Ce projet est un projet frontend qui consiste à créer une page web qui affiche les publications
+                        en utilisant les flexbox.
+
+                        <!--C'est une
+                                                plateforme permet de créer un
+                                                espace numérique où les étudiants et les professeurs de l’ESTM peuvent interagir
+                                                avec les mémoires de manière dynamique, en les consultant, les commentant et en établissant un
+                                                dialogue direct avec
+                                                leurs auteurs ou encadrants. La fonctionnalité de recherche et les filtres personnalisés
+                                                améliorent l’<span class="italic font-semibold">accessibilité</span> et
+                                                la diffusion des mémoires, tandis que la possibilité de téléchargement renforce la disponibilité
+                                                du savoir académique.-->
+                    </p>
+                </div>
+            </a>
+        </div>
+    </section>
 
     <!-- Pied de page -->
     <footer class="py-8 text-center">
         <p class="text-primary">&copy; 2023 Cherif Diouf. Tous droits réservés.</p>
         <p class="text-primary">Mentions légales</p>
     </footer>
-    </div>
 </body>
 
 </html>
