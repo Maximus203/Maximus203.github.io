@@ -25,7 +25,7 @@
     <div class="min-h-screen">
         <div class="absolute w-full h-screen">
             <img src="./images/photo.png" loading="lazy"
-                class="md:h-96 h-64 absolute md:left-36 md:bottom-0 bottom-auto md:top-auto top-48 rounded-full"
+                class="hidden md:h-96 h-64 md:inline absolute md:left-36 md:bottom-0 bottom-auto md:top-auto top-48 rounded-full"
                 alt="Cherif Diouf, développeur Full Stack">
             <a href="#projects"
                 class="absolute bottom-2 left-0 right-0 mx-auto w-2/6 md:w-1/6 py-2 px-4 bg-accent text-center text-white rounded-md hover:opacity-95 font-semibold text-xl">Mes
@@ -79,12 +79,18 @@
                 </div>
                 <div class="text-center">
                     <h1 class="md:text-6xl text-4xl font-medium tracking-tight text-gray-900 leading-10">
-                        Je suis <span class="text-accent">Cherif Diouf.</span><br> Développeur
-                        <span class="inline-block mt-3 p-1 ring rounded-2xl ring-1 ring-accent font-code">Full
-                            Stack</span>
+                        Je suis <span class="text-accent">Cherif Diouf.</span><br>
+                        <span class="inline-block mt-3 p-1 ring rounded-2xl ring-1 ring-accent font-code">
+                            <span id="dynamic-text"></span>
+                        </span>
                     </h1>
-                    <p class="mt-6 text-lg leading-8 text-gray-600">Spécialiste en développement web et administration
+
+                    <p class="mt-6 text-lg leading-8 text-gray-600 mx-10">Spécialiste en développement web et
+                        administration
                         réseau, passionné par la technologie et l'innovation.</p>
+
+                    <img src="./images/photo.png" loading="lazy" class="mx-auto  h-64 rounded-full md:hidden"
+                        alt="Cherif Diouf, développeur Full Stack">
                 </div>
             </div>
         </div>
@@ -94,7 +100,7 @@
         <div class="container mx-auto text-center w-4/5 md:w-3/5">
             <h2 class="text-4xl md:text-3xl font-bold text-accent mb-4">Profil</h2>
             <p class="text-primary text-xl md:text-xl">Je suis un ingénieur expert avec des années d'expérience en
-                informatique, réseaux, télécommunications et développement web.</p>
+                développement web, administration système et réseaux.</p>
         </div>
     </section>
 
@@ -349,6 +355,46 @@
         <p class="text-primary">&copy; 2023 Cherif Diouf. Tous droits réservés.</p>
         <p class="text-primary"><a href="#mentions-legales">Mentions légales</a></p>
     </footer>
+
+    <script>
+        const textElement = document.getElementById("dynamic-text");
+        const words = ["Frontend", "Backend", "Full Stack", "Admin Système", "DevOps"];
+        let currentWordIndex = 0;
+        let currentText = "";
+        let isDeleting = false;
+        let typingSpeed = 160;
+
+        function type() {
+            const word = words[currentWordIndex];
+
+            if (isDeleting) {
+                currentText = word.substring(0, currentText.length - 1);
+            } else {
+                currentText = word.substring(0, currentText.length + 1);
+            }
+
+            textElement.textContent = currentText;
+
+            textElement.classList.add('show');
+
+            if (!isDeleting && currentText === word) {
+                setTimeout(() => {
+                    isDeleting = true;
+                }, 3000);
+            } else if (isDeleting && currentText === "") {
+                isDeleting = false;
+                currentWordIndex = (currentWordIndex + 1) % words.length;
+            }
+
+            const speed = isDeleting ? typingSpeed / 2 : typingSpeed;
+            setTimeout(type, speed);
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            type();
+        });
+    </script>
+
 </body>
 
 </html>
