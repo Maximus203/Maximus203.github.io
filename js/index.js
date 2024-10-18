@@ -1,3 +1,10 @@
+const menuButton = document.getElementById('multiLevelDropdownButton');
+const menu = document.getElementById('multi-dropdown');
+
+menuButton.addEventListener('click', () => {
+    menu.classList.toggle('hidden');
+});
+
 const textElement = document.getElementById("dynamic-text");
 const words = ["Frontend", "Backend", "Full Stack", "Admin Système", "DevOps"];
 let currentWordIndex = 0;
