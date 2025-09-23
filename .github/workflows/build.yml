@@ -3,7 +3,7 @@ name: Build and Deploy Tailwind CSS
 on:
   push:
     branches:
-      - main 
+      - main
   pull_request:
     branches:
       - main
@@ -13,22 +13,34 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
+      # Récupération du dépôt
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-    - name: Setup Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '20' 
+      # Installation de Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
 
-    - name: Install dependencies
-      run: npm install
+      # Installation des dépendances
+      - name: Install dependencies
+        run: npm install
 
-    - name: Build Tailwind CSS
-      run: npm run build:css
+      # Construction du CSS Tailwind
+      - name: Build Tailwind CSS
+        run: npm run build:css
 
-    - name: Deploy to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./css
+      # Déploiement via FTP vers O2Switch
+      - name: Deploy to O2Switch via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4
+        with:
+          server: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          password: ${{ secrets.SERVER_PASSWORD }}
+          # Dossier local à envoyer (ici le dossier ./css généré)
+          local-dir: ./css
+          # Dossier distant correspondant à ton sous-domaine
+          server-dir: /home/doya0556/cherif-diouf.artist-dev.com/
+          # Ne pas effacer les fichiers existants à chaque déploiement (optionnel)
+          dangerous-clean-slate: false
