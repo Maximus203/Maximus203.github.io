@@ -17,20 +17,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Installation de Node.js
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '20'
-
-      # Installation des dépendances
-      - name: Install dependencies
-        run: npm install
-
-      # Construction du CSS Tailwind
-      - name: Build Tailwind CSS
-        run: npm run build:css
-
       # Déploiement via FTP vers O2Switch
       - name: Deploy to O2Switch via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.6
