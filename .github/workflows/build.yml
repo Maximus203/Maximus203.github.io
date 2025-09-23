@@ -16,12 +16,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Installation de Node si nécessaire pour Tailwind/React
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: "20"
-
       # Création d’une archive contenant tout le site à publier
       - name: Compress site
         run: |
@@ -33,7 +27,10 @@ jobs:
             --exclude=package-lock.json \
             --exclude=tailwind.config.js \
             --exclude=README.md \
-            -czf site.tar.gz .
+            --exclude=CNAME \
+            -czf /tmp/site.tar.gz .
+          mv /tmp/site.tar.gz site.tar.gz
+
 
       # Téléversement via l'API cPanel + extraction de l’archive
       - name: Deploy via cPanel API
