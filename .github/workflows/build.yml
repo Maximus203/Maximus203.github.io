@@ -34,23 +34,27 @@ jobs:
 
       # Téléversement via l'API cPanel + extraction de l’archive
       - name: Deploy via cPanel API
-      # Attention : on utilise l'API cPanel avec le jeton (header Authorization):contentReference[oaicite:3]{index=3}
-        env:
-          CPANEL_USER: ${{ secrets.LOGIN }}
-          CPANEL_TOKEN: ${{ secrets.TOKEN }}
-          CPANEL_SERVER: ${{ secrets.SERVER }}
         run: |
+          # Récupère les secrets dans des variables locales
+          CPANEL_USER="${{ secrets.LOGIN }}"
+          CPANEL_TOKEN="${{ secrets.TOKEN }}"
+          CPANEL_SERVER="${{ secrets.SERVER }}"
+          
+          # Vérification des variables (optionnel)
+          [ -z "$CPANEL_USER" ] && echo "CPANEL_USER est vide !" && exit 1
+          [ -z "$CPANEL_TOKEN" ] && echo "CPANEL_TOKEN est vide !" && exit 1
+          [ -z "$CPANEL_SERVER" ] && echo "CPANEL_SERVER est vide !" && exit 1
+          
           # Téléverse l’archive dans le répertoire du sous‑domaine
           curl -k -H "Authorization: cpanel ${CPANEL_USER}:${CPANEL_TOKEN}" \
                -F "file=@site.tar.gz;filename=site.tar.gz" \
                -F "dir=cherif-diouf.artist-dev.com" \
                https://${CPANEL_SERVER}:2083/execute/Fileman/upload_files
-
-          # Décompresse l’archive à l’endroit souhaité
+      
+          # Décompresse l’archive
           curl -k -H "Authorization: cpanel ${CPANEL_USER}:${CPANEL_TOKEN}" \
                "https://${CPANEL_SERVER}:2083/execute/Fileman/fileop?op=extract&sourcefiles=cherif-diouf.artist-dev.com/site.tar.gz&destfiles=cherif-diouf.artist-dev.com&doubledecode=1"
-
-          # Supprime l’archive après extraction (facultatif)
+      
+          # Supprime l’archive
           curl -k -H "Authorization: cpanel ${CPANEL_USER}:${CPANEL_TOKEN}" \
                "https://${CPANEL_SERVER}:2083/execute/Fileman/fileop?op=unlink&sourcefiles=cherif-diouf.artist-dev.com/site.tar.gz"
-
