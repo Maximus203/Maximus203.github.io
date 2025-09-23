@@ -1,4 +1,4 @@
-name: Build and Deploy Tailwind CSS
+name: Build and Deploy via cPanel API
 
 on:
   push:
@@ -11,31 +11,49 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-      # Récupération du dépôt
+      # Clone du dépôt
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Déploiement via FTP vers O2Switch
-
-      # Déploiement de tous les fichiers statiques (HTML, JS, CSS, assets) via FTP
-      - name: Deploy to O2Switch via FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.6
+      # Installation de Node si nécessaire pour Tailwind/React
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
         with:
-          server: ${{ secrets.SERVER_HOST }}
-          username: ${{ secrets.SERVER_USER }}
-          password: ${{ secrets.SERVER_PASSWORD }}
-          # On déploie la racine du dépôt (où se trouvent index.html et assets)
-          local-dir: .
-          server-dir: /home/doya0556/cherif-diouf.artist-dev.com/
-          # On ignore les fichiers/dossiers de build et de configuration inutiles sur le serveur
-          exclude: |
-            node_modules/**
-            .github/**
-            package.json
-            package-lock.json
-            tailwind.config.js
-            README.md
-            CNAME
-          dangerous-clean-slate: false
+          node-version: "20"
+
+      # Création d’une archive contenant tout le site à publier
+      - name: Compress site
+        run: |
+          tar \
+            --exclude=node_modules \
+            --exclude=.github \
+            --exclude=.git \
+            --exclude=package.json \
+            --exclude=package-lock.json \
+            --exclude=tailwind.config.js \
+            --exclude=README.md \
+            -czf site.tar.gz .
+
+      # Téléversement via l'API cPanel + extraction de l’archive
+      - name: Deploy via cPanel API
+      # Attention : on utilise l'API cPanel avec le jeton (header Authorization):contentReference[oaicite:3]{index=3}
+        env:
+          CPANEL_USER: ${{ secrets.LOGIN }}
+          CPANEL_TOKEN: ${{ secrets.TOKEN }}
+          CPANEL_SERVER: ${{ secrets.SERVER }}
+        run: |
+          # Téléverse l’archive dans le répertoire du sous‑domaine
+          curl -k -H "Authorization: cpanel ${CPANEL_USER}:${CPANEL_TOKEN}" \
+               -F "file=@site.tar.gz;filename=site.tar.gz" \
+               -F "dir=cherif-diouf.artist-dev.com" \
+               https://${CPANEL_SERVER}:2083/execute/Fileman/upload_files
+
+          # Décompresse l’archive à l’endroit souhaité
+          curl -k -H "Authorization: cpanel ${CPANEL_USER}:${CPANEL_TOKEN}" \
+               "https://${CPANEL_SERVER}:2083/execute/Fileman/fileop?op=extract&sourcefiles=cherif-diouf.artist-dev.com/site.tar.gz&destfiles=cherif-diouf.artist-dev.com&doubledecode=1"
+
+          # Supprime l’archive après extraction (facultatif)
+          curl -k -H "Authorization: cpanel ${CPANEL_USER}:${CPANEL_TOKEN}" \
+               "https://${CPANEL_SERVER}:2083/execute/Fileman/fileop?op=unlink&sourcefiles=cherif-diouf.artist-dev.com/site.tar.gz"
+
