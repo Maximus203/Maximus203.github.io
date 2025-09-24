@@ -52,10 +52,11 @@ jobs:
                -F "dir=cherif-diouf.artist-dev.com" \
                https://${CPANEL_SERVER}:2083/execute/Fileman/upload_files
       
-          # Décompresse l’archive
+          # Extraction de l'archive via l'API 2
           curl -k -H "Authorization: cpanel ${CPANEL_USER}:${CPANEL_TOKEN}" \
-               "https://${CPANEL_SERVER}:2083/execute/Fileman/fileop?op=extract&sourcefiles=cherif-diouf.artist-dev.com/site.tar.gz&destfiles=cherif-diouf.artist-dev.com&doubledecode=1"
-      
-          # Supprime l’archive
+          "https://${CPANEL_SERVER}:2083/json-api/cpanel?cpanel_jsonapi_user=${CPANEL_USER}&cpanel_jsonapi_apiversion=2&cpanel_jsonapi_module=Fileman&cpanel_jsonapi_func=fileop&op=extract&sourcefiles=cherif-diouf.artist-dev.com/site.tar.gz&destfiles=cherif-diouf.artist-dev.com&doubledecode=1"
+          
+          # Suppression du fichier compressé
           curl -k -H "Authorization: cpanel ${CPANEL_USER}:${CPANEL_TOKEN}" \
-               "https://${CPANEL_SERVER}:2083/execute/Fileman/fileop?op=unlink&sourcefiles=cherif-diouf.artist-dev.com/site.tar.gz"
+          "https://${CPANEL_SERVER}:2083/json-api/cpanel?cpanel_jsonapi_user=${CPANEL_USER}&cpanel_jsonapi_apiversion=2&cpanel_jsonapi_module=Fileman&cpanel_jsonapi_func=fileop&op=unlink&sourcefiles=cherif-diouf.artist-dev.com/site.tar.gz"
+
