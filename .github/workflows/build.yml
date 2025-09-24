@@ -1,4 +1,4 @@
-name: Build and Deploy via cPanel API
+name: Build and Deploy via cPanel API (O2Switch)
 
 on:
   push:
@@ -44,6 +44,7 @@ jobs:
           CPANEL_USER="${{ secrets.LOGIN }}"
           CPANEL_TOKEN="${{ secrets.TOKEN }}"
           CPANEL_SERVER="${{ secrets.SERVER }}"
+          CNAME="cherif-diouf.artist-dev.com"
           HOME_DIR="/home/${CPANEL_USER}"
       
           # Vérification des variables (optionnel)
@@ -54,14 +55,14 @@ jobs:
           # Téléverse l’archive
           curl -k -H "Authorization: cpanel ${CPANEL_USER}:${CPANEL_TOKEN}" \
                -F "file=@site.tar.gz;filename=site.tar.gz" \
-               -F "dir=cherif-diouf.artist-dev.com" \
+               -F "dir=${CNAME}" \
                https://${CPANEL_SERVER}:2083/execute/Fileman/upload_files
       
           # Chemins absolus vers l’archive et le dossier de destination
-          ARCHIVE_PATH="${HOME_DIR}/cherif-diouf.artist-dev.com/site.tar.gz"
-          DEST_PATH="${HOME_DIR}/cherif-diouf.artist-dev.com/"
-      
-          # Extraction de l'archive (chemins absolus):contentReference[oaicite:2]{index=2}
+          ARCHIVE_PATH="${HOME_DIR}/${CNAME}/site.tar.gz"
+          DEST_PATH="${HOME_DIR}/${CNAME}/"
+
+          # Extraction de l'archive (chemins absolus)
           curl -k -H "Authorization: cpanel ${CPANEL_USER}:${CPANEL_TOKEN}" \
             "https://${CPANEL_SERVER}:2083/json-api/cpanel?cpanel_jsonapi_user=${CPANEL_USER}&cpanel_jsonapi_apiversion=2&cpanel_jsonapi_module=Fileman&cpanel_jsonapi_func=fileop&op=extract&sourcefiles=${ARCHIVE_PATH}&destfiles=${DEST_PATH}&doubledecode=1"
       
