@@ -11,6 +11,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment: github-actions
     steps:
       # Clone du dépôt
       - name: Checkout repository
