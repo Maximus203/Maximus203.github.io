@@ -41,27 +41,30 @@ jobs:
       # Téléversement via l'API cPanel et extraction de l’archive
       - name: Deploy via cPanel API
         run: |
-          # Récupère les secrets dans des variables locales
           CPANEL_USER="${{ secrets.LOGIN }}"
           CPANEL_TOKEN="${{ secrets.TOKEN }}"
           CPANEL_SERVER="${{ secrets.SERVER }}"
-          
+          HOME_DIR="/home/${CPANEL_USER}"
+      
           # Vérification des variables (optionnel)
           [ -z "$CPANEL_USER" ] && echo "CPANEL_USER est vide !" && exit 1
           [ -z "$CPANEL_TOKEN" ] && echo "CPANEL_TOKEN est vide !" && exit 1
           [ -z "$CPANEL_SERVER" ] && echo "CPANEL_SERVER est vide !" && exit 1
           
-          # Téléverse l’archive dans le répertoire du sous‑domaine
+          # Téléverse l’archive
           curl -k -H "Authorization: cpanel ${CPANEL_USER}:${CPANEL_TOKEN}" \
                -F "file=@site.tar.gz;filename=site.tar.gz" \
                -F "dir=cherif-diouf.artist-dev.com" \
                https://${CPANEL_SERVER}:2083/execute/Fileman/upload_files
       
-          # Extraction de l'archive via l'API 2 (le contenu sera extrait directement
-          # dans cherif-diouf.artist-dev.com puisqu’il n’y a pas de dossier parent dans l’archive)
+          # Chemins absolus vers l’archive et le dossier de destination
+          ARCHIVE_PATH="${HOME_DIR}/cherif-diouf.artist-dev.com/site.tar.gz"
+          DEST_PATH="${HOME_DIR}/cherif-diouf.artist-dev.com/"
+      
+          # Extraction de l'archive (chemins absolus):contentReference[oaicite:2]{index=2}
           curl -k -H "Authorization: cpanel ${CPANEL_USER}:${CPANEL_TOKEN}" \
-            "https://${CPANEL_SERVER}:2083/json-api/cpanel?cpanel_jsonapi_user=${CPANEL_USER}&cpanel_jsonapi_apiversion=2&cpanel_jsonapi_module=Fileman&cpanel_jsonapi_func=fileop&op=extract&sourcefiles=cherif-diouf.artist-dev.com/site.tar.gz&destfiles=cherif-diouf.artist-dev.com&doubledecode=1"
-          
-          # Suppression du fichier compressé
+            "https://${CPANEL_SERVER}:2083/json-api/cpanel?cpanel_jsonapi_user=${CPANEL_USER}&cpanel_jsonapi_apiversion=2&cpanel_jsonapi_module=Fileman&cpanel_jsonapi_func=fileop&op=extract&sourcefiles=${ARCHIVE_PATH}&destfiles=${DEST_PATH}&doubledecode=1"
+      
+          # Suppression du fichier compressé (chemin absolu)
           curl -k -H "Authorization: cpanel ${CPANEL_USER}:${CPANEL_TOKEN}" \
-            "https://${CPANEL_SERVER}:2083/json-api/cpanel?cpanel_jsonapi_user=${CPANEL_USER}&cpanel_jsonapi_apiversion=2&cpanel_jsonapi_module=Fileman&cpanel_jsonapi_func=fileop&op=unlink&sourcefiles=cherif-diouf.artist-dev.com/site.tar.gz"
+            "https://${CPANEL_SERVER}:2083/json-api/cpanel?cpanel_jsonapi_user=${CPANEL_USER}&cpanel_jsonapi_apiversion=2&cpanel_jsonapi_module=Fileman&cpanel_jsonapi_func=fileop&op=unlink&sourcefiles=${ARCHIVE_PATH}"
