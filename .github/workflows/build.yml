@@ -12,28 +12,35 @@ jobs:
   build:
     runs-on: ubuntu-latest
     environment: github-actions
+
     steps:
       # Clone du dépôt
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Création d’une archive contenant tout le site à publier
-      - name: Compress site
+      # Préparation de l’archive : on copie le contenu à publier dans un dossier temporaire
+      # puis on crée une archive sans préfixe de dossier. Ainsi, l’extraction se fera directement
+      # dans le dossier du sous-domaine.
+      - name: Prepare deployment package
         run: |
-          tar \
-            --exclude=node_modules \
-            --exclude=.github \
-            --exclude=.git \
-            --exclude=package.json \
-            --exclude=package-lock.json \
-            --exclude=tailwind.config.js \
-            --exclude=README.md \
-            --exclude=CNAME \
-            -czf /tmp/site.tar.gz .
-          mv /tmp/site.tar.gz site.tar.gz
+          # Crée un dossier temporaire
+          mkdir -p deploy
+          shopt -s dotglob
+          # Copie tous les fichiers sauf ceux qu'on veut exclure
+          for item in *; do
+            case "$item" in
+              node_modules|.github|.git|package.json|package-lock.json|tailwind.config.js|README.md|CNAME)
+                continue
+                ;;
+              *)
+                cp -r "$item" deploy/
+                ;;
+            esac
+          done
+          # Crée l’archive à partir du contenu de deploy/
+          tar -czf site.tar.gz -C deploy .
 
-
-      # Téléversement via l'API cPanel + extraction de l’archive
+      # Téléversement via l'API cPanel et extraction de l’archive
       - name: Deploy via cPanel API
         run: |
           # Récupère les secrets dans des variables locales
@@ -52,11 +59,11 @@ jobs:
                -F "dir=cherif-diouf.artist-dev.com" \
                https://${CPANEL_SERVER}:2083/execute/Fileman/upload_files
       
-          # Extraction de l'archive via l'API 2
+          # Extraction de l'archive via l'API 2 (le contenu sera extrait directement
+          # dans cherif-diouf.artist-dev.com puisqu’il n’y a pas de dossier parent dans l’archive)
           curl -k -H "Authorization: cpanel ${CPANEL_USER}:${CPANEL_TOKEN}" \
-          "https://${CPANEL_SERVER}:2083/json-api/cpanel?cpanel_jsonapi_user=${CPANEL_USER}&cpanel_jsonapi_apiversion=2&cpanel_jsonapi_module=Fileman&cpanel_jsonapi_func=fileop&op=extract&sourcefiles=cherif-diouf.artist-dev.com/site.tar.gz&destfiles=cherif-diouf.artist-dev.com&doubledecode=1"
+            "https://${CPANEL_SERVER}:2083/json-api/cpanel?cpanel_jsonapi_user=${CPANEL_USER}&cpanel_jsonapi_apiversion=2&cpanel_jsonapi_module=Fileman&cpanel_jsonapi_func=fileop&op=extract&sourcefiles=cherif-diouf.artist-dev.com/site.tar.gz&destfiles=cherif-diouf.artist-dev.com&doubledecode=1"
           
           # Suppression du fichier compressé
           curl -k -H "Authorization: cpanel ${CPANEL_USER}:${CPANEL_TOKEN}" \
-          "https://${CPANEL_SERVER}:2083/json-api/cpanel?cpanel_jsonapi_user=${CPANEL_USER}&cpanel_jsonapi_apiversion=2&cpanel_jsonapi_module=Fileman&cpanel_jsonapi_func=fileop&op=unlink&sourcefiles=cherif-diouf.artist-dev.com/site.tar.gz"
-
+            "https://${CPANEL_SERVER}:2083/json-api/cpanel?cpanel_jsonapi_user=${CPANEL_USER}&cpanel_jsonapi_apiversion=2&cpanel_jsonapi_module=Fileman&cpanel_jsonapi_func=fileop&op=unlink&sourcefiles=cherif-diouf.artist-dev.com/site.tar.gz"
