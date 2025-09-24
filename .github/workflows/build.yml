@@ -23,13 +23,11 @@ jobs:
       # dans le dossier du sous-domaine.
       - name: Prepare deployment package
         run: |
-          # Crée un dossier temporaire
           mkdir -p deploy
           shopt -s dotglob
-          # Copie tous les fichiers sauf ceux qu'on veut exclure
           for item in *; do
             case "$item" in
-              node_modules|.github|.git|package.json|package-lock.json|tailwind.config.js|README.md|CNAME)
+              deploy|node_modules|.github|.git|package.json|package-lock.json|tailwind.config.js|README.md|CNAME)
                 continue
                 ;;
               *)
@@ -37,8 +35,8 @@ jobs:
                 ;;
             esac
           done
-          # Crée l’archive à partir du contenu de deploy/
           tar -czf site.tar.gz -C deploy .
+
 
       # Téléversement via l'API cPanel et extraction de l’archive
       - name: Deploy via cPanel API
