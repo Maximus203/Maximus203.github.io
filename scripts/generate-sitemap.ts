@@ -10,11 +10,11 @@ const VALID_CHANGEFREQ = ['always', 'hourly', 'daily', 'weekly', 'monthly', 'yea
 
 // Fonction de validation
 const validateChangefreq = (freq: string): string => {
-  if (!VALID_CHANGEFREQ.includes(freq)) {
-    console.warn(`⚠️  Valeur changefreq invalide: "${freq}". Utilisation de "monthly" par défaut.`);
-    return 'monthly';
-  }
-  return freq;
+ if (!VALID_CHANGEFREQ.includes(freq)) {
+  console.warn(`⚠️  Valeur changefreq invalide: "${freq}". Utilisation de "monthly" par défaut.`);
+  return 'monthly';
+ }
+ return freq;
 };
 
 const urls = [
