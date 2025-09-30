@@ -1,0 +1,17 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://cherif-diouf.artist-dev.com/sitemap.xml
+
+# Éviter l'indexation des fichiers de développement
+Disallow: /node_modules/
+Disallow: /src/
+Disallow: /*.json
+Disallow: /*.config.*
+Disallow: /.github/
+Disallow: /scripts/
+
+# Permettre l'accès aux assets importants
+Allow: /assets/
+Allow: /documents/
