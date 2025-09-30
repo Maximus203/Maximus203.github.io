@@ -4,6 +4,19 @@ import path from 'path';
 const SITE_URL = 'https://cherif-diouf.artist-dev.com';
 const currentDate = new Date().toISOString().split('T')[0];
 
+// Valeurs valides pour changefreq selon le standard XML sitemap
+// Référence: https://www.sitemaps.org/protocol.html#changefreqdef
+const VALID_CHANGEFREQ = ['always', 'hourly', 'daily', 'weekly', 'monthly', 'yearly', 'never'];
+
+// Fonction de validation
+const validateChangefreq = (freq: string): string => {
+  if (!VALID_CHANGEFREQ.includes(freq)) {
+    console.warn(`⚠️  Valeur changefreq invalide: "${freq}". Utilisation de "monthly" par défaut.`);
+    return 'monthly';
+  }
+  return freq;
+};
+
 const urls = [
  {
   loc: SITE_URL + '/',
@@ -20,13 +33,13 @@ const urls = [
  {
   loc: SITE_URL + '/#skills',
   lastmod: currentDate,
-  changefreq: 'quarterly',
+  changefreq: 'monthly',
   priority: '0.8'
  },
  {
   loc: SITE_URL + '/#experience',
   lastmod: currentDate,
-  changefreq: 'quarterly',
+  changefreq: 'monthly',
   priority: '0.8'
  },
  {
@@ -38,7 +51,7 @@ const urls = [
  {
   loc: SITE_URL + '/#certifications',
   lastmod: currentDate,
-  changefreq: 'quarterly',
+  changefreq: 'monthly',
   priority: '0.7'
  },
  {
@@ -64,7 +77,7 @@ const generateSitemap = () => {
 ${urls.map(url => `  <url>
     <loc>${url.loc}</loc>
     <lastmod>${url.lastmod}</lastmod>
-    <changefreq>${url.changefreq}</changefreq>
+    <changefreq>${validateChangefreq(url.changefreq)}</changefreq>
     <priority>${url.priority}</priority>
   </url>`).join('\n')}
 </urlset>`;
