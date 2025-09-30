@@ -50,6 +50,7 @@ Ajoutez des entrées dans le tableau `urls` :
 ```
 
 ### Fréquences de mise à jour
+⚠️ **Important** : Seules ces valeurs sont valides selon le standard XML sitemap :
 - `always` : Change à chaque visite
 - `hourly` : Change chaque heure
 - `daily` : Change chaque jour
@@ -57,6 +58,8 @@ Ajoutez des entrées dans le tableau `urls` :
 - `monthly` : Change chaque mois
 - `yearly` : Change chaque année
 - `never` : Ne change jamais
+
+❌ **Valeurs interdites** : `quarterly`, `bimensuel`, etc.
 
 ### Priorités (0.0 à 1.0)
 - `1.0` : Page principale (accueil)
