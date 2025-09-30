@@ -69,17 +69,33 @@ export default function Navbar() {
           onMouseEnter={() => setOpenDropdown(item.id)}
           onMouseLeave={() => setOpenDropdown(null)}
         >
-          <button className="hover:text-primary transition-colors duration-300 px-3 py-2 flex items-center">
+          <button
+            className="hover:text-primary transition-colors duration-300 px-3 py-2 flex items-center"
+            aria-expanded={openDropdown === item.id}
+            aria-haspopup="true"
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                setOpenDropdown(openDropdown === item.id ? null : item.id);
+              }
+            }}
+          >
             {item.label}
             <ChevronDown className="w-4 h-4 ml-1" />
           </button>
           {openDropdown === item.id && (
-            <div className="absolute top-full left-0 bg-card border border-border rounded-lg shadow-lg py-2 min-w-[150px]">
+            <div
+              className="absolute top-full left-0 bg-card border border-border rounded-lg shadow-lg py-2 min-w-[150px]"
+              role="menu"
+              aria-labelledby={`dropdown-${item.id}`}
+            >
               {item.dropdown.map((subItem: any) => (
                 <button
                   key={subItem.id}
                   onClick={() => handleNavClick(subItem.id)}
                   className="block w-full text-left px-4 py-2 hover:bg-muted hover:text-primary transition-colors"
+                  role="menuitem"
+                  tabIndex={0}
                 >
                   {subItem.label}
                 </button>

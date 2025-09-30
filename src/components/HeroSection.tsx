@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import LazyImage from "@/components/ui/lazy-image";
 import { scrollToSection } from "@/lib/utils";
 import { motion } from "framer-motion";
 import { Code, Globe, MessageCircle, Smartphone } from "lucide-react";
@@ -85,7 +86,7 @@ export default function HeroSection() {
 
   return (
     <section id="presentation" className="gradient-bg min-h-screen flex items-center pt-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+      <div className="section-container section-padding">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
@@ -98,14 +99,14 @@ export default function HeroSection() {
                 Curriculum Vitae →
               </a>
             </div>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
+            <h1 className="heading-1 mb-6">
               <span className="text-primary">Cherif Diouf</span>,
-              <span className="block text-3xl sm:text-4xl lg:text-5xl mt-2 text-muted-foreground min-h-[1.2em] font-code">
+              <span className="block heading-2 mt-2 text-muted-foreground min-h-[1.2em] font-code">
                 {displayText}
                 <span className="animate-pulse">|</span>
               </span>
             </h1>
-            <p className="text-xl text-muted-foreground mb-8 max-w-2xl">
+            <p className="body-large mb-8 max-w-2xl">
               Spécialiste en développement web et administration réseau,
               passionné par la technologie et l'innovation.
             </p>
@@ -113,7 +114,7 @@ export default function HeroSection() {
               <Button
                 size="lg"
                 onClick={() => scrollToSection("projets")}
-                className="transform hover:scale-105 transition-transform"
+                className="interactive-scale focus-visible-ring"
               >
                 Mes projets
               </Button>
@@ -121,7 +122,7 @@ export default function HeroSection() {
                 variant="outline"
                 size="lg"
                 onClick={() => window.open("https://wa.me/221773162727", "_blank")}
-                className="transform hover:scale-105 transition-transform flex items-center gap-2"
+                className="interactive-scale focus-visible-ring flex items-center gap-2"
               >
                 <MessageCircle className="w-4 h-4" />
                 Me contacter
@@ -135,9 +136,9 @@ export default function HeroSection() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="relative"
           >
-            <img
+            <LazyImage
               src="assets/photo.webp"
-              alt="Cherif Diouf - Développeur Frontend"
+              alt="Cherif Diouf - Développeur Full Stack spécialisé en développement web et administration réseau"
               className="rounded-3xl shadow-2xl w-full max-w-md mx-auto animate-float"
             />
 
