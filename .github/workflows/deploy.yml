@@ -41,7 +41,7 @@ jobs:
       # Téléversement via l'API cPanel et extraction de l’archive
       - name: Deploy via cPanel API
         run: |
-          CPANEL_USER="${{ secrets.LOGIN }}"
+          CPANEL_USER="${{ secrets.LOGIN }}"wha
           CPANEL_TOKEN="${{ secrets.TOKEN }}"
           CPANEL_SERVER="${{ secrets.SERVER }}"
           CNAME="cherif-diouf.artist-dev.com"

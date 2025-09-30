@@ -1,0 +1,124 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: hsl(0, 0%, 100%);
+  --foreground: hsl(20, 14.3%, 4.1%);
+  --muted: hsl(60, 4.8%, 95.9%);
+  --muted-foreground: hsl(25, 5.3%, 44.7%);
+  --popover: hsl(0, 0%, 100%);
+  --popover-foreground: hsl(20, 14.3%, 4.1%);
+  --card: hsl(0, 0%, 100%);
+  --card-foreground: hsl(20, 14.3%, 4.1%);
+  --border: hsl(20, 5.9%, 90%);
+  --input: hsl(20, 5.9%, 90%);
+  --primary: hsl(225, 95%, 58%);
+  --primary-foreground: hsl(211, 100%, 99%);
+  --secondary: hsl(60, 4.8%, 95.9%);
+  --secondary-foreground: hsl(24, 9.8%, 10%);
+  --accent: hsl(60, 4.8%, 95.9%);
+  --accent-foreground: hsl(24, 9.8%, 10%);
+  --destructive: hsl(15, 89%, 57%);
+  --destructive-foreground: hsl(60, 9.1%, 97.8%);
+  --ring: hsl(20, 14.3%, 4.1%);
+  --radius: 0.5rem;
+
+  /* Custom dark theme colors */
+  --dark-bg: hsl(226, 71%, 7%);
+  --dark-card: hsl(224, 47%, 15%);
+  --accent-blue: hsl(225, 95%, 58%);
+  --accent-hover: hsl(228, 90%, 44%);
+}
+
+.dark {
+  --background: hsl(226, 71%, 7%);
+  --foreground: hsl(210, 40%, 98%);
+  --muted: hsl(247, 47%, 15%);
+  --muted-foreground: hsl(240, 5%, 64.9%);
+  --popover: hsl(224, 47%, 15%);
+  --popover-foreground: hsl(210, 40%, 98%);
+  --card: hsl(224, 47%, 15%);
+  --card-foreground: hsl(210, 40%, 98%);
+  --border: hsl(240, 3.7%, 15.9%);
+  --input: hsl(240, 3.7%, 15.9%);
+  --primary: hsl(225, 95%, 58%);
+  --primary-foreground: hsl(211, 100%, 99%);
+  --secondary: hsl(240, 3.7%, 15.9%);
+  --secondary-foreground: hsl(210, 40%, 98%);
+  --accent: hsl(225, 95%, 58%);
+  --accent-foreground: hsl(211, 100%, 99%);
+  --destructive: hsl(0, 69%, 34%);
+  --destructive-foreground: hsl(210, 40%, 98%);
+  --ring: hsl(240, 4.9%, 83.9%);
+  --radius: 0.5rem;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-sans antialiased;
+    background-color: var(--dark-bg);
+    color: hsl(210, 40%, 98%);
+    font-family: 'Inter', sans-serif;
+  }
+
+  .font-code {
+    font-family: 'Fira Code', 'Courier New', monospace;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer components {
+  .gradient-bg {
+    background: linear-gradient(135deg, var(--dark-bg) 0%, var(--dark-card) 50%, var(--dark-bg) 100%);
+  }
+
+  .tech-icon {
+    transition: all 0.3s ease;
+  }
+
+  .tech-icon:hover {
+    transform: translateY(-5px) scale(1.1);
+  }
+}
+
+@layer utilities {
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  .animate-fade-in-up {
+    animation: fadeInUp 0.6s ease-out;
+  }
+}
+
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
