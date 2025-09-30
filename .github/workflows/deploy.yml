@@ -1,4 +1,4 @@
-name: Build and Deploy via cPanel API (O2Switch)
+name: Build and Deploy via cPanel API
 
 on:
   push:
@@ -14,58 +14,49 @@ jobs:
     environment: github-actions
 
     steps:
-      # Clone du dépôt
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      # Préparation de l’archive : on copie le contenu à publier dans un dossier temporaire
-      # puis on crée une archive sans préfixe de dossier. Ainsi, l’extraction se fera directement
-      # dans le dossier du sous-domaine.
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build project
+        run: npm run build
+
       - name: Prepare deployment package
         run: |
           mkdir -p deploy
-          shopt -s dotglob
-          for item in *; do
-            case "$item" in
-              deploy|node_modules|.github|.git|package.json|package-lock.json|tailwind.config.js|README.md|CNAME)
-                continue
-                ;;
-              *)
-                cp -r "$item" deploy/
-                ;;
-            esac
-          done
+          cp -r dist/* deploy/
           tar -czf site.tar.gz -C deploy .
 
-
-      # Téléversement via l'API cPanel et extraction de l’archive
       - name: Deploy via cPanel API
         run: |
-          CPANEL_USER="${{ secrets.LOGIN }}"wha
+          CPANEL_USER="${{ secrets.LOGIN }}"
           CPANEL_TOKEN="${{ secrets.TOKEN }}"
           CPANEL_SERVER="${{ secrets.SERVER }}"
           CNAME="cherif-diouf.artist-dev.com"
           HOME_DIR="/home/${CPANEL_USER}"
       
-          # Vérification des variables (optionnel)
           [ -z "$CPANEL_USER" ] && echo "CPANEL_USER est vide !" && exit 1
           [ -z "$CPANEL_TOKEN" ] && echo "CPANEL_TOKEN est vide !" && exit 1
           [ -z "$CPANEL_SERVER" ] && echo "CPANEL_SERVER est vide !" && exit 1
           
-          # Téléverse l’archive
           curl -k -H "Authorization: cpanel ${CPANEL_USER}:${CPANEL_TOKEN}" \
                -F "file=@site.tar.gz;filename=site.tar.gz" \
                -F "dir=${CNAME}" \
                https://${CPANEL_SERVER}:2083/execute/Fileman/upload_files
       
-          # Chemins absolus vers l’archive et le dossier de destination
           ARCHIVE_PATH="${HOME_DIR}/${CNAME}/site.tar.gz"
           DEST_PATH="${HOME_DIR}/${CNAME}/"
 
-          # Extraction de l'archive (chemins absolus)
           curl -k -H "Authorization: cpanel ${CPANEL_USER}:${CPANEL_TOKEN}" \
             "https://${CPANEL_SERVER}:2083/json-api/cpanel?cpanel_jsonapi_user=${CPANEL_USER}&cpanel_jsonapi_apiversion=2&cpanel_jsonapi_module=Fileman&cpanel_jsonapi_func=fileop&op=extract&sourcefiles=${ARCHIVE_PATH}&destfiles=${DEST_PATH}&doubledecode=1"
       
-          # Suppression du fichier compressé (chemin absolu)
           curl -k -H "Authorization: cpanel ${CPANEL_USER}:${CPANEL_TOKEN}" \
             "https://${CPANEL_SERVER}:2083/json-api/cpanel?cpanel_jsonapi_user=${CPANEL_USER}&cpanel_jsonapi_apiversion=2&cpanel_jsonapi_module=Fileman&cpanel_jsonapi_func=fileop&op=unlink&sourcefiles=${ARCHIVE_PATH}"
