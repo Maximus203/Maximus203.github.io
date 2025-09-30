@@ -1,0 +1,823 @@
+Parfait, je vais générer un prompt complet que tu pourras coller directement dans Replit pour créer ton portfolio avec :
+
+* un design en dark mode (bleu foncé inspiré de tes images fournies),
+* une UI/UX futuriste avec animations,
+* des polices comme Inter, Montserrat ou Arial,
+* et toutes les sections que tu as indiquées.
+
+Je te reviens très vite avec tout cela prêt à l’emploi.
+
+
+# Portfolio Web Application (Front-End) – Complete Code Solution
+
+**Overview:**
+This is a **frontend-only personal portfolio website** implemented in **React** (bootstrapped with Vite) and styled with **Tailwind CSS**. The design is a **dark-mode only**, futuristic theme inspired by a dark blue color palette. It features a responsive layout for desktop, tablet, and mobile, with smooth animations powered by **Framer Motion** for a modern, fluid user experience. The site includes multiple sections (Présentation, Projets, Études, Expériences, Compétences, Centres d’intérêt, Soft Skills, Langues parlées), a sticky/hamburger navigation menu, interactive skill icons, and a contact form with social icons. All icons for technologies and social links are provided using **React Icons** (which includes official tech logos from the Simple Icons set). The code is organized with a separate React component for each section for clarity and maintainability.
+
+Below, you will find the **complete code** for the project, structured by file. You can paste this code into a Replit React (Vite) project. No backend or server-side code is required.
+
+## Project Structure and Setup
+
+* **Vite + React project** with `react`, `react-dom` as dependencies, and development dependencies for Tailwind CSS, PostCSS, and Autoprefixer.
+* **TailwindCSS** is configured with a custom dark blue theme and content paths including all source files (so unused styles are purged in production). We use the `Inter` font (via Google Fonts) as the primary typeface.
+* **Framer Motion** is included for animations. We use `whileInView` triggers to animate sections when they scroll into view, and hover animations for skill icons.
+* **React Icons** provides SVG icons for technologies (e.g. React, Angular, Node.js, Laravel, etc.) and social media (GitHub, LinkedIn). We use the official tech logos via the Simple Icons set and apply brand colors using the `color` prop for authenticity.
+
+**Responsive Design:** The layout adjusts for different screen sizes. On mobile, a hamburger menu is displayed; clicking it opens a full-screen navigation overlay. On larger screens, a sticky top navigation bar is shown. We enable smooth scrolling for in-page navigation using Tailwind’s `scroll-smooth` utility on the `<html>` element.
+
+---
+
+## Dependencies (package.json)
+
+The **package.json** defines the project dependencies and scripts. Key dependencies include React, Tailwind CSS, Framer Motion, and React Icons.
+
+```json
+{
+  "name": "portfolio-frontend",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "framer-motion": "^10.12.16",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-icons": "^4.10.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/forms": "^0.5.4",
+    "autoprefixer": "^10.4.14",
+    "postcss": "^8.4.21",
+    "tailwindcss": "^3.3.2",
+    "vite": "^4.3.9"
+  }
+}
+```
+
+> **Note:** The versions above are examples. You can run `npm install` (or use Replit’s package manager) to install these. The **scripts** assume a standard Vite setup.
+
+## Tailwind CSS Configuration (tailwind.config.js)
+
+Tailwind is configured to scan the HTML and all files in the `src` directory for class names (this ensures unused CSS is purged). We also extend the theme to include the Inter font and define custom color shades for the dark blue palette. (Feel free to adjust the hex colors to match **Less-is-more.png** and **Background-Originel.png** if needed.)
+
+```js
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: [
+    "./index.html",
+    "./src/**/*.{js,jsx,ts,tsx}"
+  ],
+  theme: {
+    extend: {
+      fontFamily: {
+        sans: ["Inter", "sans-serif"]  // Use Inter font for sans-serif
+      },
+      colors: {
+        // Dark blue palette (inspired by reference images)
+        "dark-bg": "#0a0f2d",      // very dark blue background
+        "dark-card": "#1a2238",    // slightly lighter dark for cards/sections
+        "accent": "#3b82f6"        // accent blue (Tailwind blue-500 as example)
+      }
+    }
+  },
+  plugins: [
+    require("@tailwindcss/forms")
+  ]
+};
+```
+
+> We set the background colors in the CSS (below) using these custom classes. The `@tailwindcss/forms` plugin is included to style the contact form elements consistently with minimal effort.
+
+## PostCSS Configuration (postcss.config.js)
+
+PostCSS is configured with Tailwind and Autoprefixer. This file allows Tailwind to be used as a PostCSS plugin during builds.
+
+```js
+module.exports = {
+  plugins: {
+    tailwindcss: {},
+    autoprefixer: {}
+  }
+};
+```
+
+## HTML Entry (index.html)
+
+The HTML file includes the mounting point for React (`<div id="root"></div>`), links the Inter font from Google Fonts, and includes the script for the Vite bundle. We also add the `scroll-smooth` class to the HTML element to enable smooth scrolling for anchor links. The site uses a dark theme exclusively, so we set the background to dark in the body via Tailwind (in our CSS) and do not provide a light mode toggle.
+
+```html
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portfolio - DIOUF CHERIF EL HADJI AHMADOU</title>
+    <!-- Google Font: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet" />
+    <!-- Tailwind CSS output -->
+    <link rel="stylesheet" href="/src/index.css" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
+```
+
+## Global CSS (src/index.css)
+
+This file includes Tailwind’s base, components, and utilities, and then defines some global styles. We apply the dark theme globally by setting the body background to our custom dark color and text to a light color. The `font-sans` class (mapped to Inter) is applied to the body. We also include a smooth scrolling behavior here (alternative to using the HTML class above).
+
+```css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Global styles */
+@layer base {
+  body {
+    @apply bg-dark-bg text-slate-200 font-sans;
+    /* Fallback if scroll-smooth class isn't applied to html */
+    scroll-behavior: smooth;
+  }
+}
+```
+
+## React Application Entry (src/main.jsx)
+
+The main entry mounts the React app onto the DOM. We import the Tailwind CSS (index.css) and render the `App` component into the `#root` div using ReactDOM’s createRoot (React 18).
+
+```jsx
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";          // Import Tailwind CSS and global styles
+import App from "./App";
+
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
+```
+
+## App Component (src/App.jsx)
+
+The `App` component composes the page by rendering the Navbar and all section components in order. Each section component (Présentation, Projets, Études, etc.) is imported from the `components` folder. We wrap the content in a React fragment. (Each section component will define a `<section>` with an `id` so the Navbar links can scroll to them.)
+
+```jsx
+import React from "react";
+import Navbar from "./components/Navbar";
+import Presentation from "./components/Presentation";
+import Projects from "./components/Projects";
+import Studies from "./components/Studies";
+import Experiences from "./components/Experiences";
+import Skills from "./components/Skills";
+import Interests from "./components/Interests";
+import SoftSkills from "./components/SoftSkills";
+import Languages from "./components/Languages";
+import Contact from "./components/Contact";
+
+function App() {
+  return (
+    <>
+      {/* Navigation bar (sticky header with links) */}
+      <Navbar />
+
+      {/* Main content sections */}
+      <Presentation />
+      <Projects />
+      <Studies />
+      <Experiences />
+      <Skills />
+      <Interests />
+      <SoftSkills />
+      <Languages />
+      <Contact />
+    </>
+  );
+}
+
+export default App;
+```
+
+---
+
+# Components
+
+Each section of the portfolio is implemented as a React functional component in the **src/components** directory. The sections use semantic `<section>` tags with corresponding `id` attributes so that the Navbar links can navigate to them. We utilize **Framer Motion** for animating the sections into view (using the `motion` component). Specifically, each section (except the hero) fades in and slides up slightly when it enters the viewport, using `initial={{ opacity: 0, y: 50 }}` and `whileInView={{ opacity: 1, y: 0 }}` with `viewport={{ once: true }}` to animate only once. For the **skills icons**, we use `whileHover` to scale them on hover for interactivity.
+
+Below is the code for each component:
+
+## Navbar (src/components/Navbar.jsx)
+
+The **Navbar** provides a site header with navigation links to each section. On **desktop/tablet**, it is shown as a horizontal bar with section links. On **mobile** (below `md` breakpoint), it shows a hamburger menu (`☰`). Clicking the hamburger toggles an overlay menu with the navigation links (and a close `✕` icon). The navbar is made sticky/fixed at the top (`position: fixed; top:0; width:100%; z-index:50`) so it remains visible during scroll. We give it a semi-transparent dark background for a glassmorphic effect and readability.
+
+```jsx
+import React, { useState } from "react";
+import { FaBars, FaTimes } from "react-icons/fa";
+
+function Navbar() {
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const sections = [
+    "Présentation",
+    "Projets",
+    "Études",
+    "Expériences",
+    "Compétences",
+    "Centres d’intérêt",
+    "Soft Skills",
+    "Langues parlées",
+    "Contact"
+  ];
+
+  // Toggle menu for mobile
+  const toggleMenu = () => setMenuOpen(!menuOpen);
+  const closeMenu = () => setMenuOpen(false);
+
+  return (
+    <header className="fixed w-full top-0 z-50 bg-dark-bg bg-opacity-90 backdrop-blur-sm text-slate-100">
+      <nav className="max-w-5xl mx-auto flex items-center justify-between px-4 py-3">
+        {/* Logo/Brand - could be a name or initials */}
+        <div className="text-xl font-bold">
+          {/* You can replace this text with a logo image if available */}
+          DIOUF C.E.A.
+        </div>
+
+        {/* Desktop Menu */}
+        <ul className="hidden md:flex space-x-6">
+          {sections.map((sec) => (
+            <li key={sec}>
+              <a 
+                href={`#${sec.replace(/ /g, "-").toLowerCase()}`} 
+                className="hover:text-accent transition-colors duration-300"
+              >
+                {sec}
+              </a>
+            </li>
+          ))}
+        </ul>
+
+        {/* Mobile Menu Button */}
+        <button 
+          className="md:hidden text-2xl focus:outline-none" 
+          onClick={toggleMenu} 
+          aria-label="Toggle menu"
+        >
+          {menuOpen ? <FaTimes /> : <FaBars />}
+        </button>
+      </nav>
+
+      {/* Mobile Menu Overlay */}
+      {menuOpen && (
+        <div className="md:hidden fixed inset-0 bg-dark-bg bg-opacity-95 flex flex-col items-center justify-center space-y-8 text-xl">
+          {sections.map((sec) => (
+            <a 
+              key={sec} 
+              href={`#${sec.replace(/ /g, "-").toLowerCase()}`} 
+              className="text-slate-100 hover:text-accent" 
+              onClick={closeMenu}
+            >
+              {sec}
+            </a>
+          ))}
+          {/* Optionally, a close button in the center of screen */}
+          <button 
+            onClick={closeMenu} 
+            className="text-slate-100 hover:text-accent absolute top-8 right-8 text-3xl" 
+            aria-label="Close menu"
+          >
+            <FaTimes />
+          </button>
+        </div>
+      )}
+    </header>
+  );
+}
+
+export default Navbar;
+```
+
+**Key points in Navbar:**
+
+* We use `FaBars` and `FaTimes` icons from React Icons for the hamburger and close icon.
+* The section IDs in the links are generated by lowercasing and replacing spaces with hyphens (e.g., "Centres d’intérêt" → `#centres-d’intérêt`, which in HTML id becomes `centres-d’intérêt`. We might simplify/remove accents in the id for safety, but here it's kept simple).
+* On mobile, when the menu is open, we render a fixed overlay that covers the viewport with a list of links. Clicking a link or the close button closes the menu.
+
+## Presentation Section (src/components/Presentation.jsx)
+
+This is the hero section that introduces the person. It includes a photo, the full name, and a short summary/bio. The design is in **dark mode** with a modern, minimal style. We use a Flexbox layout to place the photo and text side by side on larger screens, and stacked on smaller screens. The content fades in when the section loads (using Framer Motion).
+
+```jsx
+import React from "react";
+import { motion } from "framer-motion";
+// Import profile image (you should add an actual image file in src/assets/)
+import profilePic from "../assets/profile.jpg";
+
+function Presentation() {
+  return (
+    <motion.section 
+      id="présentation" 
+      className="min-h-screen flex flex-col md:flex-row items-center justify-center text-center md:text-left px-6"
+      initial={{ opacity: 0, y: 50 }} 
+      whileInView={{ opacity: 1, y: 0 }} 
+      viewport={{ once: true }}
+    >
+      {/* Profile Photo */}
+      <img 
+        src={profilePic} 
+        alt="Portrait de DIOUF CHERIF EL HADJI AHMADOU" 
+        className="w-40 h-40 md:w-52 md:h-52 rounded-full object-cover mb-6 md:mb-0 md:mr-8 border-2 border-slate-500"
+      />
+      {/* Name and summary */}
+      <div>
+        <h1 className="text-4xl md:text-5xl font-bold mb-4">DIOUF CHERIF EL HADJI AHMADOU</h1>
+        <p className="text-lg md:text-xl max-w-xl">
+          Développeur Full-Stack passionné, créatif et polyvalent. <br className="hidden md:block" />
+          <span className="text-slate-400">
+            Spécialisé en <strong>React/Angular</strong> côté front-end et <strong>Spring Boot/Node.js</strong> côté back-end. 
+            J’aime relever les défis et créer des applications robustes, performantes et sécurisées.
+          </span>
+        </p>
+      </div>
+    </motion.section>
+  );
+}
+
+export default Presentation;
+```
+
+**Notes:** In the summary text, we included a line break (`<br>`) for desktop only (hidden on mobile) to control formatting. The content (name and description) can be adjusted as needed. Make sure to replace `profile.jpg` with the actual profile picture file (or update the import path). The image is styled to be a circle (`rounded-full`) with a border.
+
+## Projects Section (src/components/Projects.jsx)
+
+This section showcases some **projects** with their titles, descriptions, tech stack, and icons of the technologies used. We structure it as a list of project “cards.” Each project is wrapped in a Framer Motion container for a scroll-triggered animation (fade-in). Tech stack icons are displayed using React Icons (Simple Icons set) with official colors for each tech. For example, the React icon is colored cyan, Angular is red, etc., by using the `color` prop.
+
+```jsx
+import React from "react";
+import { motion } from "framer-motion";
+// Import tech icons from React Icons (Simple Icons and others)
+import { SiReact, SiNodedotjs, SiAngular, SiLaravel, SiSpringboot } from "react-icons/si";
+
+function Projects() {
+  const projectList = [
+    {
+      title: "Taskly - Gestion de tâches",
+      description: "Application web de gestion de tâches en équipe, avec suivi du temps et tableaux de bord interactifs.",
+      tech: [<SiReact color="#61DAFB" />, <SiNodedotjs color="#339933" />]  // React & Node.js
+    },
+    {
+      title: "Système de gestion de produits",
+      description: "Plateforme pour gérer un inventaire de produits, avec contrôle des stocks, alertes de réapprovisionnement et exportation de rapports.",
+      tech: [<SiAngular color="#DD0031" />, <SiSpringboot color="#6DB33F" />]  // Angular & Spring Boot
+    },
+    {
+      title: "Joko - Messagerie instantanée",
+      description: "Application de chat en temps réel avec notifications push, appels vidéo et chiffrement des messages pour la sécurité.",
+      tech: [<SiReact color="#61DAFB" />, <SiLaravel color="#FF2D20" />]  // React & Laravel (PHP)
+    },
+    {
+      title: "Archive ESTM (Blockchain)",
+      description: "Plateforme d'archivage et de diffusion de mémoires académiques, intégrant la technologie blockchain pour garantir l'authenticité des documents.",
+      tech: [<SiAngular color="#DD0031" />, <SiSpringboot color="#6DB33F" />]  // Angular & Spring Boot
+    }
+  ];
+
+  return (
+    <motion.section 
+      id="projets" 
+      className="max-w-5xl mx-auto px-6 py-16"
+      initial={{ opacity: 0, y: 50 }} 
+      whileInView={{ opacity: 1, y: 0 }} 
+      viewport={{ once: true }}
+    >
+      <h2 className="text-3xl font-bold mb-8">Projets</h2>
+      <div className="grid md:grid-cols-2 gap-8">
+        {projectList.map((proj, index) => (
+          <div 
+            key={index} 
+            className="bg-dark-card p-6 rounded-lg shadow hover:shadow-xl transition-shadow"
+          >
+            <h3 className="text-2xl font-semibold mb-2">{proj.title}</h3>
+            <p className="text-slate-300 mb-4">{proj.description}</p>
+            {/* Tech stack icons */}
+            <div className="flex space-x-4 text-3xl">
+              {proj.tech.map((icon, idx) => (
+                <span key={idx}>{icon}</span>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </motion.section>
+  );
+}
+
+export default Projects;
+```
+
+Each project card has a subtle hover effect (shadow glow) to indicate interactivity. The icons used (React, Node.js, Angular, Laravel, Spring Boot) have their official brand colors. You can add or replace projects as needed; this structure easily allows adding more objects to the `projectList` array.
+
+## Studies Section (src/components/Studies.jsx)
+
+The **Études** section lists academic qualifications (diplomas, with years, institutions, and honors). We use a simple list format. Each entry is in a list item, with the year range in bold and the details following. This section also animates in on scroll.
+
+```jsx
+import React from "react";
+import { motion } from "framer-motion";
+
+function Studies() {
+  return (
+    <motion.section 
+      id="études" 
+      className="max-w-3xl mx-auto px-6 py-16"
+      initial={{ opacity: 0, y: 50 }} 
+      whileInView={{ opacity: 1, y: 0 }} 
+      viewport={{ once: true }}
+    >
+      <h2 className="text-3xl font-bold mb-6">Études</h2>
+      <ul className="space-y-4 text-slate-200">
+        <li>
+          <span className="font-semibold">2022 – 2024 :</span> Master Génie Logiciel et Administration Réseaux – <em>ESTM (Mention Très Bien, félicitations du jury)</em>
+        </li>
+        <li>
+          <span className="font-semibold">2017 – 2021 :</span> Licence Réseaux Télécoms – <em>ESTM (Mention Très Bien)</em>
+        </li>
+        <li>
+          <span className="font-semibold">2017 :</span> Baccalauréat (Série Scientifique) – <em>Lycée Seydina Limamoulaye</em>
+        </li>
+      </ul>
+    </motion.section>
+  );
+}
+
+export default Studies;
+```
+
+Feel free to adjust the details. The above entries are based on the provided data (with assumed details for the Baccalauréat). Each `<li>` could be styled further (for example, adding icons or a vertical timeline line), but for simplicity we've kept it as text.
+
+## Experiences Section (src/components/Experiences.jsx)
+
+This section shows professional **experience** in a timeline-like format, listing roles, companies, and durations. Entries are listed in reverse chronological order. We format it similarly to the studies section (year/period in bold, followed by role and employer, and duration in parentheses).
+
+```jsx
+import React from "react";
+import { motion } from "framer-motion";
+
+function Experiences() {
+  return (
+    <motion.section 
+      id="expériences" 
+      className="max-w-3xl mx-auto px-6 py-16"
+      initial={{ opacity: 0, y: 50 }} 
+      whileInView={{ opacity: 1, y: 0 }} 
+      viewport={{ once: true }}
+    >
+      <h2 className="text-3xl font-bold mb-6">Expériences</h2>
+      <ul className="space-y-4 text-slate-200">
+        <li>
+          <span className="font-semibold">Juil. 2024 – Présent :</span> Assistant Responsable Système d’Information (Temps partiel) – <em>ESTM</em> (<small>Depuis 1 Juillet 2024</small>)
+        </li>
+        <li>
+          <span className="font-semibold">2022 – 2024 :</span> Assistant Support Performance & Projet (DRPS/DI/STI/SPP) – <em>Orange Sonatel</em> (<small>2 ans</small>)
+        </li>
+        <li>
+          <span className="font-semibold">2022 :</span> Intégrateur de services – <em>Integratop IT</em> (<small>1 mois</small>)
+        </li>
+        <li>
+          <span className="font-semibold">2021 – 2022 :</span> Assistant Sécurisation des Opérations (DESC/DPPS/SSO) – <em>Orange Sonatel</em> (<small>3 mois</small>)
+        </li>
+        <li>
+          <span className="font-semibold">2021 – 2022 :</span> Formateur en développement web (HTML/CSS) – <em>ESTM</em> (<small>30 heures</small>)
+        </li>
+      </ul>
+    </motion.section>
+  );
+}
+
+export default Experiences;
+```
+
+Each experience entry includes the period, title, company, and duration. The data here is pulled from the CV details. You can modify the format or add more context (e.g., responsibilities) if desired. The key is that it's in a clear, chronological order.
+
+## Skills Section (src/components/Skills.jsx)
+
+The **Compétences** section presents categorized skills with logos and interactive animations. We break down skills into categories such as *Développement*, *Réseaux*, *Sécurité*, *Systèmes d’Exploitation*, *Infographie*, etc., and display relevant icons for each. Each icon is interactive: on hover, it scales up slightly (using Framer Motion’s `whileHover`). This helps showcase the skill set in a visual way.
+
+```jsx
+import React from "react";
+import { motion } from "framer-motion";
+// Import skill icons (Simple Icons and others)
+import { SiJavascript, SiJava, SiPython, SiReact, SiAngular, SiNode-dot-js, SiLaravel, SiSpringboot,
+         SiMysql, SiMongodb, SiDocker, SiGit, SiCisco, SiAuth0, SiLinux, SiWindows, SiApple, SiAdobephotoshop, SiAdobeillustrator } from "react-icons/si";
+import { FaLock } from "react-icons/fa";
+
+function Skills() {
+  // Helper component for an icon with hover effect
+  const SkillIcon = ({ children }) => (
+    <motion.span 
+      className="inline-block text-4xl m-2" 
+      whileHover={{ scale: 1.2 }} 
+      whileTap={{ scale: 0.95 }}
+    >
+      {children}
+    </motion.span>
+  );
+
+  return (
+    <motion.section 
+      id="compétences" 
+      className="max-w-5xl mx-auto px-6 py-16"
+      initial={{ opacity: 0, y: 50 }} 
+      whileInView={{ opacity: 1, y: 0 }} 
+      viewport={{ once: true }}
+    >
+      <h2 className="text-3xl font-bold mb-8">Compétences</h2>
+
+      {/* Développement */}
+      <div className="mb-6">
+        <h3 className="text-2xl font-semibold mb-3">Développement</h3>
+        <p className="mb-2 text-slate-300">Langages & Frameworks :</p>
+        <div className="flex flex-wrap">
+          <SkillIcon><SiJavascript title="JavaScript" color="#F7DF1E" /></SkillIcon>
+          <SkillIcon><SiJava title="Java" color="#007396" /></SkillIcon>
+          <SkillIcon><SiPython title="Python" color="#3776AB" /></SkillIcon>
+          <SkillIcon><SiReact title="React" color="#61DAFB" /></SkillIcon>
+          <SkillIcon><SiAngular title="Angular" color="#DD0031" /></SkillIcon>
+          <SkillIcon><SiNodedotjs title="Node.js" color="#339933" /></SkillIcon>
+          <SkillIcon><SiLaravel title="Laravel" color="#FF2D20" /></SkillIcon>
+          <SkillIcon><SiSpringboot title="Spring Boot" color="#6DB33F" /></SkillIcon>
+        </div>
+        <p className="mt-3 mb-2 text-slate-300">Bases de données & Outils :</p>
+        <div className="flex flex-wrap">
+          <SkillIcon><SiMysql title="MySQL" color="#4479A1" /></SkillIcon>
+          <SkillIcon><SiMongodb title="MongoDB" color="#47A248" /></SkillIcon>
+          <SkillIcon><SiDocker title="Docker" color="#2496ED" /></SkillIcon>
+          <SkillIcon><SiGit title="Git" color="#F05032" /></SkillIcon>
+        </div>
+      </div>
+
+      {/* Réseaux */}
+      <div className="mb-6">
+        <h3 className="text-2xl font-semibold mb-3">Réseaux</h3>
+        <div className="flex flex-wrap">
+          <SkillIcon><SiCisco title="Cisco" color="#1BA0D7" /></SkillIcon>
+          {/* Placeholder icon for general networking if needed */}
+          <SkillIcon><FaLock title="Network Security" color="#ccc" /></SkillIcon>
+        </div>
+        <p className="text-slate-400 text-sm mt-1">Technologies réseaux : DNS, DHCP, TCP/IP, VoIP, etc.</p>
+      </div>
+
+      {/* Sécurité */}
+      <div className="mb-6">
+        <h3 className="text-2xl font-semibold mb-3">Sécurité</h3>
+        <div className="flex flex-wrap">
+          <SkillIcon><SiAuth0 title="Auth0" color="#EB5424" /></SkillIcon>
+          <SkillIcon><FaLock title="Cybersecurity" color="#ccc" /></SkillIcon>
+        </div>
+        <p className="text-slate-400 text-sm mt-1">Authentification JWT, OAuth2, contrôle d'accès, etc.</p>
+      </div>
+
+      {/* Systèmes d’Exploitation */}
+      <div className="mb-6">
+        <h3 className="text-2xl font-semibold mb-3">Systèmes d’Exploitation</h3>
+        <div className="flex flex-wrap">
+          <SkillIcon><SiLinux title="Linux" color="#FCC624" /></SkillIcon>
+          <SkillIcon><SiWindows title="Windows" color="#0078D6" /></SkillIcon>
+          <SkillIcon><SiApple title="Mac OS" color="#A2AAAD" /></SkillIcon>
+        </div>
+      </div>
+
+      {/* Infographie */}
+      <div className="mb-6">
+        <h3 className="text-2xl font-semibold mb-3">Infographie</h3>
+        <div className="flex flex-wrap">
+          <SkillIcon><SiAdobephotoshop title="Adobe Photoshop" color="#31A8FF" /></SkillIcon>
+          <SkillIcon><SiAdobeillustrator title="Adobe Illustrator" color="#FF9A00" /></SkillIcon>
+        </div>
+        <p className="text-slate-400 text-sm mt-1">Création de supports de communication visuelle, animations, design UI/UX.</p>
+      </div>
+    </motion.section>
+  );
+}
+
+export default Skills;
+```
+
+**Explanation:** We created a small `SkillIcon` component inside `Skills` that wraps any icon in a `motion.span` to apply a hover and tap animation (scale up on hover, and a slight scale down on click for a tactile effect). We then list icons for each category:
+
+* *Développement*: languages and frameworks (JavaScript, Java, Python, React, Angular, Node.js, Laravel, Spring Boot, etc.) and tools/DBs (MySQL, MongoDB, Docker, Git).
+* *Réseaux*: includes a Cisco icon (to represent networking skills/certifications) and a generic lock icon (we used FaLock here to represent network security or general networking).
+* *Sécurité*: includes Auth0 (representing authentication/security tech) and a lock icon for cybersecurity. (Keycloak or JWT could be represented similarly if icons were available; Auth0 is used as an example).
+* *Systèmes d’Exploitation*: icons for Linux, Windows, and Mac.
+* *Infographie*: icons for Adobe Photoshop and Illustrator to represent graphic design skills.
+
+Each category has a heading (h3) and the icons. We also added a brief descriptive text in smaller, muted font for some categories to clarify the skill scope (for example, listing protocols for networks, mentioning JWT/OAuth for security, etc.). These can be adjusted based on actual skills.
+
+All icons have `title` attributes for accessibility (hover tooltips) and are given official colors via the `color` prop. The use of `whileHover` on icons provides interactivity, making the skills section more engaging.
+
+## Interests Section (src/components/Interests.jsx)
+
+The **Centres d’intérêt** section lists personal interests or hobbies. This is kept simple – just a list of interests. We can use icons here as well for visual interest, but since it wasn’t explicitly required, we’ll list them in text form to keep it straightforward.
+
+```jsx
+import React from "react";
+import { motion } from "framer-motion";
+
+function Interests() {
+  return (
+    <motion.section 
+      id="centres-d’intérêt" 
+      className="max-w-3xl mx-auto px-6 py-16"
+      initial={{ opacity: 0, y: 50 }} 
+      whileInView={{ opacity: 1, y: 0 }} 
+      viewport={{ once: true }}
+    >
+      <h2 className="text-3xl font-bold mb-6">Centres d’intérêt</h2>
+      <ul className="list-disc list-inside space-y-2 text-slate-200">
+        <li>Veille technologique (nouvelles tendances du développement et de la cybersécurité)</li>
+        <li>Jeux vidéo et compétitions d'e-sport</li>
+        <li>Musique et production audio</li>
+        <li>Voyages et découvertes culturelles</li>
+      </ul>
+    </motion.section>
+  );
+}
+
+export default Interests;
+```
+
+Feel free to modify the interests to match actual hobbies. The above are generic examples (tech watch, video games, music, travel). We used a bulleted list (`list-disc list-inside`) for simplicity. Each list item is spaced out for readability.
+
+## Soft Skills Section (src/components/SoftSkills.jsx)
+
+The **Soft Skills** section highlights personal attributes and interpersonal skills. We use a simple list or tag-like display of soft skills. These could be formatted as badges or just list items. Here we’ll use a series of comma-separated keywords for brevity.
+
+```jsx
+import React from "react";
+import { motion } from "framer-motion";
+
+function SoftSkills() {
+  return (
+    <motion.section 
+      id="soft-skills" 
+      className="max-w-3xl mx-auto px-6 py-16"
+      initial={{ opacity: 0, y: 50 }} 
+      whileInView={{ opacity: 1, y: 0 }} 
+      viewport={{ once: true }}
+    >
+      <h2 className="text-3xl font-bold mb-4">Soft Skills</h2>
+      <p className="text-slate-200">
+        <span className="bg-slate-700 rounded-full px-3 py-1 m-1 inline-block">Esprit d'équipe</span>
+        <span className="bg-slate-700 rounded-full px-3 py-1 m-1 inline-block">Communication</span>
+        <span className="bg-slate-700 rounded-full px-3 py-1 m-1 inline-block">Proactivité</span>
+        <span className="bg-slate-700 rounded-full px-3 py-1 m-1 inline-block">Adaptabilité</span>
+        <span className="bg-slate-700 rounded-full px-3 py-1 m-1 inline-block">Résolution de problèmes</span>
+        <span className="bg-slate-700 rounded-full px-3 py-1 m-1 inline-block">Gestion du temps</span>
+      </p>
+    </motion.section>
+  );
+}
+
+export default SoftSkills;
+```
+
+In this snippet, soft skills are presented as visually distinct badges (with a background and rounded corners) to stand out. We listed a few common soft skills: teamwork, communication, proactivity, adaptability, problem-solving, time management. These can be adjusted as needed.
+
+## Languages Section (src/components/Languages.jsx)
+
+The **Langues parlées** section lists the languages spoken and proficiency. We will list the languages and optionally their proficiency level.
+
+```jsx
+import React from "react";
+import { motion } from "framer-motion";
+
+function Languages() {
+  return (
+    <motion.section 
+      id="langues-parlées" 
+      className="max-w-3xl mx-auto px-6 py-16"
+      initial={{ opacity: 0, y: 50 }} 
+      whileInView={{ opacity: 1, y: 0 }} 
+      viewport={{ once: true }}
+    >
+      <h2 className="text-3xl font-bold mb-4">Langues parlées</h2>
+      <ul className="space-y-2 text-slate-200">
+        <li><strong>Français :</strong> Langue maternelle</li>
+        <li><strong>Anglais :</strong> Professionnel (technique et conversation)</li>
+      </ul>
+    </motion.section>
+  );
+}
+
+export default Languages;
+```
+
+Here, we assume French is the native language and English is spoken at a professional level. If there are other languages or different proficiency levels, those should be listed accordingly.
+
+## Contact Section (src/components/Contact.jsx)
+
+The **Contact** section includes a simple contact form and social media icons/links. The form collects a name, email, and message, but since there is no backend, it won’t actually submit to a server – it can either be left as a dummy form or integrated with a service like Formspree if needed. We also display icons for social networks (e.g., GitHub, LinkedIn) that link to the user’s profiles. We’ll use React Icons for the social icons (FontAwesome or Simple Icons).
+
+```jsx
+import React from "react";
+import { motion } from "framer-motion";
+import { FaGithub, FaLinkedin } from "react-icons/fa";
+
+function Contact() {
+  return (
+    <motion.section 
+      id="contact" 
+      className="max-w-4xl mx-auto px-6 py-16"
+      initial={{ opacity: 0, y: 50 }} 
+      whileInView={{ opacity: 1, y: 0 }} 
+      viewport={{ once: true }}
+    >
+      <h2 className="text-3xl font-bold mb-8">Contact</h2>
+      <div className="flex flex-col md:flex-row md:space-x-12">
+        {/* Contact Form */}
+        <form className="flex-1 mb-8 md:mb-0">
+          <div className="mb-4">
+            <label className="block mb-1 text-slate-300" htmlFor="name">Nom</label>
+            <input 
+              type="text" id="name" name="name" required 
+              className="w-full px-3 py-2 bg-slate-800 text-slate-100 rounded focus:outline-none focus:ring-2 focus:ring-accent"
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block mb-1 text-slate-300" htmlFor="email">Email</label>
+            <input 
+              type="email" id="email" name="email" required 
+              className="w-full px-3 py-2 bg-slate-800 text-slate-100 rounded focus:outline-none focus:ring-2 focus:ring-accent"
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block mb-1 text-slate-300" htmlFor="message">Message</label>
+            <textarea 
+              id="message" name="message" rows="4" required 
+              className="w-full px-3 py-2 bg-slate-800 text-slate-100 rounded focus:outline-none focus:ring-2 focus:ring-accent"
+            ></textarea>
+          </div>
+          <button 
+            type="submit" 
+            className="bg-accent text-white font-semibold px-6 py-2 rounded hover:bg-blue-600 transition-colors"
+          >
+            Envoyer
+          </button>
+        </form>
+
+        {/* Contact Info / Social Links */}
+        <div className="flex-1 text-slate-200">
+          <p className="mb-4">
+            N’hésitez pas à me contacter via ce formulaire ou sur mes profils professionnels :
+          </p>
+          <ul className="space-y-3">
+            <li>
+              <FaGithub className="inline-block mr-2 text-2xl" /> 
+              <a href="https://github.com/Maximus203" target="_blank" rel="noopener noreferrer" className="hover:text-accent">
+                GitHub – Maximus203
+              </a>
+            </li>
+            <li>
+              <FaLinkedin className="inline-block mr-2 text-2xl text-blue-500" /> 
+              <a href="https://www.linkedin.com/in/cherif-diouf" target="_blank" rel="noopener noreferrer" className="hover:text-accent">
+                LinkedIn – Cherif Diouf
+              </a>
+            </li>
+            <li>Email : <a href="mailto:printf0cherif@gmail.com" className="hover:text-accent">printf0cherif@gmail.com</a></li>
+            <li>Téléphone : <a href="tel:+221773162727" className="hover:text-accent">+221 77 316 27 27</a></li>
+          </ul>
+        </div>
+      </div>
+    </motion.section>
+  );
+}
+
+export default Contact;
+```
+
+**Highlights:**
+
+* The contact form fields and button are styled using Tailwind classes. We included the Tailwind Forms plugin (as seen in tailwind.config.js) to ensure basic styling is applied (which gives uniform styling to form elements). We then customize focus rings with `focus:ring-accent` (our accent blue).
+* The button has a hover state to slightly darken the blue.
+* The social/contact info uses FontAwesome icons for GitHub and LinkedIn (via React Icons). The GitHub icon is left as default (will inherit text color, which is light grey here), and the LinkedIn icon is given its brand blue color by applying a tailwind class `text-blue-500`. We provide links to the actual profiles (replace the href with correct URLs if different).
+* Email and phone are clickable (`mailto:` and `tel:` links).
+* All links have a hover effect to change color to the accent.
+
+---
+
+## Conclusion
+
+You now have all the necessary code for the **frontend** of the portfolio website. This code can be pasted into a Replit React project. After adding the appropriate assets (like the profile picture and any additional icons if needed), run `npm install` to install dependencies, then `npm run dev` to start the development server. The site will be available at the local development URL provided by Vite.
+
+This implementation uses modern tools (React, TailwindCSS, Framer Motion, React Icons) to achieve a responsive, dark-themed portfolio with smooth transitions and a clean code structure. Each section is encapsulated in its own component, making the code easy to maintain or extend. The design is fully responsive — try resizing the browser or viewing on a mobile device to see the layout adapt (the navigation will switch to a mobile-friendly menu, and content stacks vertically where appropriate).
+
+**Reminders:**
+
+* Customize the content as needed (text, project details, links, etc.).
+* Ensure any images (like the profile photo or background images) are added to the project (in `src/assets` or public directory) and the paths/imports are correct.
+* Since this is a frontend-only project, the contact form won’t actually send messages to an email. You can integrate a service (e.g., EmailJS, Formspree) if you want form submissions to work, or simply use the provided contact information for people to reach out.
+
+With this setup, you have a modern, sleek personal portfolio website running in dark mode. Good luck with your portfolio! 🚀

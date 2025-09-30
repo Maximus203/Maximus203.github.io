@@ -1,0 +1,65 @@
+Enleve les animations des compétences et des icones autour de la photo. L'idée est de diminuer les liens de navigation ou de regrouper certains liens dans des dropdowns. Il faut aussi rajouter le lien de ma chaine youtube et de mes réseaux. 
+
+Les écritures des titres doivent etre dans une police de code comme Fira Code
+
+Mes certifications doivent pouvoir etre ajouter ici: ""d-----        15/09/2024     01:50                01 Coursera: ""-a----        21/05/2024     18:48         414528 01 Exception Handling in Java Coursera WY293TURMFFN.pdf
+-a----        01/06/2024     15:40         411848 02 PHP & MySQL.pdf
+-a----        01/06/2024     15:37         423230 03 Wordpress.pdf
+-a----        27/08/2024     11:18         421356 04 Create your first custom VPC and its components in AWS.pdf
+-a----        15/09/2024     01:40         415185 05 Introduction to Python.pdf
+-a----        15/09/2024     01:50         425085 06 JavaScript Essentials For Beginners.pdf""
+d-----        18/06/2024     20:20                02 Openclassrooms: ""131347 01 Démarrez votre projet avec Python.pdf
+120304 02 Comprendre Ie Web.pdf
+120327 03 Adoptez une architecture MVC en PHP.pdf
+128494 04 Créez des visuels avec Illustrator.pdf
+128488 05 Initiez-vous au Design Thinkin.pdf
+120585 06 Maitrisez les fondamentaux d'ExceI (version 2016).pdf
+120467 07 Apprenez les bases du langage Python.pdf
+120505 08 Initiez-vous å Python pour Ilanalyse de données.pdf
+128520 09 Mettez en place un système de veille informationnelle.pdf
+124902 10 Apprenez à apprendre.pdf
+120369 11 Apprenez à utiliser la ligne de commande dans un terminal.pdf
+120346 12 Utilisez Git et GitHub pour vos projets de développement.pdf
+120334 13 Mettez en place votre environnement front-end.pdf
+120315 14 Gérez votre temps efficacement.pdf
+120330 15 Créez votre site web avec HTML5 et CSS3.pdf
+126106 16 Découpez et intégrez une maquette.pdf
+120319 17 Développez vos soft skills.pdf
+120323 18 Simplifiez-vous le CSS avec Sass.pdf
+120323 19 Créez des animations CSS modernes.pdf
+120355 20 Apprenez à programmer avec JavaScript.pdf
+120372 21 Écrivez du JavaScript pour le web.pdf
+131359 22 Découvrez le fonctionnement des algorithmes.pdf
+120326 23 Créez une maquette web avec Figma.pdf
+120329 24 Concevez votre site web avec PHP et MySQL.pdf
+120421 25 Maîtrisez les fondamentaux d'Excel.pdf
+120323 26 Gérez du code avec Git et GitHub.pdf
+128498 27 Améliorez l'impact de vos présentations.pdf
+120330 28 Créez votre site web avec HTML5 et CSS3 version 2.pdf""
+d-----        01/06/2024     16:30                03 LinkedIn Learning: ""-a----        21/05/2024     16:31          71885 01 Mieux cooperer avec lintelligence emotionnelle.pdf""
+d-----        01/06/2024     16:30                04 Huawei: ""-a----        14/04/2024     00:27         208873 Bagde Certificate Python.png
+-a----        27/08/2021     16:56        1459132 Certificate Python.png""
+d-----        11/08/2024     11:53                05 Force N: ""-a----        13/07/2024     11:07         493624 Certificat Commerce digital.pdf
+-a----        12/07/2024     20:06         494680 Certificat Informatique et Internet.pdf
+-a----        11/08/2024     11:53         598058 Certificat Intelligence Artificielle pour tous.pdf
+-a----        13/07/2024     15:50         495015 Certificat Marketing digital.pdf
+-a----        06/07/2024     14:06         494422 Certificat Traitement de donnees 1.pdf""
+d-----        01/06/2024     16:29                08 Cisco: ""-a----        12/04/2022     18:53          46601 badge CCNA.png
+-a----        12/04/2022     18:49          42146 badge IT essensial.png
+-a----        13/06/2022     13:07          22585 EL HADJI AHMADOUDIOUF-M1TC2022-certificate (1).pdf
+-a----        13/06/2022     13:07          22995 EL HADJI AHMADOUDIOUF-M1TC2022-certificate (2).pdf
+-a----        13/06/2022     13:07          78481 EL HADJI AHMADOUDIOUF-M1TC2022-certificate.pdf
+-a----        18/10/2023     13:03          82593 EL HADJI AHMADOUDIOUF-M1TC2022-letter.pdf
+-a----        13/06/2022     13:07          23013 EL HADJI AHMADOUDIOUF-M1TC2022N2-certificate (1).pdf
+-a----        13/06/2022     13:07          78911 EL HADJI AHMADOUDIOUF-M1TC2022N2-certificate.pdf
+-a----        18/10/2023     13:03          82871 EL HADJI AHMADOUDIOUF-M1TC2022N2-letter.pdf
+-a----        18/09/2022     16:31          99714 introduction-to-iot.png""
+d-----        01/06/2024     16:29                09 Fortinet: ""-a----        06/04/2022     22:52         173024 1-associate-logo.png
+-a----        12/04/2022     17:00         133932 2-associate-logo.png
+-a----        04/04/2022     18:42         149469 3-associate-logo.png
+-a----        05/04/2022     23:28         227705 NSE 1.pdf
+-a----        06/04/2022     22:52         458775 NSE_1_Certification.pdf
+-a----        12/04/2022     17:00         413298 NSE_2_Certification.pdf
+-a----        02/05/2022     16:27         428522 NSE_3_Certificate.pdf""
+
+
