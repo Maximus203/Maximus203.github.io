@@ -19,9 +19,7 @@ Créer un portfolio professionnel moderne et responsive pour Cherif Diouf avec u
   - Conserver uniquement le dossier `client/` mais le déplacer son contenu à la racine du projet
   - Nettoyer les imports et dépendances inutilisées
   - Simplifier la configuration Vite en rajoutant les configurations nécessaires pour un déploiement facile sur GitHub Pages
-  - Changer les imports et dépendances inutilisées
-  - Changer le dossier attached_assets en assets
-  - Fusionner les dossiers `attached_assets` et `public` en un seul dossier `assets` à la racine
+  - Nettoyer les imports et dépendances inutilisées
   - Mettre à jour les imports dans le code pour refléter la nouvelle structure
   - Modifier le script de démarrage dans `package.json` pour refléter la nouvelle structure
   - Faire une revue complète du code pour s'assurer qu'il n'y a pas de références cassées
