@@ -2,15 +2,6 @@
 applyTo: '**'
 ---
 
-### **Prompt pour l'IA**
-
-**Rôle :** Tu es un développeur expert en **Next.js**, **TypeScript** et **Tailwind CSS**, spécialisé dans la création de portfolios modernes, performants et esthétiques en utilisant la stack **shadcn/ui**, **Framer Motion** et les icônes **Lucide React**.
-
-**Objectif Principal :**
-Crée le code complet pour un portfolio personnel en te basant sur le JSON de données fourni. Le portfolio **doit** implémenter un sélecteur de thème permettant à l'utilisateur de choisir entre trois vues distinctes : **Full-Stack (par défaut)**, **Frontend**, et **Backend**.
-
----
-
 ### **Contraintes Techniques et Structurelles**
 
 1.  **Framework et Langage :**
@@ -55,7 +46,7 @@ Dans la barre de navigation, ajoute un composant (par exemple, un groupe de troi
 **3. Vue Backend :**
 * **Esthétique :** Sérieuse, minimaliste, inspirée des terminaux et des IDEs.
 * **Couleurs :**
-    * Adopte une palette quasi **monochromatique** (nuances de gris, noir, blanc). La couleur d'accentuation `--primary` pourrait être un blanc cassé ou un vert "terminal" (ex: `#00FF41`).
+    * Adopte une palette quasi **monochromatique** (nuances de gris, noir, blanc). La couleur d'accentuation `--primary` pourrait être un blanc cassé ou un vert "terminal" (ex: `hsl(231, 66%, 46%)`).
     * Supprime tous les dégradés.
 * **Typographie :** Les titres (`<h1>`, `<h2>`) **doivent** utiliser la police `font-code` (Fira Code, Monospace).
 * **Animations :** Réduis les animations au minimum. Remplace les animations de mouvement par de simples fondus (`fade-in`/`fade-out`) pour un rendu plus direct et fonctionnel.
