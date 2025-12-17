@@ -1,7 +1,7 @@
-import React, { useRef, useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { GalleryItem } from '../types';
 import { MoveRight } from 'lucide-react';
+import React, { useEffect, useRef, useState } from 'react';
+import { GalleryItem } from '../types';
 
 interface GalleryCarouselProps {
   items: GalleryItem[];
@@ -14,19 +14,23 @@ const GalleryCarousel: React.FC<GalleryCarouselProps> = ({ items }) => {
   const [scrollLeft, setScrollLeft] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
 
-  // Auto Scroll Logic
+  // Duplicate items for infinite scroll
+  const duplicatedItems = [...items, ...items, ...items];
+
+  // Auto Scroll Logic with infinite loop
   useEffect(() => {
     const interval = setInterval(() => {
       if (!isPaused && !isDown && scrollRef.current) {
-        // Slow continuous scroll
-        if (scrollRef.current.scrollLeft + scrollRef.current.clientWidth >= scrollRef.current.scrollWidth - 10) {
-           // Reset to start smoothly or instantly? Let's scroll back to start
-           scrollRef.current.scrollTo({ left: 0, behavior: 'smooth' });
+        const maxScroll = scrollRef.current.scrollWidth / 3; // Original items width
+
+        if (scrollRef.current.scrollLeft >= maxScroll) {
+          // Reset to beginning without animation for seamless loop
+          scrollRef.current.scrollLeft = 0;
         } else {
-           scrollRef.current.scrollLeft += 1;
+          scrollRef.current.scrollLeft += 1;
         }
       }
-    }, 15); // Update every 15ms for smooth animation
+    }, 20); // Update every 20ms for smooth animation
 
     return () => clearInterval(interval);
   }, [isPaused, isDown]);
@@ -57,7 +61,7 @@ const GalleryCarousel: React.FC<GalleryCarouselProps> = ({ items }) => {
   if (items.length === 0) return null;
 
   return (
-    <div 
+    <div
       className="w-full relative mb-12"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => {
@@ -69,18 +73,18 @@ const GalleryCarousel: React.FC<GalleryCarouselProps> = ({ items }) => {
         <MoveRight size={16} className="animate-pulse" />
         <span>Drag to explore</span>
       </div>
-      
+
       {/* Scroll Container */}
-      <div 
+      <div
         ref={scrollRef}
         className="flex overflow-x-auto gap-6 pb-8 hide-scrollbar cursor-grab active:cursor-grabbing"
         onMouseDown={handleMouseDown}
         onMouseUp={handleMouseUp}
         onMouseMove={handleMouseMove}
       >
-        {items.map((item, index) => (
+        {duplicatedItems.map((item, index) => (
           <motion.div
-            key={item.id}
+            key={`${item.id}-${index}`}
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: index * 0.1, duration: 0.5 }}
@@ -88,31 +92,31 @@ const GalleryCarousel: React.FC<GalleryCarouselProps> = ({ items }) => {
             whileHover={{ scale: 1.01 }}
             whileTap={{ scale: 0.98 }}
           >
-            <img 
-              src={item.imageUrl} 
-              alt={item.title} 
+            <img
+              src={item.imageUrl}
+              alt={item.title}
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 pointer-events-none"
               draggable={false}
             />
-            
+
             {/* Overlay Gradient */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
 
             {/* Content */}
             <div className="absolute bottom-0 left-0 p-8 w-full transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300 pointer-events-none">
-               <div className="inline-block px-3 py-1 mb-3 rounded-full bg-white/20 backdrop-blur-md border border-white/10 text-white text-xs font-mono">
-                  {item.category}
-               </div>
-               <h3 className="text-2xl md:text-3xl font-bold text-white mb-2 leading-tight">
-                 {item.title}
-               </h3>
-               <p className="text-gray-300 text-sm font-medium">
-                 {item.date}
-               </p>
+              <div className="inline-block px-3 py-1 mb-3 rounded-full bg-white/20 backdrop-blur-md border border-white/10 text-white text-xs font-mono">
+                {item.category}
+              </div>
+              <h3 className="text-2xl md:text-3xl font-bold text-white mb-2 leading-tight">
+                {item.title}
+              </h3>
+              <p className="text-gray-300 text-sm font-medium">
+                {item.date}
+              </p>
             </div>
           </motion.div>
         ))}
-        
+
         {/* Spacer for right padding */}
         <div className="w-6 flex-shrink-0" />
       </div>

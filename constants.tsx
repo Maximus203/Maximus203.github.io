@@ -1,4 +1,4 @@
-import { ResumeData, Language } from './types';
+import { Language, ResumeData } from './types';
 
 export const UI_LABELS: Record<Language, Record<string, string>> = {
   fr: {
@@ -293,97 +293,151 @@ const SHARED_GALLERY = [
     title: 'DevFest Dakar 2023',
     category: 'Conference',
     date: 'Dec 2023',
-    imageUrl: 'https://images.unsplash.com/photo-1544531586-fde5298cdd40?auto=format&fit=crop&q=80&w=1200',
+    imageUrl: '/assets/galerie/devfest-1.jpg',
     size: 'large' as const,
     featured: true
   },
   {
     id: '2',
-    title: 'Journée Laravel Senegal',
-    category: 'Community',
-    date: 'Nov 2023',
-    imageUrl: 'https://images.unsplash.com/photo-1515187029135-18ee286d815b?auto=format&fit=crop&q=80&w=1200',
+    title: 'DevFest Dakar - Conférence',
+    category: 'Conference',
+    date: 'Dec 2023',
+    imageUrl: '/assets/galerie/devfest-2.jpg',
     size: 'normal' as const,
     featured: true
   },
   {
     id: '3',
-    title: 'Hacktoberfest Galsen Dev',
-    category: 'Hackathon',
-    date: 'Oct 2023',
-    imageUrl: 'https://images.unsplash.com/photo-1504384308090-c54be3852f92?auto=format&fit=crop&q=80&w=1200',
+    title: 'DevFest Dakar - Networking',
+    category: 'Conference',
+    date: 'Dec 2023',
+    imageUrl: '/assets/galerie/devfest-3.jpg',
     size: 'normal' as const,
     featured: true
   },
   {
     id: '4',
-    title: 'GalsenAI Meetup',
-    category: 'Talk',
-    date: 'Sep 2023',
-    imageUrl: 'https://images.unsplash.com/photo-1475721027767-p053db4929c30?auto=format&fit=crop&q=80&w=800',
-    size: 'normal' as const,
+    title: 'DevFest Dakar - Workshop',
+    category: 'Conference',
+    date: 'Dec 2023',
+    imageUrl: '/assets/galerie/devfest-4.jpg',
+    size: 'large' as const,
     featured: true
   },
   {
     id: '5',
-    title: 'Team Building Sonatel',
-    category: 'Life',
-    date: 'Aug 2023',
-    imageUrl: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&q=80&w=800',
-    size: 'large' as const,
-    featured: true
-  },
-  {
-    id: '6',
-    title: 'Coding Session @ ESTM',
-    category: 'Work',
-    date: 'Jul 2023',
-    imageUrl: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&q=80&w=800',
+    title: 'DevFest Dakar - Community',
+    category: 'Conference',
+    date: 'Dec 2023',
+    imageUrl: '/assets/galerie/devfest-5.jpg',
     size: 'normal' as const,
     featured: true
   },
   {
-    id: '7',
-    title: 'Open Source Day',
-    category: 'Contribution',
-    date: 'Jun 2023',
-    imageUrl: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=1200',
+    id: '6',
+    title: 'Journée Laravel Senegal',
+    category: 'Community',
+    date: 'Nov 2023',
+    imageUrl: '/assets/galerie/laravel-senegal-1.jpg',
     size: 'large' as const,
     featured: true
   },
   {
+    id: '7',
+    title: 'Laravel Senegal - Présentation',
+    category: 'Community',
+    date: 'Nov 2023',
+    imageUrl: '/assets/galerie/laravel-senegal-2.jpg',
+    size: 'normal' as const,
+    featured: true
+  },
+  {
     id: '8',
-    title: 'React Workshop',
-    category: 'Training',
-    date: 'May 2023',
-    imageUrl: 'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80&w=1200',
+    title: 'Laravel Senegal - Atelier',
+    category: 'Community',
+    date: 'Nov 2023',
+    imageUrl: '/assets/galerie/laravel-senegal-3.jpg',
     size: 'normal' as const,
     featured: true
   },
   {
     id: '9',
-    title: 'Startup Weekend',
-    category: 'Hackathon',
-    date: 'Apr 2023',
-    imageUrl: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&q=80&w=1200',
-    size: 'large' as const,
-    featured: true
-  },
-  {
-    id: '10',
-    title: 'Tech Awards Night',
-    category: 'Event',
-    date: 'Mar 2023',
-    imageUrl: 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&q=80&w=1200',
+    title: 'Laravel Senegal - Networking',
+    category: 'Community',
+    date: 'Nov 2023',
+    imageUrl: '/assets/galerie/laravel-senegal-4.jpg',
     size: 'normal' as const,
     featured: true
   },
   {
+    id: '10',
+    title: 'Laravel Senegal - Team',
+    category: 'Community',
+    date: 'Nov 2023',
+    imageUrl: '/assets/galerie/laravel-senegal-5.jpg',
+    size: 'large' as const,
+    featured: true
+  },
+  {
     id: '11',
-    title: 'Community Lunch',
-    category: 'Life',
-    date: 'Feb 2023',
-    imageUrl: 'https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&q=80&w=1200',
+    title: 'Hacktoberfest Galsen Dev',
+    category: 'Hackathon',
+    date: 'Oct 2023',
+    imageUrl: '/assets/galerie/hacktoberfest-1.jpg',
+    size: 'large' as const,
+    featured: true
+  },
+  {
+    id: '12',
+    title: 'Hacktoberfest - Coding Session',
+    category: 'Hackathon',
+    date: 'Oct 2023',
+    imageUrl: '/assets/galerie/hacktoberfest-2.jpg',
+    size: 'normal' as const,
+    featured: true
+  },
+  {
+    id: '13',
+    title: 'Hacktoberfest - Collaboration',
+    category: 'Hackathon',
+    date: 'Oct 2023',
+    imageUrl: '/assets/galerie/hacktoberfest-3.jpg',
+    size: 'normal' as const,
+    featured: true
+  },
+  {
+    id: '14',
+    title: 'Hacktoberfest - Open Source',
+    category: 'Hackathon',
+    date: 'Oct 2023',
+    imageUrl: '/assets/galerie/hacktoberfest-4.jpg',
+    size: 'normal' as const,
+    featured: true
+  },
+  {
+    id: '15',
+    title: 'Workshop ESTM',
+    category: 'Training',
+    date: 'Sep 2023',
+    imageUrl: '/assets/galerie/estm-workshop-1.jpg',
+    size: 'large' as const,
+    featured: true
+  },
+  {
+    id: '16',
+    title: 'Formation ESTM',
+    category: 'Training',
+    date: 'Sep 2023',
+    imageUrl: '/assets/galerie/estm-workshop-2.jpg',
+    size: 'normal' as const,
+    featured: true
+  },
+  {
+    id: '17',
+    title: 'Edacy Formation',
+    category: 'Training',
+    date: 'Aug 2023',
+    imageUrl: '/assets/galerie/edacy-2.jpg',
     size: 'normal' as const,
     featured: true
   }
@@ -447,7 +501,7 @@ export const RESUME_DATA: Record<Language, ResumeData> = {
       phone: "+221 77 316 27 27",
       linkedin: "linkedin.com/in/cherif-diouf-59747b17b",
       github: "github.com/Maximus203",
-      avatar: "./profile.png",
+      avatar: "/assets/photo-2.webp",
       bioShort: "Formateur-doctorant & Ingénieur Full-Stack (Laravel, React). Je transforme mon vécu en entreprise en projets pédagogiques concrets.",
       bio: "Passionné par le développement web et la transmission de savoir, je combine une expertise technique solide (Laravel, React, DevOps) avec une pédagogie éprouvée. Mon approche se base sur des projets réels, la qualité du code et l'autonomie.",
     },
@@ -516,24 +570,26 @@ export const RESUME_DATA: Record<Language, ResumeData> = {
         description: "Service Open Source de conversion d'images en WebP. Optimisation SEO et éco-conception.",
         tags: ["OpenSource", "WebP", "Performance"],
         github: "https://github.com/Maximus203/image-converter",
+        image: "/assets/projets/image-converter.gif"
       },
       {
         title: "MyEvent",
         description: "Application complète de création et gestion d'événements.",
         tags: ["Laravel", "React", "Management"],
         github: "https://github.com/Maximus203/my-event-app",
-        image: "./task-flow.png"
+        image: "/assets/projets/my-event-demo.gif"
       },
       {
         title: "Archive ESTM",
         description: "Plateforme d'archivage des mémoires avec ancrage Blockchain Ethereum pour l'intégrité.",
         tags: ["Blockchain", "Ethereum", "Archivage"],
-        image: "./archive-estm.png"
+        image: "/assets/projets/Archive-ESTM.webp"
       },
       {
         title: "Cynoia Spaces",
         description: "SaaS de gestion d'espaces collaboratifs. Architecture microservices (Spring Boot, Gateway).",
         tags: ["Spring Boot", "Microservices", "SaaS"],
+        image: "/assets/projets/sap-demo.gif"
       }
     ],
     skills: getSkills('fr'),
@@ -548,7 +604,7 @@ export const RESUME_DATA: Record<Language, ResumeData> = {
       phone: "+221 77 316 27 27",
       linkedin: "linkedin.com/in/cherif-diouf-59747b17b",
       github: "github.com/Maximus203",
-      avatar: "./profile.png",
+      avatar: "/assets/photo-2.webp",
       bioShort: "Doctoral Trainer & Full-Stack Engineer (Laravel, React). I transform my enterprise experience into concrete pedagogical projects.",
       bio: "Passionate about web development and knowledge sharing, I combine solid technical expertise (Laravel, React, DevOps) with proven pedagogy. My approach is based on real-world projects, code quality, and autonomy.",
     },
@@ -617,24 +673,26 @@ export const RESUME_DATA: Record<Language, ResumeData> = {
         description: "Open Source service for WebP image conversion. SEO optimization and eco-design.",
         tags: ["OpenSource", "WebP", "Performance"],
         github: "https://github.com/Maximus203/image-converter",
+        image: "/assets/projets/image-converter.gif"
       },
       {
         title: "MyEvent",
         description: "Complete application for event creation and management.",
         tags: ["Laravel", "React", "Management"],
         github: "https://github.com/Maximus203/my-event-app",
-        image: "./task-flow.png"
+        image: "/assets/projets/my-event-demo.gif"
       },
       {
         title: "Archive ESTM",
         description: "Thesis archiving platform with Ethereum Blockchain anchoring for integrity.",
         tags: ["Blockchain", "Ethereum", "Archiving"],
-        image: "./archive-estm.png"
+        image: "/assets/projets/Archive-ESTM.webp"
       },
       {
         title: "Cynoia Spaces",
         description: "Collaborative space management SaaS. Microservices architecture.",
         tags: ["Spring Boot", "Microservices", "SaaS"],
+        image: "/assets/projets/sap-demo.gif"
       }
     ],
     skills: getSkills('en'),
@@ -649,7 +707,7 @@ export const RESUME_DATA: Record<Language, ResumeData> = {
       phone: "+221 77 316 27 27",
       linkedin: "linkedin.com/in/cherif-diouf-59747b17b",
       github: "github.com/Maximus203",
-      avatar: "./profile.png",
+      avatar: "/assets/photo-2.webp",
       bioShort: "博士讲师 & 全栈工程师 (Laravel, React). 我将企业经验转化为具体的教学项目。",
       bio: "热衷于Web开发和知识分享，我将扎实的技术专长 (Laravel, React, DevOps) 与成熟的教学方法相结合。我的方法基于真实项目、代码质量和自主性。",
     },
@@ -718,24 +776,26 @@ export const RESUME_DATA: Record<Language, ResumeData> = {
         description: "WebP图像转换开源服务. SEO优化和生态设计.",
         tags: ["OpenSource", "WebP", "Performance"],
         github: "https://github.com/Maximus203/image-converter",
+        image: "/assets/projets/image-converter.gif"
       },
       {
         title: "MyEvent",
         description: "完整的活动创建和管理应用程序.",
         tags: ["Laravel", "React", "Management"],
         github: "https://github.com/Maximus203/my-event-app",
-        image: "./task-flow.png"
+        image: "/assets/projets/my-event-demo.gif"
       },
       {
         title: "Archive ESTM",
         description: "基于以太坊区块链锚定的论文归档平台，确保完整性.",
         tags: ["Blockchain", "Ethereum", "Archivage"],
-        image: "./archive-estm.png"
+        image: "/assets/projets/Archive-ESTM.webp"
       },
       {
         title: "Cynoia Spaces",
         description: "协作空间管理SaaS. 微服务架构 (Spring Boot, Gateway).",
         tags: ["Spring Boot", "Microservices", "SaaS"],
+        image: "/assets/projets/sap-demo.gif"
       }
     ],
     skills: getSkills('zh'),
@@ -750,7 +810,7 @@ export const RESUME_DATA: Record<Language, ResumeData> = {
       phone: "+221 77 316 27 27",
       linkedin: "linkedin.com/in/cherif-diouf-59747b17b",
       github: "github.com/Maximus203",
-      avatar: "./profile.png",
+      avatar: "/assets/photo-2.webp",
       bioShort: "博士課程講師 & フルスタックエンジニア (Laravel, React). 企業での経験を具体的な教育プロジェクトに変えます。",
       bio: "Web開発と知識共有に情熱を注いでおり、確かな技術力 (Laravel, React, DevOps) と実績のある教育法を組み合わせています。私の手法は、実際のプロジェクト、コード品質、自律性に基づいています。",
     },
@@ -819,24 +879,26 @@ export const RESUME_DATA: Record<Language, ResumeData> = {
         description: "WebP画像変換オープンソースサービス. SEO最適化とエコデザイン.",
         tags: ["OpenSource", "WebP", "Performance"],
         github: "https://github.com/Maximus203/image-converter",
+        image: "/assets/projets/image-converter.gif"
       },
       {
         title: "MyEvent",
         description: "イベント作成および管理のための完全なアプリケーション.",
         tags: ["Laravel", "React", "Management"],
         github: "https://github.com/Maximus203/my-event-app",
-        image: "./task-flow.png"
+        image: "/assets/projets/my-event-demo.gif"
       },
       {
         title: "Archive ESTM",
         description: "完全性を確保するためのイーサリアムブロックチェーンアンカー付き論文アーカイブプラットフォーム.",
         tags: ["Blockchain", "Ethereum", "Archivage"],
-        image: "./archive-estm.png"
+        image: "/assets/projets/Archive-ESTM.webp"
       },
       {
         title: "Cynoia Spaces",
         description: "コラボレーションスペース管理SaaS. マイクロサービスアーキテクチャ (Spring Boot, Gateway).",
         tags: ["Spring Boot", "Microservices", "SaaS"],
+        image: "/assets/projets/sap-demo.gif"
       }
     ],
     skills: getSkills('ja'),

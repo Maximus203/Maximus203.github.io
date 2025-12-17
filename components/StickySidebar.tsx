@@ -1,7 +1,7 @@
-import React from 'react';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import { Coffee, Download, Github, Linkedin, Mail, MapPin } from 'lucide-react';
+import React from 'react';
 import { ResumeData } from '../types';
-import { Download, Mail, Github, Linkedin, MapPin, Coffee, Terminal as TerminalIcon } from 'lucide-react';
 
 interface StickySidebarProps {
   data: ResumeData['profile'];
@@ -54,59 +54,60 @@ const StickySidebar: React.FC<StickySidebarProps> = ({ data, labels }) => {
       >
         <div className="bg-white dark:bg-slate-800 rounded-[2rem] p-2 shadow-xl dark:shadow-none border border-gray-100 dark:border-slate-700 overflow-hidden relative transition-colors duration-300">
           <div className="relative aspect-[4/5] overflow-hidden rounded-[1.5rem] bg-gray-100 dark:bg-slate-900">
-             <img 
-               src={data.avatar || "https://cherif-diouf.artist-dev.com/assets/photo.webp"} 
-               alt={data.name}
-               className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-105"
-             />
-             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-             
-             <div className="absolute bottom-6 left-6 text-white translate-z-10">
-                <div className="flex items-center gap-2 mb-2">
-                   <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-                   <span className="text-xs font-medium bg-white/20 backdrop-blur-md px-2 py-0.5 rounded-full">{labels.available || "Available"}</span>
-                </div>
-                <h2 className="text-xl font-bold">{data.name.split(" ").slice(-2).join(" ")}</h2>
-                <p className="text-sm text-gray-200">{data.role}</p>
-             </div>
+            <img
+              src={data.avatar || "/assets/photo.webp"}
+              alt={data.name}
+              className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-105"
+            />
+            <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-transparent" />
+
+            <div className="absolute top-6 left-6 text-white translate-z-10">
+              <h2 className="text-xl font-bold mb-1">{data.name.split(" ").slice(-2).join(" ")}</h2>
+              <p className="text-sm text-gray-200 mb-2">{data.role}</p>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+                <span className="text-xs font-medium bg-white/20 backdrop-blur-md px-2 py-0.5 rounded-full">{labels.available || "Available"}</span>
+              </div>
+            </div>
           </div>
         </div>
       </motion.div>
 
       {/* Widget Grid */}
       <div className="grid grid-cols-2 gap-4">
-         {/* Widget 1: Location */}
-         <motion.div 
-            whileHover={{ scale: 1.02 }}
-            className="bg-white dark:bg-slate-800 p-4 rounded-3xl shadow-sm border border-gray-100 dark:border-slate-700 flex flex-col justify-between h-32 transition-colors duration-300"
-         >
-            <div className="w-8 h-8 rounded-full bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center text-blue-500 dark:text-blue-400">
-               <MapPin size={16} />
-            </div>
-            <div>
-               <p className="text-xs text-gray-400 dark:text-gray-500 uppercase font-semibold">{labels.base}</p>
-               <p className="text-sm font-medium text-gray-800 dark:text-gray-200 truncate" title={data.location}>Dakar, SN</p>
-            </div>
-         </motion.div>
+        {/* Widget 1: Location */}
+        <motion.div
+          whileHover={{ scale: 1.02 }}
+          className="bg-white dark:bg-slate-800 p-4 rounded-3xl shadow-sm border border-gray-100 dark:border-slate-700 flex flex-col justify-between h-32 transition-colors duration-300"
+        >
+          <div className="w-8 h-8 rounded-full bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center text-blue-500 dark:text-blue-400">
+            <MapPin size={16} />
+          </div>
+          <div>
+            <p className="text-xs text-gray-400 dark:text-gray-500 uppercase font-semibold">{labels.base}</p>
+            <p className="text-sm font-medium text-gray-800 dark:text-gray-200 truncate" title={data.location}>Dakar, SN</p>
+          </div>
+        </motion.div>
 
-         {/* Widget 2: Download CV */}
-         <motion.a 
-            href="/cv.pdf" // In a real app, this would be the actual path
-            target="_blank"
-            whileHover={{ scale: 1.02 }}
-            className="bg-indigo-600 dark:bg-indigo-600 text-white p-4 rounded-3xl shadow-lg shadow-indigo-200 dark:shadow-none flex flex-col justify-between h-32 cursor-pointer group transition-colors duration-300 hover:bg-indigo-700"
-         >
-            <div className="flex justify-between items-start">
-               <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-white">
-                  <Download size={16} />
-               </div>
-               <span className="text-xs font-mono text-white/60 opacity-0 group-hover:opacity-100 transition-opacity">.pdf</span>
+        {/* Widget 2: Download CV */}
+        <motion.a
+          href="/assets/documents/CV.pdf"
+          target="_blank"
+          download="Cherif_Diouf_CV.pdf"
+          whileHover={{ scale: 1.02 }}
+          className="bg-indigo-600 dark:bg-indigo-600 text-white p-4 rounded-3xl shadow-lg shadow-indigo-200 dark:shadow-none flex flex-col justify-between h-32 cursor-pointer group transition-colors duration-300 hover:bg-indigo-700"
+        >
+          <div className="flex justify-between items-start">
+            <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-white">
+              <Download size={16} />
             </div>
-            <div>
-               <p className="text-xs text-white/70 uppercase font-semibold">{labels.resume}</p>
-               <p className="text-sm font-medium text-white">{labels.download}</p>
-            </div>
-         </motion.a>
+            <span className="text-xs font-mono text-white/60 opacity-0 group-hover:opacity-100 transition-opacity">.pdf</span>
+          </div>
+          <div>
+            <p className="text-xs text-white/70 uppercase font-semibold">{labels.resume}</p>
+            <p className="text-sm font-medium text-white">{labels.download}</p>
+          </div>
+        </motion.a>
       </div>
 
       {/* Social Links */}
@@ -118,15 +119,15 @@ const StickySidebar: React.FC<StickySidebarProps> = ({ data, labels }) => {
 
       {/* Fun Widget: Coffee & Code */}
       <div className="bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-slate-800 dark:to-slate-800 p-6 rounded-3xl border border-indigo-100/50 dark:border-slate-700 transition-colors duration-300">
-         <div className="flex items-center gap-3 mb-3">
-             <Coffee className="text-indigo-600 dark:text-indigo-400" size={20} />
-             <h3 className="font-semibold text-gray-800 dark:text-white">{labels.status}</h3>
-         </div>
-         <div className="font-mono text-sm text-gray-600 dark:text-gray-300 bg-white/60 dark:bg-slate-900/50 p-3 rounded-xl backdrop-blur-sm">
-             <span className="text-purple-600 dark:text-purple-400">const</span> mood = <span className="text-green-600 dark:text-green-400">"Focused"</span>;
-             <br/>
-             <span className="text-purple-600 dark:text-purple-400">await</span> coffee.drink();
-         </div>
+        <div className="flex items-center gap-3 mb-3">
+          <Coffee className="text-indigo-600 dark:text-indigo-400" size={20} />
+          <h3 className="font-semibold text-gray-800 dark:text-white">{labels.status}</h3>
+        </div>
+        <div className="font-mono text-sm text-gray-600 dark:text-gray-300 bg-white/60 dark:bg-slate-900/50 p-3 rounded-xl backdrop-blur-sm">
+          <span className="text-purple-600 dark:text-purple-400">const</span> mood = <span className="text-green-600 dark:text-green-400">"Focused"</span>;
+          <br />
+          <span className="text-purple-600 dark:text-purple-400">await</span> coffee.drink();
+        </div>
       </div>
     </div>
   );

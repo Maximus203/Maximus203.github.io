@@ -1,82 +1,159 @@
 <!DOCTYPE html>
 <html lang="fr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cherif Diouf | Full-Stack Engineer</title>
-    <meta name="description" content="Portfolio de El Hadji Ahmadou Cherif Diouf, Ingénieur Full-Stack & Formateur." />
-    
-    <!-- Fonts: Inter for UI, JetBrains Mono (similar to Cascadia) for Code -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-    
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        darkMode: 'class',
-        theme: {
-          extend: {
-            fontFamily: {
-              sans: ['Inter', 'sans-serif'],
-              mono: ['"JetBrains Mono"', '"Cascadia Code"', 'monospace'],
-            },
-            colors: {
-              primary: '#4F46E5', // Indigo 600
-              secondary: '#10B981', // Emerald 500 (Terminal Green)
-              dark: '#0f172a',
-            }
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cherif Diouf | Ingénieur Full-Stack & Formateur</title>
+  <meta name="description"
+    content="Portfolio de El Hadji Ahmadou Cherif Diouf, Ingénieur Full-Stack & Formateur. Expert Laravel, React & DevOps. Découvrez mes projets, compétences et parcours." />
+
+  <!-- SEO Keywords -->
+  <meta name="keywords"
+    content="Cherif Diouf, Full-Stack Developer, Laravel, React, TypeScript, DevOps, Formateur, Développeur Web, Sénégal, Dakar, Portfolio" />
+  <meta name="author" content="El Hadji Ahmadou Cherif Diouf" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://maximus203.github.io/" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="/assets/logo.webp" />
+  <link rel="shortcut icon" type="image/x-icon" href="/assets/logo.webp" />
+  <link rel="apple-touch-icon" href="/assets/logo.webp" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://maximus203.github.io/" />
+  <meta property="og:title" content="Cherif Diouf | Ingénieur Full-Stack & Formateur" />
+  <meta property="og:description"
+    content="Expert Laravel, React & DevOps. Découvrez mes projets, compétences et parcours." />
+  <meta property="og:image" content="https://maximus203.github.io/assets/photo.webp" />
+  <meta property="og:image:alt" content="Photo de profil de Cherif Diouf" />
+  <meta property="og:locale" content="fr_FR" />
+  <meta property="og:site_name" content="Cherif Diouf Portfolio" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content="https://maximus203.github.io/" />
+  <meta name="twitter:title" content="Cherif Diouf | Ingénieur Full-Stack & Formateur" />
+  <meta name="twitter:description"
+    content="Expert Laravel, React & DevOps. Découvrez mes projets, compétences et parcours." />
+  <meta name="twitter:image" content="https://maximus203.github.io/assets/photo.webp" />
+  <meta name="twitter:creator" content="@Maximus203" />
+
+  <!-- Additional Meta Tags -->
+  <meta name="theme-color" content="#4F46E5" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+
+  <!-- Structured Data (JSON-LD) -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "El Hadji Ahmadou Cherif Diouf",
+      "alternateName": "Cherif Diouf",
+      "url": "https://maximus203.github.io/",
+      "image": "https://maximus203.github.io/assets/photo.webp",
+      "jobTitle": "Ingénieur Full-Stack & Formateur",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "ESCOA"
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Dakar",
+        "addressRegion": "Keur Massar",
+        "addressCountry": "SN"
+      },
+      "email": "el.hadji.ahmadou.cherif.diouf@gmail.com",
+      "sameAs": [
+        "https://github.com/Maximus203",
+        "https://linkedin.com/in/cherif-diouf-59747b17b"
+      ],
+      "knowsAbout": ["Laravel", "React", "TypeScript", "DevOps", "PHP", "JavaScript", "Docker", "Git"]
+    }
+    </script>
+
+  <!-- Fonts: Inter for UI, JetBrains Mono (similar to Cascadia) for Code -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap"
+    rel="stylesheet">
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['"JetBrains Mono"', '"Cascadia Code"', 'monospace'],
+          },
+          colors: {
+            primary: '#4F46E5', // Indigo 600
+            secondary: '#10B981', // Emerald 500 (Terminal Green)
+            dark: '#0f172a',
           }
         }
       }
-    </script>
-    <style>
-      body {
-        transition: background-color 0.3s ease, color 0.3s ease;
-        scroll-behavior: smooth;
-      }
-      /* Custom scrollbar for webkit */
-      ::-webkit-scrollbar {
-        width: 8px;
-      }
-      ::-webkit-scrollbar-track {
-        background: transparent;
-      }
-      ::-webkit-scrollbar-thumb {
-        background: #cbd5e1;
-        border-radius: 4px;
-      }
-      ::-webkit-scrollbar-thumb:hover {
-        background: #94a3b8;
-      }
-      
-      .dark ::-webkit-scrollbar-thumb {
-        background: #334155;
-      }
-      .dark ::-webkit-scrollbar-thumb:hover {
-        background: #475569;
-      }
+    }
+  </script>
+  <style>
+    body {
+      transition: background-color 0.3s ease, color 0.3s ease;
+      scroll-behavior: smooth;
+    }
 
-      /* Hide Scrollbar Utility */
-      .hide-scrollbar::-webkit-scrollbar {
-        display: none;
-      }
-      .hide-scrollbar {
-        -ms-overflow-style: none;
-        scrollbar-width: none;
-      }
-      
-      .glass-card {
-        background: rgba(255, 255, 255, 0.7);
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.5);
-      }
-      .dark .glass-card {
-        background: rgba(15, 23, 42, 0.7);
-        border: 1px solid rgba(30, 41, 59, 0.5);
-      }
-    </style>
+    /* Custom scrollbar for webkit */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+
+    .dark ::-webkit-scrollbar-thumb {
+      background: #334155;
+    }
+
+    .dark ::-webkit-scrollbar-thumb:hover {
+      background: #475569;
+    }
+
+    /* Hide Scrollbar Utility */
+    .hide-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+
+    .hide-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    .glass-card {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+    }
+
+    .dark .glass-card {
+      background: rgba(15, 23, 42, 0.7);
+      border: 1px solid rgba(30, 41, 59, 0.5);
+    }
+  </style>
   <script type="importmap">
 {
   "imports": {
@@ -91,10 +168,12 @@
   }
 }
 </script>
-<link rel="stylesheet" href="/index.css">
+  <link rel="stylesheet" href="/index.css">
 </head>
-  <body>
-    <div id="root"></div>
+
+<body>
+  <div id="root"></div>
   <script type="module" src="/index.tsx"></script>
 </body>
+
 </html>
