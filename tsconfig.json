@@ -1,56 +1,29 @@
 {
   "compilerOptions": {
+    "target": "ES2022",
+    "experimentalDecorators": true,
+    "useDefineForClassFields": false,
+    "module": "ESNext",
     "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
+      "ES2022",
+      "DOM",
+      "DOM.Iterable"
     ],
-    "allowJs": true,
     "skipLibCheck": true,
-    "strict": true,
-    "noEmit": true,
-    "esModuleInterop": true,
-    "module": "esnext",
-    "moduleResolution": "bundler",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "jsx": "preserve",
-    "incremental": true,
-    "plugins": [
-      {
-        "name": "next"
-      }
+    "types": [
+      "node"
     ],
-    "baseUrl": ".",
+    "moduleResolution": "bundler",
+    "isolatedModules": true,
+    "moduleDetection": "force",
+    "allowJs": true,
+    "jsx": "react-jsx",
     "paths": {
       "@/*": [
         "./*"
-      ],
-      "@/components/*": [
-        "./components/*"
-      ],
-      "@/lib/*": [
-        "./lib/*"
-      ],
-      "@/data/*": [
-        "./data/*"
-      ],
-      "@/hooks/*": [
-        "./hooks/*"
-      ],
-      "@/app/*": [
-        "./app/*"
       ]
     },
-    "target": "ES2017"
-  },
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    ".next/types/**/*.ts"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+    "allowImportingTsExtensions": true,
+    "noEmit": true
+  }
 }

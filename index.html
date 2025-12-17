@@ -1,77 +1,100 @@
 <!DOCTYPE html>
-<html lang="fr" class="scroll-smooth">
-
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
-  <meta name="description"
-    content="Portfolio de Cherif Diouf - Ingénieur Logiciel spécialisé en développement web et administration réseau. Découvrez mes projets et compétences techniques." />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@300;400;500;600;700&display=swap"
-    rel="stylesheet" />
-  <meta name="keywords"
-    content="Cherif Diouf, développeur, Full Stack, ingénieur logiciel, réseau, télécommunications, projets web">
-
-  <!-- Open Graph Meta Tags -->
-  <meta property="og:title" content="Cherif Diouf - Développeur Full Stack">
-  <meta property="og:description"
-    content="Découvrez le portfolio et les compétences de Cherif Diouf, un développeur Full Stack spécialisé en web et télécommunications.">
-  <meta property="og:image" content="assets/photo.webp">
-  <!-- Assure-toi que cette image est au format WebP et optimisée. -->
-  <meta property="og:url" content="https://cherif-diouf.artist-dev.com">
-  <meta property="og:type" content="website">
-
-  <!-- Twitter Card Meta Tags -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Cherif Diouf - Développeur Full Stack">
-  <meta name="twitter:description"
-    content="Découvrez le portfolio et les compétences de Cherif Diouf, un développeur Full Stack spécialisé en web et télécommunications.">
-  <meta name="twitter:image" content="assets/photo.webp"> <!-- Image adaptée pour Twitter (1200x600 recommandé) -->
-
-  <!-- Favicon et logo -->
-  <link rel="shortcut icon" href="assets/logo.webp" type="image/x-icon">
-
-  <title>Cherif Diouf - Développeur Full Stack</title>
-
-  <!-- Scripts -->
-  <script defer id="Cookiebot" src="https://consent.cookiebot.com/uc.js"
-    data-cbid="e49915d8-db32-4954-8d85-bb0281c7da02" type="text/javascript" async></script>
-
-  <!-- Google tag (gtag.js) -->
-  <script defer async src="https://www.googletagmanager.com/gtag/js?id=G-DMSJL5HRMX"></script>
-  <script defer>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    gtag('js', new Date());
-
-    gtag('config', 'G-DMSJL5HRMX');
-  </script>
-
-  <script defer type="application/ld+json">
-
-        {
-          "@context": "https://schema.org",
-          "@type": "Person",
-          "name": "Cherif Diouf",
-          "url": "https://cherif-diouf.artist-dev.com",
-          "image": "https://cherif-diouf.artist-dev.com/assets/photo.webp",
-          "jobTitle": "Développeur Full Stack",
-          "worksFor": {
-            "@type": "Organization",
-            "name": "Hydrautech"
-          },
-          "sameAs": [
-            "https://www.linkedin.com/in/cherif-diouf-59747b17b/",
-            "https://github.com/Maximus203/",
-            "https://www.youtube.com/@printf_cherif"
-          ]
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cherif Diouf | Full-Stack Engineer</title>
+    <meta name="description" content="Portfolio de El Hadji Ahmadou Cherif Diouf, Ingénieur Full-Stack & Formateur." />
+    
+    <!-- Fonts: Inter for UI, JetBrains Mono (similar to Cascadia) for Code -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+              mono: ['"JetBrains Mono"', '"Cascadia Code"', 'monospace'],
+            },
+            colors: {
+              primary: '#4F46E5', // Indigo 600
+              secondary: '#10B981', // Emerald 500 (Terminal Green)
+              dark: '#0f172a',
+            }
+          }
         }
+      }
     </script>
+    <style>
+      body {
+        transition: background-color 0.3s ease, color 0.3s ease;
+        scroll-behavior: smooth;
+      }
+      /* Custom scrollbar for webkit */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #cbd5e1;
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #94a3b8;
+      }
+      
+      .dark ::-webkit-scrollbar-thumb {
+        background: #334155;
+      }
+      .dark ::-webkit-scrollbar-thumb:hover {
+        background: #475569;
+      }
+
+      /* Hide Scrollbar Utility */
+      .hide-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+      .hide-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+      
+      .glass-card {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.5);
+      }
+      .dark .glass-card {
+        background: rgba(15, 23, 42, 0.7);
+        border: 1px solid rgba(30, 41, 59, 0.5);
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "lucide-react": "https://esm.sh/lucide-react@^0.561.0",
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "react": "https://esm.sh/react@^19.2.3",
+    "framer-motion": "https://esm.sh/framer-motion@^12.23.26",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "jszip": "https://esm.sh/jszip@3.10.1",
+    "file-saver": "https://esm.sh/file-saver@2.0.5",
+    "zustand": "https://esm.sh/zustand@5.0.3"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
 </head>
-
-<body>
-  <div id="root"></div>
-  <script type="module" src="/src/main.tsx"></script>
+  <body>
+    <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
 </body>
-
 </html>
