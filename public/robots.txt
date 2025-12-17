@@ -15,6 +15,3 @@ Disallow: /scripts/
 # Permettre l'accès aux assets importants
 Allow: /assets/
 Allow: /documents/
-
-# Crawl-delay pour éviter la surcharge
-Crawl-delay: 1
