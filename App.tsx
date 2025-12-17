@@ -15,7 +15,7 @@ import ImageConverter from './components/ImageConverter';
 import MemeGenerator from './components/MemeGenerator';
 import IntroAnimation from './components/IntroAnimation';
 import ProjectRequestModal from './components/ProjectRequestModal';
-import Footer from './components/Footer';
+import Footer from './components/footer';
 import { Briefcase, GraduationCap, Code2, FolderGit2, Menu, X, ArrowRight, Moon, Sun, Image as ImageIcon, Home, Wrench, User, ChevronRight, Search, Plus } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 

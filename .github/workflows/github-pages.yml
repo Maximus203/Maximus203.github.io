@@ -15,45 +15,118 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  build:
+  install:
+    name: 📦 Installation des dépendances
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: 📥 Checkout du code
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: 🔧 Configuration Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'npm'
 
-      - name: Install dependencies
-        run: npm ci
+      - name: 📦 Installation des dépendances npm
+        run: |
+          echo "Installation des dépendances..."
+          npm ci
+          echo "✅ Dépendances installées avec succès"
 
-      - name: Install tsx for sitemap generation
-        run: npm install -D tsx
+      - name: 🛠️ Installation de tsx
+        run: |
+          echo "Installation de tsx pour la génération du sitemap..."
+          npm install -D tsx
+          echo "✅ tsx installé"
 
-      - name: Generate sitemap
-        run: npm run generate-sitemap
-
-      - name: Build project
-        run: npm run build
-
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+      - name: 💾 Cache des node_modules
+        uses: actions/cache@v3
         with:
-          path: './dist'
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+
+  build:
+    name: 🏗️ Build du projet
+    runs-on: ubuntu-latest
+    needs: install
+    steps:
+      - name: 📥 Checkout du code
+        uses: actions/checkout@v4
+
+      - name: 🔧 Configuration Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: 📦 Restauration du cache
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+
+      - name: 📦 Installation (si cache manquant)
+        run: |
+          if [ ! -d "node_modules" ]; then
+            npm ci
+            npm install -D tsx
+          fi
+
+      - name: 🗺️ Génération du sitemap
+        run: |
+          echo "Génération du sitemap.xml..."
+          npm run generate-sitemap
+          echo "✅ Sitemap généré"
+
+      - name: 🏗️ Build Vite
+        run: |
+          echo "Démarrage du build de production..."
+          npm run build
+          echo "✅ Build terminé avec succès"
+
+      - name: 📊 Informations du build
+        run: |
+          echo "📂 Contenu du dossier dist:"
+          ls -lah dist/
+          echo ""
+          echo "📏 Taille totale:"
+          du -sh dist/
+
+      - name: 📤 Upload de l'artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist-files
+          path: ./dist
+          retention-days: 1
 
   deploy:
+    name: 🚀 Déploiement sur GitHub Pages
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     needs: build
     steps:
-      - name: Deploy to GitHub Pages
+      - name: 📥 Téléchargement de l'artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: dist-files
+          path: ./dist
+
+      - name: ⚙️ Configuration de GitHub Pages
+        uses: actions/configure-pages@v4
+
+      - name: 📦 Upload vers GitHub Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './dist'
+
+      - name: 🚀 Déploiement sur GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+      - name: ✅ Déploiement terminé
+        run: |
+          echo "🎉 Portfolio déployé avec succès!"
+          echo "🔗 URL: ${{ steps.deployment.outputs.page_url }}"
