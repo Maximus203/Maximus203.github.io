@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
-const SITE_URL = 'https://cherif-diouf.artist-dev.com';
+const SITE_URL = 'https://maximus203.github.io';
 const currentDate = new Date().toISOString().split('T')[0];
 
 // Valeurs valides pour changefreq selon le standard XML sitemap
