@@ -54,7 +54,7 @@ export default function ProjectsSection() {
         <div className="relative overflow-hidden">
          <div className="aspect-video relative">
           <Image
-           src={`/${project.image}`}
+           src={project.image.startsWith('http') ? project.image : `/${project.image}`}
            alt={project.title}
            fill
            className="object-cover group-hover:scale-105 transition-transform duration-300"
@@ -110,7 +110,7 @@ export default function ProjectsSection() {
             <div className="space-y-6">
              <div className="aspect-video relative rounded-lg overflow-hidden">
               <Image
-               src={`/${project.image}`}
+               src={project.image.startsWith('http') ? project.image : `/${project.image}`}
                alt={project.title}
                fill
                className="object-cover"

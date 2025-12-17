@@ -44,8 +44,10 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   body.classList.remove('theme-fullstack', 'theme-frontend', 'theme-backend')
   html.classList.remove('dark')
 
-  // Add current theme class
-  body.classList.add(`theme-${theme}`)
+  // Add current theme class (only for frontend and backend, fullstack uses default CSS)
+  if (theme !== 'fullstack') {
+   body.classList.add(`theme-${theme}`)
+  }
 
   // Add dark class if needed
   if (isDark) {
