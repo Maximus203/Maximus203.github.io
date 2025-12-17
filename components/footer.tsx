@@ -36,7 +36,7 @@ const Footer: React.FC<FooterProps> = ({ data, labels, onNavClick, onToolLaunch 
 
           {/* Column 2: Sections */}
           <div>
-            <h3 className="font-bold text-gray-900 dark:text-white uppercase tracking-wider text-xs mb-6">
+            <h3 className="font-bold text-gray-900 dark:text-white capitalize tracking-wider text-xs mb-6">
               {labels.sections}
             </h3>
             <ul className="space-y-3">
@@ -65,7 +65,7 @@ const Footer: React.FC<FooterProps> = ({ data, labels, onNavClick, onToolLaunch 
 
           {/* Column 3: Pages/Tools */}
           <div>
-            <h3 className="font-bold text-gray-900 dark:text-white uppercase tracking-wider text-xs mb-6">
+            <h3 className="font-bold text-gray-900 dark:text-white capitalize tracking-wider text-xs mb-6">
               {labels.pages}
             </h3>
             <ul className="space-y-3">
@@ -75,7 +75,7 @@ const Footer: React.FC<FooterProps> = ({ data, labels, onNavClick, onToolLaunch 
                 </button>
               </li>
               <li>
-                <a href="/cv.pdf" target="_blank" className="text-gray-500 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 text-sm transition-colors">
+                <a href="/assets/documents/CV.pdf" target="_blank" download="Cherif_Diouf_CV.pdf" className="text-gray-500 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 text-sm transition-colors">
                   {labels.resume}
                 </a>
               </li>
@@ -99,7 +99,7 @@ const Footer: React.FC<FooterProps> = ({ data, labels, onNavClick, onToolLaunch 
 
           {/* Column 4: Connect */}
           <div>
-            <h3 className="font-bold text-gray-900 dark:text-white uppercase tracking-wider text-xs mb-6">
+            <h3 className="font-bold text-gray-900 dark:text-white capitalize tracking-wider text-xs mb-6">
               {labels.connect}
             </h3>
             <ul className="space-y-3">
