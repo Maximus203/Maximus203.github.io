@@ -6,6 +6,12 @@ const nextConfig = {
  images: {
   unoptimized: true,
   formats: ['image/webp', 'image/avif'],
+  remotePatterns: [
+   {
+    protocol: 'https',
+    hostname: 'images.unsplash.com',
+   },
+  ],
  },
  experimental: {
   optimizeCss: true,
@@ -13,7 +19,6 @@ const nextConfig = {
  assetPrefix: process.env.NODE_ENV === 'production' ? '' : '',
  basePath: '',
  reactStrictMode: true,
- swcMinify: true,
  compiler: {
   removeConsole: process.env.NODE_ENV === 'production',
  },

@@ -156,17 +156,17 @@
 
  body {
   @apply bg-background text-foreground font-sans antialiased;
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-inter), 'Inter', sans-serif;
   transition: all 0.3s ease;
  }
 
  /* Typography Classes */
  .font-code {
-  font-family: 'Fira Code', 'Courier New', monospace;
+  font-family: var(--font-fira-code), 'Fira Code', 'Courier New', monospace;
  }
 
  .font-sans {
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-inter), 'Inter', sans-serif;
  }
 
  /* Backend theme typography override */
@@ -359,4 +359,3 @@
  * {
   transition: none !important;
  }
-}

@@ -140,7 +140,7 @@ export default function RootLayout({
      type="image/webp"
     />
    </head>
-   <body className="theme-transition">
+   <body className={`theme-transition ${inter.variable} ${firaCode.variable}`}>
     <ThemeProvider>
      {children}
     </ThemeProvider>

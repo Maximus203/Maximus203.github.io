@@ -167,7 +167,7 @@ export default function HeroSection() {
         <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-accent/20 rounded-full blur-3xl" />
         <div className="relative w-full h-full rounded-full overflow-hidden border-4 border-primary/20 shadow-2xl">
          <Image
-          src={`/${portfolioData.profile.image}`}
+          src={portfolioData.profile.image.startsWith('http') ? portfolioData.profile.image : `/${portfolioData.profile.image}`}
           alt={`${portfolioData.profile.name} - ${portfolioData.profile.title}`}
           fill
           className="object-cover"
