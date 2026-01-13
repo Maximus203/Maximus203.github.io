@@ -1,8 +1,14 @@
 <?php
 
+use App\Models\Project;
 use Inertia\Testing\AssertableInertia as Assert;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+
+uses(RefreshDatabase::class);
 
 test('inertia renders app layout', function () {
+    Project::factory()->count(3)->create();
+
     $response = $this->get('/');
 
     $response->assertInertia(
@@ -12,6 +18,8 @@ test('inertia renders app layout', function () {
 });
 
 test('inertia shares auth data', function () {
+    Project::factory()->count(3)->create();
+
     $response = $this->get('/');
 
     $response->assertInertia(
@@ -22,6 +30,8 @@ test('inertia shares auth data', function () {
 });
 
 test('inertia shares ziggy routes', function () {
+    Project::factory()->count(3)->create();
+
     $response = $this->get('/');
 
     $response->assertInertia(

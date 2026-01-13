@@ -1,23 +1,51 @@
+import IntroAnimation from '@/Components/IntroAnimation';
 import { Link } from '@inertiajs/react';
+import { AnimatePresence } from 'framer-motion';
 import { Menu, Monitor, Moon, Sun, X } from 'lucide-react';
 import { ReactNode, useEffect, useState } from 'react';
 
 type Theme = 'light' | 'dark' | 'system';
+type Language = 'fr' | 'en';
 
 interface MainLayoutProps {
     children: ReactNode;
 }
 
 export default function MainLayout({ children }: MainLayoutProps) {
-    const [theme, setTheme] = useState<Theme>('system');
+    const [theme, setTheme] = useState<Theme>('dark');
+    const [lang, setLang] = useState<Language>('fr');
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const [showIntro, setShowIntro] = useState(true);
 
     useEffect(() => {
-        // Charger le thème depuis localStorage
-        const savedTheme = (localStorage.getItem('theme') as Theme) || 'system';
+        // Vérifier si l'intro a déjà été vue
+        const introSeen = sessionStorage.getItem('introSeen');
+        if (introSeen) {
+            setShowIntro(false);
+        }
+    }, []);
+
+    useEffect(() => {
+        // Charger le thème depuis localStorage (par défaut: dark)
+        const savedTheme = (localStorage.getItem('theme') as Theme) || 'dark';
         setTheme(savedTheme);
         applyTheme(savedTheme);
+
+        // Charger la langue depuis localStorage
+        const savedLang = (localStorage.getItem('lang') as Language) || 'fr';
+        setLang(savedLang);
     }, []);
+
+    const handleIntroComplete = () => {
+        setShowIntro(false);
+        sessionStorage.setItem('introSeen', 'true');
+    };
+
+    const handleLanguageChange = (newLang: Language) => {
+        setLang(newLang);
+        localStorage.setItem('lang', newLang);
+        // Note: Dans une vraie app, on rechargerait ici les données traduites
+    };
 
     const applyTheme = (newTheme: Theme) => {
         const root = document.documentElement;
@@ -43,9 +71,17 @@ export default function MainLayout({ children }: MainLayoutProps) {
     ];
 
     return (
-        <div className="min-h-screen bg-white dark:bg-slate-950 transition-colors duration-300">
-            {/* Navigation */}
-            <nav className="sticky top-0 z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+        <>
+            <AnimatePresence mode="wait">
+                {showIntro && (
+                    <IntroAnimation onComplete={handleIntroComplete} />
+                )}
+            </AnimatePresence>
+
+            {!showIntro && (
+                <div className="min-h-screen bg-white dark:bg-slate-950 transition-colors duration-300">
+                    {/* Navigation */}
+                    <nav className="sticky top-0 z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between items-center h-16">
                         {/* Logo */}
@@ -57,7 +93,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
                         </Link>
 
                         {/* Desktop Navigation */}
-                        <div className="hidden md:flex items-center space-x-8">
+                        <div className="hidden md:flex items-center space-x-6">
                             {navLinks.map((link) => (
                                 <Link
                                     key={link.name}
@@ -67,6 +103,28 @@ export default function MainLayout({ children }: MainLayoutProps) {
                                     {link.name}
                                 </Link>
                             ))}
+
+                            {/* Language Switcher */}
+                            <div className="flex items-center space-x-1 bg-slate-100 dark:bg-slate-800 rounded-lg p-1">
+                                <button
+                                    onClick={() => handleLanguageChange('fr')}
+                                    className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${lang === 'fr'
+                                            ? 'bg-white dark:bg-slate-700 text-indigo-600 dark:text-indigo-400'
+                                            : 'text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200'
+                                        }`}
+                                >
+                                    FR
+                                </button>
+                                <button
+                                    onClick={() => handleLanguageChange('en')}
+                                    className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${lang === 'en'
+                                            ? 'bg-white dark:bg-slate-700 text-indigo-600 dark:text-indigo-400'
+                                            : 'text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200'
+                                        }`}
+                                >
+                                    EN
+                                </button>
+                            </div>
 
                             {/* Theme Switcher */}
                             <div className="flex items-center space-x-2 bg-slate-100 dark:bg-slate-800 rounded-lg p-1">
@@ -246,5 +304,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
                 </div>
             </footer>
         </div>
+            )}
+        </>
     );
 }
