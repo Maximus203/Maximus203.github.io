@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProjectSubmissionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -9,6 +10,10 @@ Route::get('/health', function () {
         'status' => 'ok',
         'timestamp' => now()->toIso8601String(),
     ]);
+});
+
+Route::middleware('throttle:60,1')->group(function () {
+    Route::post('/projects/submit', [ProjectSubmissionController::class, 'store']);
 });
 
 // API routes protégées (à implémenter en Phase 4)

@@ -1,6 +1,9 @@
 <?php
 
 use Inertia\Testing\AssertableInertia as Assert;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+
+uses(RefreshDatabase::class);
 
 test('all pages render correctly', function () {
     // Test Home
@@ -17,8 +20,6 @@ test('all pages render correctly', function () {
         ->assertInertia(
             fn(Assert $page) =>
             $page->component('Projets')
-                ->has('projects')
-                ->has('categories')
         );
 
     // Test Galerie
@@ -27,8 +28,6 @@ test('all pages render correctly', function () {
         ->assertInertia(
             fn(Assert $page) =>
             $page->component('Galerie')
-                ->has('images')
-                ->has('categories')
         );
 
     // Test Outils

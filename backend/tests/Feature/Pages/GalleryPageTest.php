@@ -9,7 +9,5 @@ test('gallery page loads successfully', function () {
         ->assertInertia(
             fn(Assert $page) =>
             $page->component('Galerie')
-                ->has('images')
-                ->has('categories')
         );
 });

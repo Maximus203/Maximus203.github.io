@@ -23,8 +23,8 @@ export interface ProjectSubmission {
 
 export interface Project {
     id: number;
-    title: string;
-    description: string;
+    title: string | { fr: string; en: string };
+    description: string | { fr: string; en: string };
     tags: string[];
     github?: string;
     demo_url?: string;
@@ -57,6 +57,16 @@ export interface Skill {
     name: string;
     category: string;
     level: number;
+}
+
+export interface GalleryItem {
+    id: string;
+    title: string;
+    category: string;
+    date: string;
+    imageUrl: string;
+    size?: 'normal' | 'large';
+    featured?: boolean;
 }
 
 export interface ResumeData {

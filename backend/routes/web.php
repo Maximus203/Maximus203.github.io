@@ -1,28 +1,19 @@
 <?php
 
+use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\OutilsController;
+use App\Http\Controllers\ProjectController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::get('/projets', function () {
-    return inertia('Projets', [
-        'projects' => [],
-        'categories' => [],
-    ]);
-})->name('projets');
+Route::get('/projets', [ProjectController::class, 'index'])->name('projets');
 
-Route::get('/galerie', function () {
-    return inertia('Galerie', [
-        'images' => [],
-        'categories' => [],
-    ]);
-})->name('galerie');
+Route::get('/galerie', [GalleryController::class, 'index'])->name('galerie');
 
 Route::prefix('outils')->name('outils.')->group(function () {
-    Route::get('/', function () {
-        return inertia('Outils/Index');
-    })->name('index');
+    Route::get('/', [OutilsController::class, 'index'])->name('index');
 
     Route::get('/readme-generator', function () {
         return inertia('Outils/ReadmeGenerator');
