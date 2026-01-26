@@ -1564,91 +1564,1047 @@ export default function ProjectRequestModal({ onClose }) {
 
 ---
 
-## 6. Gestion des données
+## 6. Gestion des données de `constants.tsx`
 
-### 6.1 Migration des données statiques
+Le fichier `constants.tsx` (33.4 KB) est le cœur des données du portfolio. Il contient **4 types de données distincts** qui nécessitent des stratégies de migration différentes.
 
-Les données actuellement dans `constants.tsx` seront migrées vers :
+### 6.1 Inventaire complet des données
 
-| Données | Source actuelle | Destination | Méthode |
-|---------|-----------------|-------------|---------|
-| **Labels UI** | `constants.tsx` | `/resources/js/i18n/*.ts` | Fichiers de traduction |
-| **Profil** | `constants.tsx` | `config/portfolio.php` | Configuration Laravel |
-| **Projets** | `constants.tsx` | Table `projects` | Seeder + Admin |
-| **Expériences** | `constants.tsx` | Table `experiences` | Seeder + Admin |
-| **Compétences** | `constants.tsx` | Table `skills` | Seeder + Admin |
-| **Éducation** | `constants.tsx` | Table `education` | Seeder + Admin |
-| **Galerie** | `constants.tsx` | Table `gallery_items` | Seeder + Admin |
-| **Certifications** | `constants.tsx` | `config/portfolio.php` | Configuration |
+#### Structure actuelle de `constants.tsx`
 
-### 6.2 Script de migration des données
-
-**scripts/migrate-constants.ts**
 ```typescript
-// Script Node.js pour convertir constants.tsx en seeders Laravel
-// À exécuter une fois pour générer les fichiers de seed
+// 1. UI_LABELS - Labels d'interface (4 langues × ~70 clés)
+export const UI_LABELS: Record<Language, Record<string, string>>
 
-import * as fs from 'fs';
-import { RESUME_DATA, LABELS } from '../constants';
+// 2. SHARED_GALLERY - 17 éléments de galerie
+const SHARED_GALLERY = [{ id, title, category, date, imageUrl, size, featured }]
 
-// Génération du seeder PHP
-const generateSeeder = () => {
-    const projects = RESUME_DATA.projects.map(p => ({
-        title: JSON.stringify(p.title),
-        description: JSON.stringify(p.description),
-        // ...
-    }));
+// 3. getSkills() - Compétences par catégorie (4 catégories × 3-4 skills)
+const getSkills = (lang) => [{ name, skills: [{ name, icon }] }]
 
-    // Écriture du fichier PHP
-    fs.writeFileSync(
-        'database/seeders/GeneratedPortfolioSeeder.php',
-        generatePHPSeeder(projects)
-    );
-};
+// 4. RESUME_DATA - Données CV complètes (4 langues)
+export const RESUME_DATA: Record<Language, ResumeData> = {
+    profile: { name, role, location, email, phone, linkedin, github, avatar, bioShort, bio },
+    experience: [{ company, role, period, description[] }],  // 4 expériences
+    education: [{ school, degree, period, description }],    // 3 formations
+    projects: [{ title, description, tags[], github?, image }], // 4 projets
+    skills: getSkills(lang),
+    gallery: SHARED_GALLERY
+}
 ```
 
-### 6.3 Configuration Portfolio
+### 6.2 Stratégie de migration par type de données
+
+| Type de données | Quantité | Destination Laravel | Justification |
+|-----------------|----------|---------------------|---------------|
+| **UI_LABELS** | ~280 clés (70×4 langues) | Fichiers i18n TypeScript | Statique, côté client uniquement |
+| **SHARED_GALLERY** | 17 items | Table `gallery_items` | Évolutif, administration possible |
+| **Skills** | 15 skills en 4 catégories | Table `skills` | Évolutif, administration possible |
+| **Profile** | 1 profil × 4 langues | `config/portfolio.php` | Rarement modifié, config serveur |
+| **Experience** | 4 expériences × 4 langues | Table `experiences` | Évolutif, administration possible |
+| **Education** | 3 formations × 4 langues | Table `education` | Évolutif, administration possible |
+| **Projects** | 4 projets × 4 langues | Table `projects` | Évolutif, administration possible |
+
+---
+
+### 6.3 Migration des UI_LABELS vers i18n TypeScript
+
+Les labels UI restent côté frontend car ils sont utilisés uniquement pour l'affichage.
+
+#### Structure des fichiers i18n
+
+```
+resources/js/i18n/
+├── index.ts          # Export centralisé + helper getTranslation()
+├── fr.ts             # Labels français
+├── en.ts             # Labels anglais
+├── zh.ts             # Labels chinois
+└── ja.ts             # Labels japonais
+```
+
+#### Fichier `resources/js/i18n/fr.ts`
+
+```typescript
+export default {
+    // Navigation
+    nav: {
+        home: 'Accueil',
+        gallery: 'Galerie',
+        tools: 'Outils',
+        about: 'À Propos',
+        experience: 'Expériences',
+        projects: 'Projets',
+        skills: 'Compétences',
+        education: 'Formation',
+    },
+
+    // Statut
+    status: {
+        available: 'Disponible pour nouveaux projets',
+        role: 'Développeur',
+        and: '&',
+        mentor: 'Formateur',
+    },
+
+    // Actions
+    actions: {
+        download: 'Télécharger',
+        resume: 'CV',
+        launch: 'Lancer',
+        send: 'Envoyer la demande',
+        cancel: 'Annuler',
+    },
+
+    // Sections
+    sections: {
+        selectedProjects: 'Projets sélectionnés',
+        technicalSkills: 'Compétences techniques',
+        workExperience: 'Expériences professionnelles',
+        educationTitle: 'Formation académique',
+        allProjects: 'Tous les projets',
+    },
+
+    // Galerie
+    gallery: {
+        title: 'Moments & événements',
+        subtitle: 'Conférences, hackathons et vie communautaire.',
+    },
+
+    // Outils
+    tools: {
+        title: 'Boîte à outils',
+        subtitle: 'Des utilitaires pratiques pour développeurs et créateurs.',
+        readme: {
+            name: 'Générateur readme',
+            desc: 'Créez le profil GitHub parfait avec des badges et stats dynamiques.',
+        },
+        meme: {
+            name: 'Générateur de meme',
+            desc: 'Créez du contenu viral rapidement pour vos réseaux sociaux.',
+        },
+        converter: {
+            name: "Convertisseur d'images",
+            desc: 'Optimisez vos assets : convertissez 1 image ou un lot de 10 simultanément.',
+        },
+    },
+
+    // Recherche
+    search: {
+        placeholder: 'Rechercher un projet...',
+    },
+
+    // Formulaire projet
+    form: {
+        startProject: 'Démarrer un projet',
+        submitTitle: 'Parlons de votre projet',
+        submitDesc: 'Remplissez le formulaire ci-dessous et je vous répondrai rapidement.',
+        firstName: 'Prénom',
+        lastName: 'Nom',
+        email: 'Email',
+        projectDetails: 'Détails du projet',
+        attachFile: 'Joindre un fichier',
+        filePlaceholder: 'Glissez un fichier ou cliquez',
+        successMessage: 'Votre demande a été envoyée avec succès !',
+    },
+
+    // Meme generator
+    meme: {
+        topText: 'Texte du Haut',
+        bottomText: 'Texte du Bas',
+        upload: 'Importer une image',
+        download: 'Télécharger le Meme',
+        fontSize: 'Taille du texte',
+        textColor: 'Couleur du texte',
+        strokeColor: 'Couleur du contour',
+        dragDrop: 'Glissez une image ici',
+    },
+
+    // Footer
+    footer: {
+        quote: 'Développeur Full-stack créant des expériences web modernes.',
+        sections: 'Sections',
+        pages: 'Pages & outils',
+        connect: 'Me suivre',
+        builtWith: 'Construit avec',
+        hostedOn: 'Hébergé sur',
+        rights: 'Tous droits réservés.',
+    },
+
+    // SEO
+    seo: {
+        homeTitle: 'Cherif Diouf | Ingénieur Full-Stack & Formateur',
+        homeDesc: 'Portfolio de Cherif Diouf. Expert Laravel, React & DevOps. Découvrez mes projets, compétences et parcours.',
+        galleryTitle: 'Galerie & Événements | Cherif Diouf',
+        galleryDesc: 'Retour en images sur les conférences, hackathons et événements tech au Sénégal.',
+        toolsTitle: 'Boîte à Outils Développeur | Cherif Diouf',
+        toolsDesc: "Collection d'outils gratuits pour développeurs : Readme Generator, Convertisseur d'Images, Créateur de Memes.",
+    },
+} as const;
+
+export type TranslationKeys = typeof import('./fr').default;
+```
+
+#### Fichier `resources/js/i18n/index.ts`
+
+```typescript
+import fr from './fr';
+import en from './en';
+import zh from './zh';
+import ja from './ja';
+
+export type Language = 'fr' | 'en' | 'zh' | 'ja';
+export type Translations = typeof fr;
+
+const translations: Record<Language, Translations> = { fr, en, zh, ja };
+
+export function getTranslation(lang: Language): Translations {
+    return translations[lang] ?? translations.fr;
+}
+
+export function t(lang: Language, path: string): string {
+    const keys = path.split('.');
+    let result: any = translations[lang] ?? translations.fr;
+
+    for (const key of keys) {
+        result = result?.[key];
+        if (result === undefined) return path;
+    }
+
+    return typeof result === 'string' ? result : path;
+}
+
+export { fr, en, zh, ja };
+```
+
+---
+
+### 6.4 Migration du Profile vers config/portfolio.php
+
+Le profil est rarement modifié et peut rester en configuration.
 
 **config/portfolio.php**
+
 ```php
 <?php
 
 return [
+    /*
+    |--------------------------------------------------------------------------
+    | Profil Personnel (Multilingue)
+    |--------------------------------------------------------------------------
+    */
     'profile' => [
-        'name' => 'Cherif Diouf',
-        'title' => [
-            'fr' => 'Développeur Full Stack',
-            'en' => 'Full Stack Developer',
-            'zh' => '全栈开发人员',
-            'ja' => 'フルスタック開発者',
+        'name' => 'El Hadji Ahmadou CHERIF DIOUF',
+        'role' => [
+            'fr' => 'Ingénieur Full-Stack & Formateur',
+            'en' => 'Full-Stack Engineer & Trainer',
+            'zh' => '全栈工程师 & 讲师',
+            'ja' => 'フルスタックエンジニア & 講師',
         ],
-        'email' => 'contact@cherif-diouf.com',
-        'phone' => '+221 XX XXX XX XX',
-        'location' => 'Dakar, Sénégal',
-        'avatar' => '/assets/logo.webp',
+        'location' => [
+            'fr' => 'Dakar, Keur Massar (Ouvert au Remote)',
+            'en' => 'Dakar, Keur Massar (Remote Open)',
+            'zh' => '达喀尔, Keur Massar (可远程)',
+            'ja' => 'ダカール, Keur Massar (リモート可)',
+        ],
+        'email' => 'el.hadji.ahmadou.cherif.diouf@gmail.com',
+        'phone' => '+221 77 316 27 27',
+        'linkedin' => 'linkedin.com/in/cherif-diouf-59747b17b',
+        'github' => 'github.com/Maximus203',
+        'avatar' => '/assets/photo-2.webp',
+        'bioShort' => [
+            'fr' => 'Formateur-doctorant & Ingénieur Full-Stack (Laravel, React). Je transforme mon vécu en entreprise en projets pédagogiques concrets.',
+            'en' => 'Doctoral Trainer & Full-Stack Engineer (Laravel, React). I transform my enterprise experience into concrete pedagogical projects.',
+            'zh' => '博士讲师 & 全栈工程师 (Laravel, React). 我将企业经验转化为具体的教学项目。',
+            'ja' => '博士課程講師 & フルスタックエンジニア (Laravel, React). 企業での経験を具体的な教育プロジェクトに変えます。',
+        ],
         'bio' => [
-            'fr' => 'Développeur passionné...',
-            'en' => 'Passionate developer...',
-            // ...
-        ],
-        'social' => [
-            'github' => 'https://github.com/Maximus203',
-            'linkedin' => 'https://linkedin.com/in/cherif-diouf',
-            // ...
-        ],
-        'cv' => [
-            'fr' => '/cv/cv-cherif-diouf-fr.pdf',
-            'en' => '/cv/cv-cherif-diouf-en.pdf',
+            'fr' => 'Passionné par le développement web et la transmission de savoir, je combine une expertise technique solide (Laravel, React, DevOps) avec une pédagogie éprouvée. Mon approche se base sur des projets réels, la qualité du code et l\'autonomie.',
+            'en' => 'Passionate about web development and knowledge sharing, I combine solid technical expertise (Laravel, React, DevOps) with proven pedagogy. My approach is based on real-world projects, code quality, and autonomy.',
+            'zh' => '热衷于Web开发和知识分享，我将扎实的技术专长 (Laravel, React, DevOps) 与成熟的教学方法相结合。我的方法基于真实项目、代码质量和自主性。',
+            'ja' => 'Web開発と知識共有に情熱を注いでおり、確かな技術力 (Laravel, React, DevOps) と実績のある教育法を組み合わせています。私の手法は、実際のプロジェクト、コード品質、自律性に基づいています。',
         ],
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Méta SEO par défaut
+    |--------------------------------------------------------------------------
+    */
     'meta' => [
         'title' => 'Cherif Diouf - Portfolio',
-        'description' => 'Portfolio de Cherif Diouf, développeur Full Stack',
+        'description' => 'Portfolio de Cherif Diouf, Ingénieur Full-Stack & Formateur',
     ],
 
-    'contact_email' => env('CONTACT_EMAIL', 'contact@cherif-diouf.com'),
+    /*
+    |--------------------------------------------------------------------------
+    | Contact
+    |--------------------------------------------------------------------------
+    */
+    'contact_email' => env('CONTACT_EMAIL', 'el.hadji.ahmadou.cherif.diouf@gmail.com'),
 ];
+```
+
+---
+
+### 6.5 Migrations Base de Données
+
+#### Migration complète des tables
+
+**database/migrations/2024_01_01_create_portfolio_tables.php**
+
+```php
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        // =========================================
+        // TABLE: experiences
+        // =========================================
+        Schema::create('experiences', function (Blueprint $table) {
+            $table->id();
+            $table->json('company');        // {"fr": "ESCOA", "en": "ESCOA", ...}
+            $table->json('role');           // {"fr": "Formateur", "en": "Trainer", ...}
+            $table->json('period');         // {"fr": "2025 - Présent", ...}
+            $table->json('description');    // {"fr": ["point 1", "point 2"], ...}
+            $table->integer('order')->default(0);
+            $table->timestamps();
+        });
+
+        // =========================================
+        // TABLE: education
+        // =========================================
+        Schema::create('education', function (Blueprint $table) {
+            $table->id();
+            $table->json('school');         // {"fr": "UN-CHK", ...}
+            $table->json('degree');         // {"fr": "Doctorat en Sciences...", ...}
+            $table->json('period');         // {"fr": "2025 - En cours", ...}
+            $table->json('description')->nullable();
+            $table->integer('order')->default(0);
+            $table->timestamps();
+        });
+
+        // =========================================
+        // TABLE: projects
+        // =========================================
+        Schema::create('projects', function (Blueprint $table) {
+            $table->id();
+            $table->json('title');          // {"fr": "Image Converter", ...}
+            $table->json('description');    // {"fr": "Service Open Source...", ...}
+            $table->json('tags');           // ["OpenSource", "WebP", "Performance"]
+            $table->string('github')->nullable();
+            $table->string('image')->nullable();
+            $table->boolean('featured')->default(false);
+            $table->integer('order')->default(0);
+            $table->timestamps();
+        });
+
+        // =========================================
+        // TABLE: skills (catégories + compétences)
+        // =========================================
+        Schema::create('skill_categories', function (Blueprint $table) {
+            $table->id();
+            $table->json('name');           // {"fr": "Frontend", "zh": "前端", ...}
+            $table->integer('order')->default(0);
+            $table->timestamps();
+        });
+
+        Schema::create('skills', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('skill_category_id')->constrained()->cascadeOnDelete();
+            $table->string('name');         // "React", "Laravel", etc.
+            $table->string('icon');         // URL skillicons.dev
+            $table->integer('order')->default(0);
+            $table->timestamps();
+        });
+
+        // =========================================
+        // TABLE: gallery_items
+        // =========================================
+        Schema::create('gallery_items', function (Blueprint $table) {
+            $table->id();
+            $table->string('title');
+            $table->string('category');     // "Conference", "Hackathon", "Training"
+            $table->string('date');         // "Dec 2023"
+            $table->string('image_url');
+            $table->enum('size', ['normal', 'large'])->default('normal');
+            $table->boolean('featured')->default(true);
+            $table->integer('order')->default(0);
+            $table->timestamps();
+        });
+
+        // =========================================
+        // TABLE: contact_requests
+        // =========================================
+        Schema::create('contact_requests', function (Blueprint $table) {
+            $table->id();
+            $table->string('first_name');
+            $table->string('last_name');
+            $table->string('email');
+            $table->text('project_details');
+            $table->string('attachment_path')->nullable();
+            $table->enum('status', ['new', 'read', 'replied', 'archived'])->default('new');
+            $table->timestamps();
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists('contact_requests');
+        Schema::dropIfExists('gallery_items');
+        Schema::dropIfExists('skills');
+        Schema::dropIfExists('skill_categories');
+        Schema::dropIfExists('projects');
+        Schema::dropIfExists('education');
+        Schema::dropIfExists('experiences');
+    }
+};
+```
+
+---
+
+### 6.6 Seeder complet avec données de constants.tsx
+
+**database/seeders/PortfolioSeeder.php**
+
+```php
+<?php
+
+namespace Database\Seeders;
+
+use App\Models\Experience;
+use App\Models\Education;
+use App\Models\Project;
+use App\Models\SkillCategory;
+use App\Models\Skill;
+use App\Models\GalleryItem;
+use Illuminate\Database\Seeder;
+
+class PortfolioSeeder extends Seeder
+{
+    public function run(): void
+    {
+        $this->seedExperiences();
+        $this->seedEducation();
+        $this->seedProjects();
+        $this->seedSkills();
+        $this->seedGallery();
+    }
+
+    private function seedExperiences(): void
+    {
+        $experiences = [
+            [
+                'company' => ['fr' => 'ESCOA', 'en' => 'ESCOA', 'zh' => 'ESCOA', 'ja' => 'ESCOA'],
+                'role' => ['fr' => 'Formateur', 'en' => 'Trainer', 'zh' => '讲师', 'ja' => '講師'],
+                'period' => ['fr' => '2025 - Présent', 'en' => '2025 - Present', 'zh' => '2025 - 至今', 'ja' => '2025 - 現在'],
+                'description' => [
+                    'fr' => [
+                        'Développement web dynamique : PHP/MySQL et JavaScript (DOM).',
+                        'Java : Syntaxe de base, POO.',
+                        'Pédagogie : Progression du fondamental vers le CRUD complet, sensibilisation sécurité.',
+                    ],
+                    'en' => [
+                        'Dynamic web development: PHP/MySQL and JavaScript (DOM).',
+                        'Java: Basic syntax, OOP.',
+                        'Pedagogy: Progression from fundamentals to full CRUD, security awareness.',
+                    ],
+                    'zh' => [
+                        '动态Web开发: PHP/MySQL 和 JavaScript (DOM).',
+                        'Java: 基础语法, 面向对象编程.',
+                        '教学: 从基础到完整CRUD的进阶, 安全意识.',
+                    ],
+                    'ja' => [
+                        '動的Web開発: PHP/MySQL および JavaScript (DOM).',
+                        'Java: 基本構文, オブジェクト指向プログラミング.',
+                        '教育法: 基礎から完全なCRUDへの進歩, セキュリティ意識.',
+                    ],
+                ],
+                'order' => 1,
+            ],
+            [
+                'company' => ['fr' => 'FIDECA', 'en' => 'FIDECA', 'zh' => 'FIDECA', 'ja' => 'FIDECA'],
+                'role' => [
+                    'fr' => 'Ingénieur Full-Stack & Resp. Informatique',
+                    'en' => 'Full-Stack Engineer & IT Manager',
+                    'zh' => '全栈工程师 & IT经理',
+                    'ja' => 'フルスタックエンジニア & ITマネージャー',
+                ],
+                'period' => ['fr' => '2024 - 2025 (1 an)', 'en' => '2024 - 2025 (1 year)', 'zh' => '2024 - 2025 (1年)', 'ja' => '2024 - 2025 (1年)'],
+                'description' => [
+                    'fr' => [
+                        'Conception logiciel génération états financiers (FastAPI, React, Tauri). Gain de temps: 6h -> 35min.',
+                        'Pilotage du SI : Réseau, sauvegardes, gestion des accès.',
+                        'Règles métier & contrôles automatisés pour la consolidation.',
+                    ],
+                    'en' => [
+                        'Financial statement generation software (FastAPI, React, Tauri). Time saved: 6h -> 35min.',
+                        'IT Management: Network, backups, access management.',
+                        'Business rules & automated controls for consolidation.',
+                    ],
+                    'zh' => [
+                        '财务报表生成软件设计 (FastAPI, React, Tauri). 耗时减少: 6小时 -> 35分钟.',
+                        'IT管理: 网络, 备份, 访问管理.',
+                        '合并的业务规则和自动化控制.',
+                    ],
+                    'ja' => [
+                        '財務諸表作成ソフトウェア設計 (FastAPI, React, Tauri). 時間短縮: 6時間 -> 35分.',
+                        'IT管理: ネットワーク, バックアップ, アクセス管理.',
+                        '連結のためのビジネスルールと自動制御.',
+                    ],
+                ],
+                'order' => 2,
+            ],
+            [
+                'company' => ['fr' => 'ESTM', 'en' => 'ESTM', 'zh' => 'ESTM', 'ja' => 'ESTM'],
+                'role' => ['fr' => 'Formateur', 'en' => 'Trainer', 'zh' => '讲师', 'ja' => '講師'],
+                'period' => ['fr' => '2024 - 2025', 'en' => '2024 - 2025', 'zh' => '2024 - 2025', 'ja' => '2024 - 2025'],
+                'description' => [
+                    'fr' => [
+                        'Web statique (HTML5, CSS3, Flexbox/Grid) & dynamique (PHP, MySQL, MVC).',
+                        'Encadrement projets fil rouge, code reviews, évaluation continue.',
+                    ],
+                    'en' => [
+                        'Static (HTML5, CSS3) & Dynamic Web (PHP, MySQL, MVC).',
+                        'Capstone project supervision, code reviews, continuous assessment.',
+                    ],
+                    'zh' => [
+                        '静态 (HTML5, CSS3, Flexbox/Grid) & 动态 Web (PHP, MySQL, MVC).',
+                        '毕业设计指导, 代码审查, 持续评估.',
+                    ],
+                    'ja' => [
+                        '静的 (HTML5, CSS3, Flexbox/Grid) & 動的 Web (PHP, MySQL, MVC).',
+                        '卒業制作指導, コードレビュー, 継続的な評価.',
+                    ],
+                ],
+                'order' => 3,
+            ],
+            [
+                'company' => ['fr' => 'Orange - Sonatel', 'en' => 'Orange - Sonatel', 'zh' => 'Orange - Sonatel', 'ja' => 'Orange - Sonatel'],
+                'role' => [
+                    'fr' => 'Assistant Support Performance & Projet',
+                    'en' => 'Performance Support & Project Assistant',
+                    'zh' => '性能支持 & 项目助理',
+                    'ja' => 'パフォーマンスサポート & プロジェクトアシスタント',
+                ],
+                'period' => ['fr' => '2021 - 2024', 'en' => '2021 - 2024', 'zh' => '2021 - 2024', 'ja' => '2021 - 2024'],
+                'description' => [
+                    'fr' => [
+                        'Suivi des KPI performance, reporting et coordination des mises en production.',
+                        'Sécurisation des opérations : check-lists, contrôles, conformité.',
+                    ],
+                    'en' => [
+                        'KPI monitoring, reporting, and coordination of production releases.',
+                        'Operations security: checklists, periodic controls, compliance.',
+                    ],
+                    'zh' => [
+                        'KPI性能监控, 报告和生产发布协调.',
+                        '运营安全: 检查清单, 定期控制, 合规性.',
+                    ],
+                    'ja' => [
+                        'KPIパフォーマンス監視, レポート作成および本番リリースの調整.',
+                        '運用セキュリティ: チェックリスト, 定期的な管理, コンプライアンス.',
+                    ],
+                ],
+                'order' => 4,
+            ],
+        ];
+
+        foreach ($experiences as $exp) {
+            Experience::create($exp);
+        }
+    }
+
+    private function seedEducation(): void
+    {
+        $education = [
+            [
+                'school' => ['fr' => 'UN-CHK', 'en' => 'UN-CHK', 'zh' => 'UN-CHK', 'ja' => 'UN-CHK'],
+                'degree' => [
+                    'fr' => 'Doctorat en Sciences Techniques et Numériques',
+                    'en' => 'PhD in Technical and Digital Sciences',
+                    'zh' => '技术与数字科学博士',
+                    'ja' => '技術・デジタル科学博士',
+                ],
+                'period' => ['fr' => '2025 - En cours', 'en' => '2025 - Current', 'zh' => '2025 - 在读', 'ja' => '2025 - 在学中'],
+                'description' => null,
+                'order' => 1,
+            ],
+            [
+                'school' => ['fr' => 'ESTM', 'en' => 'ESTM', 'zh' => 'ESTM', 'ja' => 'ESTM'],
+                'degree' => [
+                    'fr' => 'Master Génie Logiciel et Admin Réseaux',
+                    'en' => 'Master in Software Engineering',
+                    'zh' => '软件工程与网络管理硕士',
+                    'ja' => 'ソフトウェア工学およびネットワーク管理修士',
+                ],
+                'period' => ['fr' => '2022 - 2024', 'en' => '2022 - 2024', 'zh' => '2022 - 2024', 'ja' => '2022 - 2024'],
+                'description' => [
+                    'fr' => 'Mention Très bien avec les félicitations du jury.',
+                    'en' => 'Highest honors with jury congratulations.',
+                    'zh' => '优秀毕业生 (评审团祝贺).',
+                    'ja' => '最優秀成績 (審査員賞賛).',
+                ],
+                'order' => 2,
+            ],
+            [
+                'school' => ['fr' => 'ESTM', 'en' => 'ESTM', 'zh' => 'ESTM', 'ja' => 'ESTM'],
+                'degree' => [
+                    'fr' => 'Licence Réseaux Télécoms',
+                    'en' => 'Bachelor in Telecom Networks',
+                    'zh' => '电信网络学士',
+                    'ja' => '通信ネットワーク学士',
+                ],
+                'period' => ['fr' => '2017 - 2021', 'en' => '2017 - 2021', 'zh' => '2017 - 2021', 'ja' => '2017 - 2021'],
+                'description' => [
+                    'fr' => 'Mention Très bien.',
+                    'en' => 'Highest honors.',
+                    'zh' => '优秀毕业生.',
+                    'ja' => '最優秀成績.',
+                ],
+                'order' => 3,
+            ],
+        ];
+
+        foreach ($education as $edu) {
+            Education::create($edu);
+        }
+    }
+
+    private function seedProjects(): void
+    {
+        $projects = [
+            [
+                'title' => [
+                    'fr' => 'Image Converter',
+                    'en' => 'Image Converter',
+                    'zh' => 'Image Converter',
+                    'ja' => 'Image Converter',
+                ],
+                'description' => [
+                    'fr' => "Service Open Source de conversion d'images en WebP. Optimisation SEO et éco-conception.",
+                    'en' => 'Open Source service for WebP image conversion. SEO optimization and eco-design.',
+                    'zh' => 'WebP图像转换开源服务. SEO优化和生态设计.',
+                    'ja' => 'WebP画像変換オープンソースサービス. SEO最適化とエコデザイン.',
+                ],
+                'tags' => ['OpenSource', 'WebP', 'Performance'],
+                'github' => 'https://github.com/Maximus203/image-converter',
+                'image' => '/assets/projets/image-converter.gif',
+                'featured' => true,
+                'order' => 1,
+            ],
+            [
+                'title' => [
+                    'fr' => 'MyEvent',
+                    'en' => 'MyEvent',
+                    'zh' => 'MyEvent',
+                    'ja' => 'MyEvent',
+                ],
+                'description' => [
+                    'fr' => "Application complète de création et gestion d'événements.",
+                    'en' => 'Complete application for event creation and management.',
+                    'zh' => '完整的活动创建和管理应用程序.',
+                    'ja' => 'イベント作成および管理のための完全なアプリケーション.',
+                ],
+                'tags' => ['Laravel', 'React', 'Management'],
+                'github' => 'https://github.com/Maximus203/my-event-app',
+                'image' => '/assets/projets/my-event-demo.gif',
+                'featured' => true,
+                'order' => 2,
+            ],
+            [
+                'title' => [
+                    'fr' => 'Archive ESTM',
+                    'en' => 'Archive ESTM',
+                    'zh' => 'Archive ESTM',
+                    'ja' => 'Archive ESTM',
+                ],
+                'description' => [
+                    'fr' => "Plateforme d'archivage des mémoires avec ancrage Blockchain Ethereum pour l'intégrité.",
+                    'en' => 'Thesis archiving platform with Ethereum Blockchain anchoring for integrity.',
+                    'zh' => '基于以太坊区块链锚定的论文归档平台，确保完整性.',
+                    'ja' => '完全性を確保するためのイーサリアムブロックチェーンアンカー付き論文アーカイブプラットフォーム.',
+                ],
+                'tags' => ['Blockchain', 'Ethereum', 'Archivage'],
+                'github' => null,
+                'image' => '/assets/projets/Archive-ESTM.webp',
+                'featured' => true,
+                'order' => 3,
+            ],
+            [
+                'title' => [
+                    'fr' => 'Cynoia Spaces',
+                    'en' => 'Cynoia Spaces',
+                    'zh' => 'Cynoia Spaces',
+                    'ja' => 'Cynoia Spaces',
+                ],
+                'description' => [
+                    'fr' => "SaaS de gestion d'espaces collaboratifs. Architecture microservices (Spring Boot, Gateway).",
+                    'en' => 'Collaborative space management SaaS. Microservices architecture.',
+                    'zh' => '协作空间管理SaaS. 微服务架构 (Spring Boot, Gateway).',
+                    'ja' => 'コラボレーションスペース管理SaaS. マイクロサービスアーキテクチャ (Spring Boot, Gateway).',
+                ],
+                'tags' => ['Spring Boot', 'Microservices', 'SaaS'],
+                'github' => null,
+                'image' => '/assets/projets/sap-demo.gif',
+                'featured' => true,
+                'order' => 4,
+            ],
+        ];
+
+        foreach ($projects as $project) {
+            Project::create($project);
+        }
+    }
+
+    private function seedSkills(): void
+    {
+        $categories = [
+            [
+                'name' => ['fr' => 'Frontend', 'en' => 'Frontend', 'zh' => '前端', 'ja' => 'Frontend'],
+                'skills' => [
+                    ['name' => 'React', 'icon' => 'https://skillicons.dev/icons?i=react'],
+                    ['name' => 'TypeScript', 'icon' => 'https://skillicons.dev/icons?i=ts'],
+                    ['name' => 'TailwindCSS', 'icon' => 'https://skillicons.dev/icons?i=tailwind'],
+                    ['name' => 'Bootstrap', 'icon' => 'https://skillicons.dev/icons?i=bootstrap'],
+                ],
+            ],
+            [
+                'name' => ['fr' => 'Backend', 'en' => 'Backend', 'zh' => '后端', 'ja' => 'Backend'],
+                'skills' => [
+                    ['name' => 'Laravel', 'icon' => 'https://skillicons.dev/icons?i=laravel'],
+                    ['name' => 'Symfony', 'icon' => 'https://skillicons.dev/icons?i=symfony'],
+                    ['name' => 'PHP', 'icon' => 'https://skillicons.dev/icons?i=php'],
+                    ['name' => 'Node.js', 'icon' => 'https://skillicons.dev/icons?i=nodejs'],
+                ],
+            ],
+            [
+                'name' => ['fr' => 'DevOps & Tools', 'en' => 'DevOps & Tools', 'zh' => 'DevOps & 工具', 'ja' => 'DevOps & ツール'],
+                'skills' => [
+                    ['name' => 'Docker', 'icon' => 'https://skillicons.dev/icons?i=docker'],
+                    ['name' => 'Git/GitHub', 'icon' => 'https://skillicons.dev/icons?i=git'],
+                    ['name' => 'CI/CD', 'icon' => 'https://skillicons.dev/icons?i=githubactions'],
+                    ['name' => 'Linux', 'icon' => 'https://skillicons.dev/icons?i=linux'],
+                ],
+            ],
+            [
+                'name' => ['fr' => 'Data', 'en' => 'Data', 'zh' => '数据', 'ja' => 'データ'],
+                'skills' => [
+                    ['name' => 'MySQL', 'icon' => 'https://skillicons.dev/icons?i=mysql'],
+                    ['name' => 'PostgreSQL', 'icon' => 'https://skillicons.dev/icons?i=postgres'],
+                    ['name' => 'MongoDB', 'icon' => 'https://skillicons.dev/icons?i=mongodb'],
+                ],
+            ],
+        ];
+
+        foreach ($categories as $index => $categoryData) {
+            $category = SkillCategory::create([
+                'name' => $categoryData['name'],
+                'order' => $index + 1,
+            ]);
+
+            foreach ($categoryData['skills'] as $skillIndex => $skillData) {
+                Skill::create([
+                    'skill_category_id' => $category->id,
+                    'name' => $skillData['name'],
+                    'icon' => $skillData['icon'],
+                    'order' => $skillIndex + 1,
+                ]);
+            }
+        }
+    }
+
+    private function seedGallery(): void
+    {
+        $galleryItems = [
+            ['title' => 'DevFest Dakar 2023', 'category' => 'Conference', 'date' => 'Dec 2023', 'image_url' => '/assets/galerie/devfest-1.jpg', 'size' => 'large'],
+            ['title' => 'DevFest Dakar - Conférence', 'category' => 'Conference', 'date' => 'Dec 2023', 'image_url' => '/assets/galerie/devfest-2.jpg', 'size' => 'normal'],
+            ['title' => 'DevFest Dakar - Networking', 'category' => 'Conference', 'date' => 'Dec 2023', 'image_url' => '/assets/galerie/devfest-3.jpg', 'size' => 'normal'],
+            ['title' => 'DevFest Dakar - Workshop', 'category' => 'Conference', 'date' => 'Dec 2023', 'image_url' => '/assets/galerie/devfest-4.jpg', 'size' => 'large'],
+            ['title' => 'DevFest Dakar - Community', 'category' => 'Conference', 'date' => 'Dec 2023', 'image_url' => '/assets/galerie/devfest-5.jpg', 'size' => 'normal'],
+            ['title' => 'Journée Laravel Senegal', 'category' => 'Community', 'date' => 'Nov 2023', 'image_url' => '/assets/galerie/laravel-senegal-1.jpg', 'size' => 'large'],
+            ['title' => 'Laravel Senegal - Présentation', 'category' => 'Community', 'date' => 'Nov 2023', 'image_url' => '/assets/galerie/laravel-senegal-2.jpg', 'size' => 'normal'],
+            ['title' => 'Laravel Senegal - Atelier', 'category' => 'Community', 'date' => 'Nov 2023', 'image_url' => '/assets/galerie/laravel-senegal-3.jpg', 'size' => 'normal'],
+            ['title' => 'Laravel Senegal - Networking', 'category' => 'Community', 'date' => 'Nov 2023', 'image_url' => '/assets/galerie/laravel-senegal-4.jpg', 'size' => 'normal'],
+            ['title' => 'Laravel Senegal - Team', 'category' => 'Community', 'date' => 'Nov 2023', 'image_url' => '/assets/galerie/laravel-senegal-5.jpg', 'size' => 'large'],
+            ['title' => 'Hacktoberfest Galsen Dev', 'category' => 'Hackathon', 'date' => 'Oct 2023', 'image_url' => '/assets/galerie/hacktoberfest-1.jpg', 'size' => 'large'],
+            ['title' => 'Hacktoberfest - Coding Session', 'category' => 'Hackathon', 'date' => 'Oct 2023', 'image_url' => '/assets/galerie/hacktoberfest-2.jpg', 'size' => 'normal'],
+            ['title' => 'Hacktoberfest - Collaboration', 'category' => 'Hackathon', 'date' => 'Oct 2023', 'image_url' => '/assets/galerie/hacktoberfest-3.jpg', 'size' => 'normal'],
+            ['title' => 'Hacktoberfest - Open Source', 'category' => 'Hackathon', 'date' => 'Oct 2023', 'image_url' => '/assets/galerie/hacktoberfest-4.jpg', 'size' => 'normal'],
+            ['title' => 'Workshop ESTM', 'category' => 'Training', 'date' => 'Sep 2023', 'image_url' => '/assets/galerie/estm-workshop-1.jpg', 'size' => 'large'],
+            ['title' => 'Formation ESTM', 'category' => 'Training', 'date' => 'Sep 2023', 'image_url' => '/assets/galerie/estm-workshop-2.jpg', 'size' => 'normal'],
+            ['title' => 'Edacy Formation', 'category' => 'Training', 'date' => 'Aug 2023', 'image_url' => '/assets/galerie/edacy-2.jpg', 'size' => 'normal'],
+        ];
+
+        foreach ($galleryItems as $index => $item) {
+            GalleryItem::create([
+                ...$item,
+                'featured' => true,
+                'order' => $index + 1,
+            ]);
+        }
+    }
+}
+```
+
+---
+
+### 6.7 Modèles Eloquent avec accesseurs multilingues
+
+**app/Models/Experience.php**
+
+```php
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+
+class Experience extends Model
+{
+    protected $fillable = ['company', 'role', 'period', 'description', 'order'];
+
+    protected $casts = [
+        'company' => 'array',
+        'role' => 'array',
+        'period' => 'array',
+        'description' => 'array',
+    ];
+
+    /**
+     * Récupère les données localisées selon la langue courante
+     */
+    public function localized(string $locale = null): array
+    {
+        $locale = $locale ?? app()->getLocale();
+        $fallback = 'fr';
+
+        return [
+            'id' => $this->id,
+            'company' => $this->company[$locale] ?? $this->company[$fallback],
+            'role' => $this->role[$locale] ?? $this->role[$fallback],
+            'period' => $this->period[$locale] ?? $this->period[$fallback],
+            'description' => $this->description[$locale] ?? $this->description[$fallback],
+        ];
+    }
+
+    public function scopeOrdered($query)
+    {
+        return $query->orderBy('order');
+    }
+}
+```
+
+**app/Models/Project.php**
+
+```php
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Project extends Model
+{
+    protected $fillable = ['title', 'description', 'tags', 'github', 'image', 'featured', 'order'];
+
+    protected $casts = [
+        'title' => 'array',
+        'description' => 'array',
+        'tags' => 'array',
+        'featured' => 'boolean',
+    ];
+
+    public function localized(string $locale = null): array
+    {
+        $locale = $locale ?? app()->getLocale();
+        $fallback = 'fr';
+
+        return [
+            'id' => $this->id,
+            'title' => $this->title[$locale] ?? $this->title[$fallback],
+            'description' => $this->description[$locale] ?? $this->description[$fallback],
+            'tags' => $this->tags,
+            'github' => $this->github,
+            'image' => $this->image,
+        ];
+    }
+
+    public function scopeOrdered($query)
+    {
+        return $query->orderBy('order');
+    }
+
+    public function scopeFeatured($query)
+    {
+        return $query->where('featured', true);
+    }
+}
+```
+
+---
+
+### 6.8 Service de récupération des données
+
+**app/Services/PortfolioDataService.php**
+
+```php
+<?php
+
+namespace App\Services;
+
+use App\Models\Experience;
+use App\Models\Education;
+use App\Models\Project;
+use App\Models\SkillCategory;
+use App\Models\GalleryItem;
+use Illuminate\Support\Collection;
+
+class PortfolioDataService
+{
+    public function __construct(
+        private ?string $locale = null
+    ) {
+        $this->locale = $locale ?? app()->getLocale();
+    }
+
+    public function getProfile(): array
+    {
+        $config = config('portfolio.profile');
+        $locale = $this->locale;
+        $fallback = 'fr';
+
+        return [
+            'name' => $config['name'],
+            'role' => $config['role'][$locale] ?? $config['role'][$fallback],
+            'location' => $config['location'][$locale] ?? $config['location'][$fallback],
+            'email' => $config['email'],
+            'phone' => $config['phone'],
+            'linkedin' => $config['linkedin'],
+            'github' => $config['github'],
+            'avatar' => $config['avatar'],
+            'bioShort' => $config['bioShort'][$locale] ?? $config['bioShort'][$fallback],
+            'bio' => $config['bio'][$locale] ?? $config['bio'][$fallback],
+        ];
+    }
+
+    public function getExperiences(): Collection
+    {
+        return Experience::ordered()->get()->map(
+            fn ($exp) => $exp->localized($this->locale)
+        );
+    }
+
+    public function getEducation(): Collection
+    {
+        return Education::ordered()->get()->map(
+            fn ($edu) => $edu->localized($this->locale)
+        );
+    }
+
+    public function getProjects(): Collection
+    {
+        return Project::ordered()->get()->map(
+            fn ($project) => $project->localized($this->locale)
+        );
+    }
+
+    public function getSkills(): Collection
+    {
+        $locale = $this->locale;
+        $fallback = 'fr';
+
+        return SkillCategory::with('skills')->ordered()->get()->map(function ($category) use ($locale, $fallback) {
+            return [
+                'name' => $category->name[$locale] ?? $category->name[$fallback],
+                'skills' => $category->skills->map(fn ($skill) => [
+                    'name' => $skill->name,
+                    'icon' => $skill->icon,
+                ]),
+            ];
+        });
+    }
+
+    public function getGalleryItems(): Collection
+    {
+        return GalleryItem::ordered()->get();
+    }
+
+    public function getFeaturedGalleryItems(): Collection
+    {
+        return GalleryItem::where('featured', true)->ordered()->get();
+    }
+}
+```
+
+---
+
+### 6.9 Utilisation dans les Controllers
+
+**app/Http/Controllers/HomeController.php**
+
+```php
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Services\PortfolioDataService;
+use Inertia\Inertia;
+use Inertia\Response;
+
+class HomeController extends Controller
+{
+    public function index(): Response
+    {
+        $locale = app()->getLocale();
+        $service = new PortfolioDataService($locale);
+
+        return Inertia::render('Home', [
+            'profile' => $service->getProfile(),
+            'experiences' => $service->getExperiences(),
+            'education' => $service->getEducation(),
+            'projects' => $service->getProjects(),
+            'skills' => $service->getSkills(),
+        ]);
+    }
+}
+```
+
+---
+
+### 6.10 Résumé de la migration des données
+
+| Donnée source | Destination | Avantage |
+|---------------|-------------|----------|
+| `UI_LABELS` (280 clés) | `resources/js/i18n/*.ts` | Reste côté client, typage TypeScript |
+| `profile` | `config/portfolio.php` | Config centralisée, cache Laravel |
+| `SHARED_GALLERY` (17 items) | Table `gallery_items` | Administrable, extensible |
+| `getSkills()` (15 skills) | Tables `skill_categories` + `skills` | Hiérarchie BDD, administrable |
+| `experience` (4 items) | Table `experiences` | Administrable, JSON multilingue |
+| `education` (3 items) | Table `education` | Administrable, JSON multilingue |
+| `projects` (4 items) | Table `projects` | Administrable, recherche SQL |
+
+**Commandes de migration :**
+
+```bash
+# Créer les migrations
+php artisan migrate
+
+# Seeder les données
+php artisan db:seed --class=PortfolioSeeder
+
+# Vérifier les données
+php artisan tinker
+>>> App\Models\Project::count()  // 4
+>>> App\Models\Experience::count()  // 4
+>>> App\Models\GalleryItem::count()  // 17
 ```
 
 ---
