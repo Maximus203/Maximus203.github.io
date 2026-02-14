@@ -275,7 +275,7 @@ export const UI_LABELS: Record<Language, Record<string, string>> = {
     connect: 'SNS',
     builtWith: '使用技術',
     hostedOn: 'ホスティング',
-    rights: 'All rights reserved.',
+    rights: '無断複写・転載を禁じます。',
     allProjects: 'すべてのプロジェクト',
     // SEO
     seoHomeTitle: "Cherif Diouf | フルスタックエンジニア & 講師",
@@ -290,7 +290,7 @@ export const UI_LABELS: Record<Language, Record<string, string>> = {
 const SHARED_GALLERY = [
   {
     id: '1',
-    title: 'DevFest Dakar 2023',
+    title: 'DevFest Dakar 2025',
     category: 'Conference',
     date: 'Dec 2023',
     imageUrl: '/assets/galerie/devfest-1.jpg',
@@ -301,7 +301,7 @@ const SHARED_GALLERY = [
     id: '2',
     title: 'DevFest Dakar - Conférence',
     category: 'Conference',
-    date: 'Dec 2023',
+    date: 'Dec 2025',
     imageUrl: '/assets/galerie/devfest-2.jpg',
     size: 'normal' as const,
     featured: true
@@ -310,7 +310,7 @@ const SHARED_GALLERY = [
     id: '3',
     title: 'DevFest Dakar - Networking',
     category: 'Conference',
-    date: 'Dec 2023',
+    date: 'Dec 2025',
     imageUrl: '/assets/galerie/devfest-3.jpg',
     size: 'normal' as const,
     featured: true
@@ -319,7 +319,7 @@ const SHARED_GALLERY = [
     id: '4',
     title: 'DevFest Dakar - Workshop',
     category: 'Conference',
-    date: 'Dec 2023',
+    date: 'Dec 2025',
     imageUrl: '/assets/galerie/devfest-4.jpg',
     size: 'large' as const,
     featured: true
@@ -328,7 +328,7 @@ const SHARED_GALLERY = [
     id: '5',
     title: 'DevFest Dakar - Community',
     category: 'Conference',
-    date: 'Dec 2023',
+    date: 'Dec 2025',
     imageUrl: '/assets/galerie/devfest-5.jpg',
     size: 'normal' as const,
     featured: true
@@ -337,7 +337,7 @@ const SHARED_GALLERY = [
     id: '6',
     title: 'Journée Laravel Senegal',
     category: 'Community',
-    date: 'Nov 2023',
+    date: 'Nov 2025',
     imageUrl: '/assets/galerie/laravel-senegal-1.jpg',
     size: 'large' as const,
     featured: true
@@ -346,7 +346,7 @@ const SHARED_GALLERY = [
     id: '7',
     title: 'Laravel Senegal - Présentation',
     category: 'Community',
-    date: 'Nov 2023',
+    date: 'Nov 2025',
     imageUrl: '/assets/galerie/laravel-senegal-2.jpg',
     size: 'normal' as const,
     featured: true
@@ -355,7 +355,7 @@ const SHARED_GALLERY = [
     id: '8',
     title: 'Laravel Senegal - Atelier',
     category: 'Community',
-    date: 'Nov 2023',
+    date: 'Nov 2025',
     imageUrl: '/assets/galerie/laravel-senegal-3.jpg',
     size: 'normal' as const,
     featured: true
@@ -364,7 +364,7 @@ const SHARED_GALLERY = [
     id: '9',
     title: 'Laravel Senegal - Networking',
     category: 'Community',
-    date: 'Nov 2023',
+    date: 'Nov 2025',
     imageUrl: '/assets/galerie/laravel-senegal-4.jpg',
     size: 'normal' as const,
     featured: true
@@ -373,7 +373,7 @@ const SHARED_GALLERY = [
     id: '10',
     title: 'Laravel Senegal - Team',
     category: 'Community',
-    date: 'Nov 2023',
+    date: 'Nov 2025',
     imageUrl: '/assets/galerie/laravel-senegal-5.jpg',
     size: 'large' as const,
     featured: true
@@ -382,7 +382,7 @@ const SHARED_GALLERY = [
     id: '11',
     title: 'Hacktoberfest Galsen Dev',
     category: 'Hackathon',
-    date: 'Oct 2023',
+    date: 'Oct 2025',
     imageUrl: '/assets/galerie/hacktoberfest-1.jpg',
     size: 'large' as const,
     featured: true
@@ -391,7 +391,7 @@ const SHARED_GALLERY = [
     id: '12',
     title: 'Hacktoberfest - Coding Session',
     category: 'Hackathon',
-    date: 'Oct 2023',
+    date: 'Oct 2025',
     imageUrl: '/assets/galerie/hacktoberfest-2.jpg',
     size: 'normal' as const,
     featured: true
@@ -400,7 +400,7 @@ const SHARED_GALLERY = [
     id: '13',
     title: 'Hacktoberfest - Collaboration',
     category: 'Hackathon',
-    date: 'Oct 2023',
+    date: 'Oct 2025',
     imageUrl: '/assets/galerie/hacktoberfest-3.jpg',
     size: 'normal' as const,
     featured: true
@@ -409,7 +409,7 @@ const SHARED_GALLERY = [
     id: '14',
     title: 'Hacktoberfest - Open Source',
     category: 'Hackathon',
-    date: 'Oct 2023',
+    date: 'Oct 2025',
     imageUrl: '/assets/galerie/hacktoberfest-4.jpg',
     size: 'normal' as const,
     featured: true
@@ -418,7 +418,7 @@ const SHARED_GALLERY = [
     id: '15',
     title: 'Workshop ESTM',
     category: 'Training',
-    date: 'Sep 2023',
+    date: 'Sep 2025',
     imageUrl: '/assets/galerie/estm-workshop-1.jpg',
     size: 'large' as const,
     featured: true
@@ -427,7 +427,7 @@ const SHARED_GALLERY = [
     id: '16',
     title: 'Formation ESTM',
     category: 'Training',
-    date: 'Sep 2023',
+    date: 'Sep 2025',
     imageUrl: '/assets/galerie/estm-workshop-2.jpg',
     size: 'normal' as const,
     featured: true
@@ -436,7 +436,7 @@ const SHARED_GALLERY = [
     id: '17',
     title: 'Edacy Formation',
     category: 'Training',
-    date: 'Aug 2023',
+    date: 'Aug 2025',
     imageUrl: '/assets/galerie/edacy-2.jpg',
     size: 'normal' as const,
     featured: true
@@ -507,9 +507,21 @@ export const RESUME_DATA: Record<Language, ResumeData> = {
     },
     experience: [
       {
+        company: "ISM",
+        role: "Formateur",
+        period: "Nov 2025 - Présent",
+        logo: "https://upload.wikimedia.org/wikipedia/commons/b/b5/LOGO-ISM-SENEGAL-WIKI.jpg",
+        description: [
+          "HTML & CSS (Licence 1 CPD).",
+          "HTML (Licence 2 IAGE).",
+          "JavaScript (Licence 2 IAGE)."
+        ]
+      },
+      {
         company: "ESCOA",
         role: "Formateur",
-        period: "2025 - Présent",
+        period: "Mai 2025 - Oct 2025",
+        logo: "/assets/entreprises/escoa.png",
         description: [
           "Développement web dynamique : PHP/MySQL et JavaScript (DOM).",
           "Java : Syntaxe de base, POO.",
@@ -520,6 +532,7 @@ export const RESUME_DATA: Record<Language, ResumeData> = {
         company: "FIDECA",
         role: "Ingénieur Full-Stack & Resp. Informatique",
         period: "2024 - 2025 (1 an)",
+        logo: "/assets/entreprises/fideca.png",
         description: [
           "Conception logiciel génération états financiers (FastAPI, React, Tauri). Gain de temps: 6h -> 35min.",
           "Pilotage du SI : Réseau, sauvegardes, gestion des accès.",
@@ -530,6 +543,7 @@ export const RESUME_DATA: Record<Language, ResumeData> = {
         company: "ESTM",
         role: "Formateur",
         period: "2024 - 2025",
+        logo: "/assets/entreprises/estm.svg",
         description: [
           "Web statique (HTML5, CSS3, Flexbox/Grid) & dynamique (PHP, MySQL, MVC).",
           "Encadrement projets fil rouge, code reviews, évaluation continue."
@@ -539,6 +553,7 @@ export const RESUME_DATA: Record<Language, ResumeData> = {
         company: "Orange - Sonatel",
         role: "Assistant Support Performance & Projet",
         period: "2021 - 2024",
+        logo: "/assets/entreprises/Orange-sonatel.jpeg",
         description: [
           "Suivi des KPI performance, reporting et coordination des mises en production.",
           "Sécurisation des opérations : check-lists, contrôles, conformité."
@@ -549,7 +564,7 @@ export const RESUME_DATA: Record<Language, ResumeData> = {
       {
         school: "UN-CHK",
         degree: "Doctorat en Sciences Techniques et Numériques",
-        period: "2025 - En cours",
+        period: "2026 - En cours",
       },
       {
         school: "ESTM",
@@ -610,9 +625,21 @@ export const RESUME_DATA: Record<Language, ResumeData> = {
     },
     experience: [
       {
+        company: "ISM",
+        role: "Trainer",
+        period: "Nov 2025 - Present",
+        logo: "https://upload.wikimedia.org/wikipedia/commons/b/b5/LOGO-ISM-SENEGAL-WIKI.jpg",
+        description: [
+          "HTML & CSS (Bachelor 1 CPD).",
+          "HTML (Bachelor 2 IAGE).",
+          "JavaScript (Bachelor 2 IAGE)."
+        ]
+      },
+      {
         company: "ESCOA",
         role: "Trainer",
-        period: "2025 - Present",
+        period: "May 2025 - Oct 2025",
+        logo: "/assets/entreprises/escoa.png",
         description: [
           "Dynamic web development: PHP/MySQL and JavaScript (DOM).",
           "Java: Basic syntax, OOP.",
@@ -623,6 +650,7 @@ export const RESUME_DATA: Record<Language, ResumeData> = {
         company: "FIDECA",
         role: "Full-Stack Engineer & IT Manager",
         period: "2024 - 2025 (1 year)",
+        logo: "/assets/entreprises/fideca.png",
         description: [
           "Financial statement generation software (FastAPI, React, Tauri). Time saved: 6h -> 35min.",
           "IT Management: Network, backups, access management.",
@@ -633,8 +661,9 @@ export const RESUME_DATA: Record<Language, ResumeData> = {
         company: "ESTM",
         role: "Trainer",
         period: "2024 - 2025",
+        logo: "/assets/entreprises/estm.svg",
         description: [
-          "Static (HTML5, CSS3) & Dynamic Web (PHP, MySQL, MVC).",
+          "Static (HTML5, CSS3, Flexbox/Grid) & Dynamic Web (PHP, MySQL, MVC).",
           "Capstone project supervision, code reviews, continuous assessment."
         ]
       },
@@ -642,6 +671,7 @@ export const RESUME_DATA: Record<Language, ResumeData> = {
         company: "Orange - Sonatel",
         role: "Performance Support & Project Assistant",
         period: "2021 - 2024",
+        logo: "/assets/entreprises/Orange-sonatel.jpeg",
         description: [
           "KPI monitoring, reporting, and coordination of production releases.",
           "Operations security: checklists, periodic controls, compliance."
@@ -652,11 +682,11 @@ export const RESUME_DATA: Record<Language, ResumeData> = {
       {
         school: "UN-CHK",
         degree: "PhD in Technical and Digital Sciences",
-        period: "2025 - Current",
+        period: "2026 - Current",
       },
       {
         school: "ESTM",
-        degree: "Master in Software Engineering",
+        degree: "Master in Software Engineering & Network Administration",
         period: "2022 - 2024",
         description: "Highest honors with jury congratulations."
       },
@@ -690,7 +720,7 @@ export const RESUME_DATA: Record<Language, ResumeData> = {
       },
       {
         title: "Cynoia Spaces",
-        description: "Collaborative space management SaaS. Microservices architecture.",
+        description: "Collaborative space management SaaS. Microservices architecture (Spring Boot, Gateway).",
         tags: ["Spring Boot", "Microservices", "SaaS"],
         image: "/assets/projets/sap-demo.gif"
       }
@@ -713,9 +743,21 @@ export const RESUME_DATA: Record<Language, ResumeData> = {
     },
     experience: [
       {
+        company: "ISM",
+        role: "讲师",
+        period: "2025年11月 - 至今",
+        logo: "https://upload.wikimedia.org/wikipedia/commons/b/b5/LOGO-ISM-SENEGAL-WIKI.jpg",
+        description: [
+          "HTML & CSS (学士1年 CPD).",
+          "HTML (学士2年 IAGE).",
+          "JavaScript (学士2年 IAGE)."
+        ]
+      },
+      {
         company: "ESCOA",
         role: "讲师",
-        period: "2025 - 至今",
+        period: "2025年5月 - 2025年10月",
+        logo: "/assets/entreprises/escoa.png",
         description: [
           "动态Web开发: PHP/MySQL 和 JavaScript (DOM).",
           "Java: 基础语法, 面向对象编程.",
@@ -726,6 +768,7 @@ export const RESUME_DATA: Record<Language, ResumeData> = {
         company: "FIDECA",
         role: "全栈工程师 & IT经理",
         period: "2024 - 2025 (1年)",
+        logo: "/assets/entreprises/fideca.png",
         description: [
           "财务报表生成软件设计 (FastAPI, React, Tauri). 耗时减少: 6小时 -> 35分钟.",
           "IT管理: 网络, 备份, 访问管理.",
@@ -736,6 +779,7 @@ export const RESUME_DATA: Record<Language, ResumeData> = {
         company: "ESTM",
         role: "讲师",
         period: "2024 - 2025",
+        logo: "/assets/entreprises/estm.svg",
         description: [
           "静态 (HTML5, CSS3, Flexbox/Grid) & 动态 Web (PHP, MySQL, MVC).",
           "毕业设计指导, 代码审查, 持续评估."
@@ -745,6 +789,7 @@ export const RESUME_DATA: Record<Language, ResumeData> = {
         company: "Orange - Sonatel",
         role: "性能支持 & 项目助理",
         period: "2021 - 2024",
+        logo: "/assets/entreprises/Orange-sonatel.jpeg",
         description: [
           "KPI性能监控, 报告和生产发布协调.",
           "运营安全: 检查清单, 定期控制, 合规性."
@@ -755,7 +800,7 @@ export const RESUME_DATA: Record<Language, ResumeData> = {
       {
         school: "UN-CHK",
         degree: "技术与数字科学博士",
-        period: "2025 - 在读",
+        period: "2026 - 在读",
       },
       {
         school: "ESTM",
@@ -816,9 +861,21 @@ export const RESUME_DATA: Record<Language, ResumeData> = {
     },
     experience: [
       {
+        company: "ISM",
+        role: "講師",
+        period: "2025年11月 - 現在",
+        logo: "https://upload.wikimedia.org/wikipedia/commons/b/b5/LOGO-ISM-SENEGAL-WIKI.jpg",
+        description: [
+          "HTML & CSS (学士1年 CPD).",
+          "HTML (学士2年 IAGE).",
+          "JavaScript (学士2年 IAGE)."
+        ]
+      },
+      {
         company: "ESCOA",
         role: "講師",
-        period: "2025 - 現在",
+        period: "2025年5月 - 2025年10月",
+        logo: "/assets/entreprises/escoa.png",
         description: [
           "動的Web開発: PHP/MySQL および JavaScript (DOM).",
           "Java: 基本構文, オブジェクト指向プログラミング.",
@@ -829,6 +886,7 @@ export const RESUME_DATA: Record<Language, ResumeData> = {
         company: "FIDECA",
         role: "フルスタックエンジニア & ITマネージャー",
         period: "2024 - 2025 (1年)",
+        logo: "/assets/entreprises/fideca.png",
         description: [
           "財務諸表作成ソフトウェア設計 (FastAPI, React, Tauri). 時間短縮: 6時間 -> 35分.",
           "IT管理: ネットワーク, バックアップ, アクセス管理.",
@@ -839,6 +897,7 @@ export const RESUME_DATA: Record<Language, ResumeData> = {
         company: "ESTM",
         role: "講師",
         period: "2024 - 2025",
+        logo: "/assets/entreprises/estm.svg",
         description: [
           "静的 (HTML5, CSS3, Flexbox/Grid) & 動的 Web (PHP, MySQL, MVC).",
           "卒業制作指導, コードレビュー, 継続的な評価."
@@ -848,6 +907,7 @@ export const RESUME_DATA: Record<Language, ResumeData> = {
         company: "Orange - Sonatel",
         role: "パフォーマンスサポート & プロジェクトアシスタント",
         period: "2021 - 2024",
+        logo: "/assets/entreprises/Orange-sonatel.jpeg",
         description: [
           "KPIパフォーマンス監視, レポート作成および本番リリースの調整.",
           "運用セキュリティ: チェックリスト, 定期的な管理, コンプライアンス."
@@ -858,7 +918,7 @@ export const RESUME_DATA: Record<Language, ResumeData> = {
       {
         school: "UN-CHK",
         degree: "技術・デジタル科学博士",
-        period: "2025 - 在学中",
+        period: "2026 - 在学中",
       },
       {
         school: "ESTM",

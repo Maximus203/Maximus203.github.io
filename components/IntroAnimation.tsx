@@ -1,5 +1,5 @@
-import React, { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
+import React, { useEffect, useRef } from 'react';
 
 interface Star {
   x: number;
@@ -170,7 +170,7 @@ const IntroAnimation: React.FC<{ onComplete: () => void }> = ({ onComplete }) =>
         className="relative z-10 text-center px-4"
       >
         <h1 className="text-3xl md:text-6xl font-black text-white font-mono uppercase mix-blend-difference">
-          Bienvenue chez moi
+          Cherif Diouf | Portfolio
         </h1>
       </motion.div>
     </motion.div>

@@ -15,6 +15,7 @@ export interface Experience {
   period: string;
   description: string[];
   location?: string;
+  logo?: string;
 }
 
 export interface Education {
