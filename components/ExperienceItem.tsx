@@ -1,5 +1,5 @@
-import React from 'react';
 import { motion } from 'framer-motion';
+import React from 'react';
 import { Experience } from '../types';
 
 interface ExperienceItemProps {
@@ -38,12 +38,20 @@ const ExperienceItem: React.FC<ExperienceItemProps> = ({ exp, isLast, index }) =
 
         {/* Content */}
         <div className="md:col-span-8 mb-12 relative">
-          <div className="md:hidden mb-2">
+          <div className="md:hidden mb-2 flex items-center gap-2">
+             {exp.logo && (
+               <img src={exp.logo} alt={exp.company} className="w-6 h-6 rounded object-contain bg-white" />
+             )}
              <span className="text-xs font-mono text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded mr-2">{exp.period}</span>
              <span className="text-sm font-semibold text-gray-900 dark:text-white">{exp.company}</span>
           </div>
           
-          <h3 className="text-lg md:text-xl font-bold text-gray-900 dark:text-white mb-2">{exp.role}</h3>
+          <div className="flex items-center gap-3 mb-2">
+            {exp.logo && (
+              <img src={exp.logo} alt={exp.company} className="w-8 h-8 rounded object-contain bg-white hidden md:block" />
+            )}
+            <h3 className="text-lg md:text-xl font-bold text-gray-900 dark:text-white">{exp.role}</h3>
+          </div>
           
           <ul className="space-y-2">
             {exp.description.map((desc, i) => (
