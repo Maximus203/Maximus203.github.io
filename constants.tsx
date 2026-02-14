@@ -509,7 +509,7 @@ export const RESUME_DATA: Record<Language, ResumeData> = {
       {
         company: "ISM",
         role: "Formateur",
-        period: "Nov 2025 - Présent",
+        period: "Nov 2025 - Jan 2026",
         logo: "https://upload.wikimedia.org/wikipedia/commons/b/b5/LOGO-ISM-SENEGAL-WIKI.jpg",
         description: [
           "HTML & CSS (Licence 1 CPD).",
@@ -531,7 +531,7 @@ export const RESUME_DATA: Record<Language, ResumeData> = {
       {
         company: "FIDECA",
         role: "Ingénieur Full-Stack & Resp. Informatique",
-        period: "2024 - 2025 (1 an)",
+        period: "2024 - Présent",
         logo: "/assets/entreprises/fideca.png",
         description: [
           "Conception logiciel génération états financiers (FastAPI, React, Tauri). Gain de temps: 6h -> 35min.",
@@ -542,7 +542,7 @@ export const RESUME_DATA: Record<Language, ResumeData> = {
       {
         company: "ESTM",
         role: "Formateur",
-        period: "2024 - 2025",
+        period: "2024 - Présent",
         logo: "/assets/entreprises/estm.svg",
         description: [
           "Web statique (HTML5, CSS3, Flexbox/Grid) & dynamique (PHP, MySQL, MVC).",
@@ -627,7 +627,7 @@ export const RESUME_DATA: Record<Language, ResumeData> = {
       {
         company: "ISM",
         role: "Trainer",
-        period: "Nov 2025 - Present",
+        period: "Nov 2025 - Jan 2026",
         logo: "https://upload.wikimedia.org/wikipedia/commons/b/b5/LOGO-ISM-SENEGAL-WIKI.jpg",
         description: [
           "HTML & CSS (Bachelor 1 CPD).",
@@ -649,7 +649,7 @@ export const RESUME_DATA: Record<Language, ResumeData> = {
       {
         company: "FIDECA",
         role: "Full-Stack Engineer & IT Manager",
-        period: "2024 - 2025 (1 year)",
+        period: "2024 - Present",
         logo: "/assets/entreprises/fideca.png",
         description: [
           "Financial statement generation software (FastAPI, React, Tauri). Time saved: 6h -> 35min.",
@@ -660,7 +660,7 @@ export const RESUME_DATA: Record<Language, ResumeData> = {
       {
         company: "ESTM",
         role: "Trainer",
-        period: "2024 - 2025",
+        period: "2024 - Present",
         logo: "/assets/entreprises/estm.svg",
         description: [
           "Static (HTML5, CSS3, Flexbox/Grid) & Dynamic Web (PHP, MySQL, MVC).",
@@ -745,7 +745,7 @@ export const RESUME_DATA: Record<Language, ResumeData> = {
       {
         company: "ISM",
         role: "讲师",
-        period: "2025年11月 - 至今",
+        period: "2025年11月 - 2026年1月",
         logo: "https://upload.wikimedia.org/wikipedia/commons/b/b5/LOGO-ISM-SENEGAL-WIKI.jpg",
         description: [
           "HTML & CSS (学士1年 CPD).",
@@ -767,7 +767,7 @@ export const RESUME_DATA: Record<Language, ResumeData> = {
       {
         company: "FIDECA",
         role: "全栈工程师 & IT经理",
-        period: "2024 - 2025 (1年)",
+        period: "2024 - 至今",
         logo: "/assets/entreprises/fideca.png",
         description: [
           "财务报表生成软件设计 (FastAPI, React, Tauri). 耗时减少: 6小时 -> 35分钟.",
@@ -778,7 +778,7 @@ export const RESUME_DATA: Record<Language, ResumeData> = {
       {
         company: "ESTM",
         role: "讲师",
-        period: "2024 - 2025",
+        period: "2024 - 至今",
         logo: "/assets/entreprises/estm.svg",
         description: [
           "静态 (HTML5, CSS3, Flexbox/Grid) & 动态 Web (PHP, MySQL, MVC).",
@@ -863,7 +863,7 @@ export const RESUME_DATA: Record<Language, ResumeData> = {
       {
         company: "ISM",
         role: "講師",
-        period: "2025年11月 - 現在",
+        period: "2025年11月 - 2026年1月",
         logo: "https://upload.wikimedia.org/wikipedia/commons/b/b5/LOGO-ISM-SENEGAL-WIKI.jpg",
         description: [
           "HTML & CSS (学士1年 CPD).",
@@ -885,7 +885,7 @@ export const RESUME_DATA: Record<Language, ResumeData> = {
       {
         company: "FIDECA",
         role: "フルスタックエンジニア & ITマネージャー",
-        period: "2024 - 2025 (1年)",
+        period: "2024 - 現在",
         logo: "/assets/entreprises/fideca.png",
         description: [
           "財務諸表作成ソフトウェア設計 (FastAPI, React, Tauri). 時間短縮: 6時間 -> 35分.",
@@ -896,7 +896,7 @@ export const RESUME_DATA: Record<Language, ResumeData> = {
       {
         company: "ESTM",
         role: "講師",
-        period: "2024 - 2025",
+        period: "2024 - 現在",
         logo: "/assets/entreprises/estm.svg",
         description: [
           "静的 (HTML5, CSS3, Flexbox/Grid) & 動的 Web (PHP, MySQL, MVC).",
