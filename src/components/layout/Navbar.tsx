@@ -1,7 +1,7 @@
 'use client';
 
 import { AnimatePresence, motion } from 'framer-motion';
-import { Briefcase, ChevronRight, Code2, FolderGit2, Home, Image as ImageIcon, Menu, User, Wrench, X } from 'lucide-react';
+import { Briefcase, ChevronRight, Code2, FolderGit2, GraduationCap, Home, Image as ImageIcon, Menu, User, Wrench, X } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useAppStore } from '@/store/store';
@@ -21,6 +21,7 @@ export default function Navbar({ lang, labels }: NavbarProps) {
   const isHome = pathname === `/${lang}` || pathname === `/${lang}/`;
   const isGallery = pathname.startsWith(`/${lang}/gallery`);
   const isTools = pathname.startsWith(`/${lang}/tools`);
+  const isStudents = pathname.startsWith(`/${lang}/students`);
 
   const sectionItems = [
     { id: 'about', label: labels.about, icon: <User size={18} /> },
@@ -132,9 +133,21 @@ export default function Navbar({ lang, labels }: NavbarProps) {
                   </Link>
                 </motion.div>
 
-                <motion.div custom={7} variants={menuItemVariants} className="h-px bg-gray-100 dark:bg-slate-800 my-4" />
+                <motion.div custom={7} variants={menuItemVariants}>
+                  <Link
+                    href={`/${lang}/students/`}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className={`flex items-center gap-3 w-full p-3 rounded-xl text-sm font-medium transition-all ${isStudents ? 'bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400' : 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-slate-800'}`}
+                  >
+                    <GraduationCap size={18} />
+                    {labels.students}
+                    {isStudents && <ChevronRight size={16} className="ml-auto opacity-50" />}
+                  </Link>
+                </motion.div>
 
-                <motion.div custom={8} variants={menuItemVariants} className="flex items-center justify-between px-2">
+                <motion.div custom={8} variants={menuItemVariants} className="h-px bg-gray-100 dark:bg-slate-800 my-4" />
+
+                <motion.div custom={9} variants={menuItemVariants} className="flex items-center justify-between px-2">
                   <ThemeToggle variant="button" />
                   <LangSwitcher currentLang={lang} variant="mobile" />
                 </motion.div>

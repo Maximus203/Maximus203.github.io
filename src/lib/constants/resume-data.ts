@@ -163,6 +163,20 @@ export const RESUME_DATA: Record<Language, ResumeData> = {
         description: "SaaS de gestion d'espaces collaboratifs. Architecture microservices (Spring Boot, Gateway).",
         tags: ["Spring Boot", "Microservices", "SaaS"],
         image: "/assets/projets/sap-demo.gif"
+      },
+      {
+        title: "Momentum",
+        description: "Plateforme de quiz interactifs en temps réel avec classement instantané. Idéale pour cours, événements et team-building.",
+        tags: ["React", "Temps réel", "Quiz", "Éducation"],
+        link: "https://momentum.artist-dev.com/",
+        image: "/assets/projets/momentum-demo.gif"
+      },
+      {
+        title: "Les chats sont mignons",
+        description: "Projet pédagogique HTML/CSS pour étudiants L1 : structure sémantique, Grid, animations et responsive design.",
+        tags: ["HTML", "CSS", "Pédagogie", "Responsive"],
+        github: "https://github.com/Maximus203/Les-chats-sont-mignons",
+        image: "/assets/projets/les-chats-sont-mignons.png"
       }
     ],
     skills: getSkills('fr'),
@@ -281,6 +295,20 @@ export const RESUME_DATA: Record<Language, ResumeData> = {
         description: "Collaborative space management SaaS. Microservices architecture (Spring Boot, Gateway).",
         tags: ["Spring Boot", "Microservices", "SaaS"],
         image: "/assets/projets/sap-demo.gif"
+      },
+      {
+        title: "Momentum",
+        description: "Real-time interactive quiz platform with instant leaderboard. Ideal for classes, events and team-building.",
+        tags: ["React", "Real-time", "Quiz", "Education"],
+        link: "https://momentum.artist-dev.com/",
+        image: "/assets/projets/momentum-demo.gif"
+      },
+      {
+        title: "Les chats sont mignons",
+        description: "Educational HTML/CSS project for L1 students: semantic structure, Grid, animations and responsive design.",
+        tags: ["HTML", "CSS", "Pedagogy", "Responsive"],
+        github: "https://github.com/Maximus203/Les-chats-sont-mignons",
+        image: "/assets/projets/les-chats-sont-mignons.png"
       }
     ],
     skills: getSkills('en'),
@@ -399,6 +427,20 @@ export const RESUME_DATA: Record<Language, ResumeData> = {
         description: "协作空间管理SaaS. 微服务架构 (Spring Boot, Gateway).",
         tags: ["Spring Boot", "Microservices", "SaaS"],
         image: "/assets/projets/sap-demo.gif"
+      },
+      {
+        title: "Momentum",
+        description: "实时互动问答平台，即时排行榜。适用于课程、活动和团队建设。",
+        tags: ["React", "实时", "问答", "教育"],
+        link: "https://momentum.artist-dev.com/",
+        image: "/assets/projets/momentum-demo.gif"
+      },
+      {
+        title: "Les chats sont mignons",
+        description: "面向L1学生的HTML/CSS教学项目：语义结构、Grid布局、动画和响应式设计。",
+        tags: ["HTML", "CSS", "教学", "响应式"],
+        github: "https://github.com/Maximus203/Les-chats-sont-mignons",
+        image: "/assets/projets/les-chats-sont-mignons.png"
       }
     ],
     skills: getSkills('zh'),
@@ -517,6 +559,20 @@ export const RESUME_DATA: Record<Language, ResumeData> = {
         description: "コラボレーションスペース管理SaaS. マイクロサービスアーキテクチャ (Spring Boot, Gateway).",
         tags: ["Spring Boot", "Microservices", "SaaS"],
         image: "/assets/projets/sap-demo.gif"
+      },
+      {
+        title: "Momentum",
+        description: "リアルタイムインタラクティブクイズプラットフォーム。即時ランキング表示。授業、イベント、チームビルディングに最適。",
+        tags: ["React", "リアルタイム", "クイズ", "教育"],
+        link: "https://momentum.artist-dev.com/",
+        image: "/assets/projets/momentum-demo.gif"
+      },
+      {
+        title: "Les chats sont mignons",
+        description: "L1学生向けHTML/CSS教育プロジェクト：セマンティック構造、Grid、アニメーション、レスポンシブデザイン。",
+        tags: ["HTML", "CSS", "教育", "レスポンシブ"],
+        github: "https://github.com/Maximus203/Les-chats-sont-mignons",
+        image: "/assets/projets/les-chats-sont-mignons.png"
       }
     ],
     skills: getSkills('ja'),

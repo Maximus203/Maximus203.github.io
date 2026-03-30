@@ -1,6 +1,6 @@
 'use client';
 
-import { Briefcase, Code2, FolderGit2, Home, Image as ImageIcon, User, Wrench } from 'lucide-react';
+import { Briefcase, Code2, FolderGit2, GraduationCap, Home, Image as ImageIcon, User, Wrench } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import type { Language } from '@/types';
@@ -16,6 +16,7 @@ export default function DesktopNav({ lang, labels }: DesktopNavProps) {
   const isHome = pathname === `/${lang}` || pathname === `/${lang}/`;
   const isGallery = pathname.startsWith(`/${lang}/gallery`);
   const isTools = pathname.startsWith(`/${lang}/tools`);
+  const isStudents = pathname.startsWith(`/${lang}/students`);
 
   const sectionItems = [
     { id: 'about', label: labels.about, icon: <User size={16} /> },
@@ -58,6 +59,14 @@ export default function DesktopNav({ lang, labels }: DesktopNavProps) {
       >
         <Wrench size={16} />
         {labels.tools}
+      </Link>
+
+      <Link
+        href={`/${lang}/students/`}
+        className={`flex items-center gap-2 transition-colors ${isStudents ? 'text-indigo-600 dark:text-indigo-400' : 'hover:text-gray-900 dark:hover:text-gray-200'}`}
+      >
+        <GraduationCap size={16} />
+        {labels.students}
       </Link>
     </div>
   );
