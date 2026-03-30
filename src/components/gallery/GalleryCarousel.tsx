@@ -23,21 +23,19 @@ const GalleryCarousel: React.FC<GalleryCarouselProps> = ({ items }) => {
   useEffect(() => {
     const interval = setInterval(() => {
       if (!isPaused && !isDown && scrollRef.current) {
-        const maxScroll = scrollRef.current.scrollWidth / 3; // Original items width
+        const maxScroll = scrollRef.current.scrollWidth / 3;
 
         if (scrollRef.current.scrollLeft >= maxScroll) {
-          // Reset to beginning without animation for seamless loop
           scrollRef.current.scrollLeft = 0;
         } else {
           scrollRef.current.scrollLeft += 1;
         }
       }
-    }, 20); // Update every 20ms for smooth animation
+    }, 20);
 
     return () => clearInterval(interval);
   }, [isPaused, isDown]);
 
-  // Mouse Down (Start Drag)
   const handleMouseDown = (e: React.MouseEvent) => {
     setIsDown(true);
     if (scrollRef.current) {
@@ -46,17 +44,35 @@ const GalleryCarousel: React.FC<GalleryCarouselProps> = ({ items }) => {
     }
   };
 
-  // Mouse Up / Leave (Stop Drag)
   const handleMouseUp = () => {
     setIsDown(false);
   };
 
-  // Mouse Move (Drag)
   const handleMouseMove = (e: React.MouseEvent) => {
     if (!isDown || !scrollRef.current) return;
     e.preventDefault();
     const x = e.pageX - scrollRef.current.offsetLeft;
-    const walk = (x - startX) * 2; // Speed multiplier
+    const walk = (x - startX) * 2;
+    scrollRef.current.scrollLeft = scrollLeft - walk;
+  };
+
+  // Touch support
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setIsDown(true);
+    if (scrollRef.current) {
+      setStartX(e.touches[0].pageX - scrollRef.current.offsetLeft);
+      setScrollLeft(scrollRef.current.scrollLeft);
+    }
+  };
+
+  const handleTouchEnd = () => {
+    setIsDown(false);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (!isDown || !scrollRef.current) return;
+    const x = e.touches[0].pageX - scrollRef.current.offsetLeft;
+    const walk = (x - startX) * 2;
     scrollRef.current.scrollLeft = scrollLeft - walk;
   };
 
@@ -76,50 +92,64 @@ const GalleryCarousel: React.FC<GalleryCarouselProps> = ({ items }) => {
         <span>Drag to explore</span>
       </div>
 
-      {/* Scroll Container */}
       <div
         ref={scrollRef}
-        className="flex overflow-x-auto gap-6 pb-8 hide-scrollbar cursor-grab active:cursor-grabbing"
+        className="flex overflow-x-auto gap-4 pb-8 hide-scrollbar cursor-grab active:cursor-grabbing items-end"
         onMouseDown={handleMouseDown}
         onMouseUp={handleMouseUp}
         onMouseMove={handleMouseMove}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+        onTouchMove={handleTouchMove}
       >
-        {duplicatedItems.map((item, index) => (
-          <motion.div
-            key={`${item.id}-${index}`}
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: index * 0.1, duration: 0.5 }}
-            className="relative flex-shrink-0 w-[85vw] md:w-[600px] h-[350px] md:h-[400px] rounded-3xl overflow-hidden group select-none"
-            whileHover={{ scale: 1.01 }}
-            whileTap={{ scale: 0.98 }}
-          >
-            <img
-              src={item.imageUrl}
-              alt={item.title}
-              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 pointer-events-none"
-              draggable={false}
-            />
+        {duplicatedItems.map((item, index) => {
+          const isPortrait = item.orientation === 'portrait';
 
-            {/* Overlay Gradient */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
+          return (
+            <motion.div
+              key={`${item.id}-${index}`}
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: Math.min(index * 0.05, 1), duration: 0.5 }}
+              className={`relative flex-shrink-0 rounded-3xl overflow-hidden group select-none ${
+                isPortrait
+                  ? 'w-[65vw] md:w-[320px] h-[420px] md:h-[480px]'
+                  : 'w-[85vw] md:w-[560px] h-[300px] md:h-[380px]'
+              }`}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              <img
+                src={item.imageUrl}
+                alt={item.title}
+                className={`w-full h-full transition-transform duration-700 group-hover:scale-110 pointer-events-none ${
+                  isPortrait ? 'object-cover object-top' : 'object-cover object-center'
+                }`}
+                draggable={false}
+                loading="lazy"
+              />
 
-            {/* Content */}
-            <div className="absolute bottom-0 left-0 p-8 w-full transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300 pointer-events-none">
-              <div className="inline-block px-3 py-1 mb-3 rounded-full bg-white/20 backdrop-blur-md border border-white/10 text-white text-xs font-mono">
-                {item.category}
+              {/* Overlay Gradient */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
+
+              {/* Content */}
+              <div className="absolute bottom-0 left-0 p-6 md:p-8 w-full transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300 pointer-events-none">
+                <div className="inline-block px-3 py-1 mb-2 rounded-full bg-white/20 backdrop-blur-md border border-white/10 text-white text-xs font-mono">
+                  {item.category}
+                </div>
+                <h3 className={`font-bold text-white mb-1 leading-tight ${
+                  isPortrait ? 'text-lg md:text-xl' : 'text-xl md:text-2xl'
+                }`}>
+                  {item.title}
+                </h3>
+                <p className="text-gray-300 text-sm font-medium">
+                  {item.date}
+                </p>
               </div>
-              <h3 className="text-2xl md:text-3xl font-bold text-white mb-2 leading-tight">
-                {item.title}
-              </h3>
-              <p className="text-gray-300 text-sm font-medium">
-                {item.date}
-              </p>
-            </div>
-          </motion.div>
-        ))}
+            </motion.div>
+          );
+        })}
 
-        {/* Spacer for right padding */}
         <div className="w-6 flex-shrink-0" />
       </div>
     </div>

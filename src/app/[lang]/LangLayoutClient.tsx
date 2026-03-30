@@ -32,7 +32,7 @@ export function LangLayoutClient({ lang, children }: LangLayoutClientProps) {
   const isHome = pathname === `/${lang}` || pathname === `/${lang}/`;
   const isToolPage = pathname.includes('/tools/readme-generator') || pathname.includes('/tools/image-converter') || pathname.includes('/tools/meme-generator');
   const isFullWidth = !isHome;
-  const showFooter = isHome || pathname.includes('/gallery') || pathname === `/${lang}/tools` || pathname === `/${lang}/tools/`;
+  const showFooter = isHome || pathname.includes('/gallery') || pathname === `/${lang}/tools` || pathname === `/${lang}/tools/` || pathname.includes('/students');
 
   useEffect(() => {
     document.documentElement.lang = lang;

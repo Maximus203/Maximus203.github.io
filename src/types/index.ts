@@ -36,7 +36,7 @@ export interface GalleryItem {
   category: string;
   date: string;
   imageUrl: string;
-  size?: 'normal' | 'large';
+  orientation?: 'portrait' | 'landscape';
   featured?: boolean;
 }
 

@@ -64,13 +64,21 @@ export const UI_LABELS: Record<Language, Record<string, string>> = {
     hostedOn: 'Hébergé sur',
     rights: 'Tous droits réservés.',
     allProjects: 'Tous les projets',
+    // Students
+    students: 'Étudiants',
+    studentsTitle: 'Réalisations de mes étudiants',
+    studentsSubtitle: 'Portfolios réalisés par mes étudiants durant leur formation.',
+    studentsCount: 'portfolios mis en avant',
+    studentsHighlight: 'Créés pendant leur parcours de formation',
     // SEO
     seoHomeTitle: "Cherif Diouf | Ingénieur Full-Stack & Formateur",
     seoHomeDesc: "Portfolio de Cherif Diouf. Expert Laravel, React & DevOps. Découvrez mes projets, compétences et parcours.",
     seoGalleryTitle: "Galerie & Événements | Cherif Diouf",
     seoGalleryDesc: "Retour en images sur les conférences, hackathons et événements tech au Sénégal.",
     seoToolsTitle: "Boîte à Outils Développeur | Cherif Diouf",
-    seoToolsDesc: "Collection d'outils gratuits pour développeurs : Readme Generator, Convertisseur d'Images, Créateur de Memes."
+    seoToolsDesc: "Collection d'outils gratuits pour développeurs : Readme Generator, Convertisseur d'Images, Créateur de Memes.",
+    seoStudentsTitle: "Réalisations Étudiants | Cherif Diouf",
+    seoStudentsDesc: "Découvrez les portfolios web réalisés par mes étudiants durant leur formation."
   },
   en: {
     home: 'Home',
@@ -135,13 +143,21 @@ export const UI_LABELS: Record<Language, Record<string, string>> = {
     hostedOn: 'Hosted on',
     rights: 'All rights reserved.',
     allProjects: 'All projects',
+    // Students
+    students: 'Students',
+    studentsTitle: 'Student achievements',
+    studentsSubtitle: 'Portfolios built by my students during their training.',
+    studentsCount: 'featured portfolios',
+    studentsHighlight: 'Built during their training journey',
     // SEO
     seoHomeTitle: "Cherif Diouf | Full-Stack Engineer & Trainer",
     seoHomeDesc: "Portfolio of Cherif Diouf. Laravel, React & DevOps Expert. Discover my projects, skills, and journey.",
     seoGalleryTitle: "Gallery & Events | Cherif Diouf",
     seoGalleryDesc: "Highlights from conferences, hackathons, and tech community events.",
     seoToolsTitle: "Developer Toolbox | Cherif Diouf",
-    seoToolsDesc: "Free tools for developers: Readme Generator, Image Converter, Meme Generator."
+    seoToolsDesc: "Free tools for developers: Readme Generator, Image Converter, Meme Generator.",
+    seoStudentsTitle: "Student Achievements | Cherif Diouf",
+    seoStudentsDesc: "Discover web portfolios built by my students during their training."
   },
   zh: {
     home: '首页',
@@ -206,13 +222,21 @@ export const UI_LABELS: Record<Language, Record<string, string>> = {
     hostedOn: '托管于',
     rights: '版权所有。',
     allProjects: '所有项目',
+    // Students
+    students: '学生',
+    studentsTitle: '学生作品',
+    studentsSubtitle: '我的学生在培训期间制作的作品集。',
+    studentsCount: '个精选作品集',
+    studentsHighlight: '在培训过程中创建',
     // SEO
     seoHomeTitle: "Cherif Diouf | 全栈工程师 & 讲师",
     seoHomeDesc: "Cherif Diouf 的作品集。Laravel, React & DevOps 专家。探索我的项目、技能和经历。",
     seoGalleryTitle: "画廊 & 活动 | Cherif Diouf",
     seoGalleryDesc: "会议、黑客马拉松和技术社区活动集锦。",
     seoToolsTitle: "开发者工具箱 | Cherif Diouf",
-    seoToolsDesc: "开发者免费工具：Readme 生成器、图像转换器、Meme 生成器。"
+    seoToolsDesc: "开发者免费工具：Readme 生成器、图像转换器、Meme 生成器。",
+    seoStudentsTitle: "学生作品 | Cherif Diouf",
+    seoStudentsDesc: "发现我的学生在培训期间制作的网页作品集。"
   },
   ja: {
     home: 'ホーム',
@@ -277,12 +301,20 @@ export const UI_LABELS: Record<Language, Record<string, string>> = {
     hostedOn: 'ホスティング',
     rights: '無断複写・転載を禁じます。',
     allProjects: 'すべてのプロジェクト',
+    // Students
+    students: '学生',
+    studentsTitle: '学生の実績',
+    studentsSubtitle: 'トレーニング中に学生が制作したポートフォリオ。',
+    studentsCount: '件の注目ポートフォリオ',
+    studentsHighlight: 'トレーニング中に制作',
     // SEO
     seoHomeTitle: "Cherif Diouf | フルスタックエンジニア & 講師",
     seoHomeDesc: "Cherif Diouf のポートフォリオ。Laravel, React & DevOps のエキスパート。私のプロジェクト、スキル、経歴をご覧ください。",
     seoGalleryTitle: "ギャラリー & イベント | Cherif Diouf",
     seoGalleryDesc: "カンファレンス、ハッカソン、テックコミュニティイベントのハイライト。",
     seoToolsTitle: "開発者ツールボックス | Cherif Diouf",
-    seoToolsDesc: "開発者向け無料ツール：Readme ジェネレーター、画像コンバーター、ミームジェネレーター。"
+    seoToolsDesc: "開発者向け無料ツール：Readme ジェネレーター、画像コンバーター、ミームジェネレーター。",
+    seoStudentsTitle: "学生の実績 | Cherif Diouf",
+    seoStudentsDesc: "トレーニング中に学生が制作したウェブポートフォリオをご覧ください。"
   }
 };

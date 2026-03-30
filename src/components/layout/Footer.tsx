@@ -96,6 +96,11 @@ const Footer: React.FC<FooterProps> = ({ data, labels, lang }) => {
                   {labels.toolConverter}
                 </Link>
               </li>
+              <li>
+                <Link href={`/${lang}/students/`} className="text-gray-500 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 text-sm transition-colors">
+                  {labels.students}
+                </Link>
+              </li>
             </ul>
           </div>
 

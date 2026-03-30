@@ -26,7 +26,27 @@
       "Bash(do echo:*)",
       "Bash(for lang:*)",
       "Read(//c/Projets/Maximus203.github.io/out/$lang/tools/$tool/**)",
-      "Bash(done)"
+      "Bash(done)",
+      "Bash(gh api:*)",
+      "Bash(for repo:*)",
+      "WebFetch(domain:momentum.artist-dev.com)",
+      "Bash(cp \"C:/Users/Cherif DIOUF/Pictures/Asset portfolio/les-chats-sont-mignons.png\" C:/Projets/Maximus203.github.io/public/assets/projets/les-chats-sont-mignons.png)",
+      "Bash(cp \"C:/Users/Cherif DIOUF/Pictures/Asset portfolio/Momentum.gif\" C:/Projets/Maximus203.github.io/public/assets/projets/momentum-demo.gif)",
+      "Bash(cp \"C:/Users/Cherif DIOUF/Pictures/Asset portfolio/momentum .png\" C:/Projets/Maximus203.github.io/public/assets/projets/momentum.png)",
+      "Bash(ls -lah C:/Projets/Maximus203.github.io/public/assets/projets/momentum* C:/Projets/Maximus203.github.io/public/assets/projets/les-chats*)",
+      "Bash(SRC=\"C:/Users/Cherif DIOUF/Pictures/Asset portfolio/28032026 Cérémonie de graduation de l''''ESTM\" DEST=\"C:/Projets/Maximus203.github.io/public/assets/galerie\" __NEW_LINE_eaafca711d61e29e__ cp \"$SRC/Moi en toge de professeur à la cérémonie de graduation de l''''ESTM.jpg\" \"$DEST/graduation-estm-1.jpg\" cp \"$SRC/Salle du grand théatre de la cérémonie de graduation de l''''ESTM.jpg\" \"$DEST/graduation-estm-2.jpg\" cp \"$SRC/Moi et Arona.jpg\" \"$DEST/graduation-estm-3.jpg\" cp \"$SRC/Moi.jpg\" \"$DEST/graduation-estm-4.jpg\" cp \"$SRC/Arona recevant son parchemin.jpg\" \"$DEST/graduation-estm-5.jpg\" cp \"$SRC/Mohamed recevant son parchemin.jpg\" \"$DEST/graduation-estm-6.jpg\" cp \"$SRC/Arona et Mohamed - lors de la graduation de l''''ESTM.jpg\" \"$DEST/graduation-estm-7.jpg\" cp \"$SRC/PXL_20260328_151526616.jpg\" \"$DEST/graduation-estm-8.jpg\" cp \"$SRC/Moi de face.jpg\" \"$DEST/graduation-estm-9.jpg\" cp \"$SRC/Moi de profil.jpg\" \"$DEST/graduation-estm-10.jpg\" __NEW_LINE_eaafca711d61e29e__ echo \"Copied\")",
+      "Read(//c/Projets/Maximus203.github.io/$DEST/**)",
+      "Bash(ls -la /c/Projets/Maximus203.github.io/src/app/[lang]/)",
+      "Bash(ls -la /c/Projets/Maximus203.github.io/src/app/[lang]/tools/)",
+      "Bash(ls -la /c/Projets/Maximus203.github.io/src/app/[lang]/gallery/)",
+      "Bash(ls -la /c/Projets/Maximus203.github.io/src/app/[lang]/contact/)",
+      "Bash(ls -la /c/Projets/Maximus203.github.io/src/app/[lang]/tools/readme-generator/)",
+      "Bash(ls C:/Projets/Maximus203.github.io/src/app/[lang]/)",
+      "WebFetch(domain:mouhamedgaye.github.io)",
+      "WebFetch(domain:portofolio-eljah.netlify.app)",
+      "WebFetch(domain:mamado886.github.io)",
+      "WebFetch(domain:kine54.github.io)",
+      "WebFetch(domain:adjaabibatoudiop-bit.github.io)"
     ]
   }
 }

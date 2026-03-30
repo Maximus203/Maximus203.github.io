@@ -1,20 +1,74 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# Cherif Diouf | Portfolio
 
-# Run and deploy your AI Studio app
+Portfolio personnel construit avec **Next.js 16**, **TypeScript**, **Tailwind CSS v4**, **Framer Motion** et **Supabase**.
 
-This contains everything you need to run your app locally.
+## Stack technique
 
-View your app in AI Studio: https://ai.studio/apps/drive/1A49b_L4mxB9I_O5JwFbXzQRuLuDOHVub
+- **Frontend** : Next.js (App Router, static export), React 19, TypeScript
+- **Styling** : Tailwind CSS v4, Framer Motion
+- **Backend** : Supabase (PostgreSQL, Storage, RLS)
+- **State** : Zustand
+- **i18n** : 4 langues (FR, EN, ZH, JA)
+- **Deploiement** : GitHub Pages + cPanel (static export)
 
-## Run Locally
+## Architecture
 
-**Prerequisites:**  Node.js
+```
+src/
+├── app/[lang]/          # Pages avec SEO par langue (28 pages statiques)
+│   ├── page.tsx         # Home (hero, experience, projets, skills, education)
+│   ├── gallery/         # Galerie evenements
+│   ├── tools/           # Grille outils + 3 pages dediees
+│   │   ├── readme-generator/
+│   │   ├── image-converter/
+│   │   └── meme-generator/
+│   └── contact/         # Formulaire de demande de projet
+├── components/          # 16 composants React (layout, home, gallery, tools, shared)
+├── lib/                 # Constants i18n, metadata SEO, client Supabase
+├── store/               # Zustand (theme, UI state)
+└── styles/              # Tailwind globals + custom styles
+```
 
+## Lancer en local
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+**Prerequis** : Node.js 20+
+
+```bash
+# Installer les dependances
+npm install
+
+# Lancer le serveur de developpement
+npm run dev
+
+# Build de production (static export)
+npm run build
+```
+
+## Variables d'environnement
+
+Copier `.env.local.example` ou creer `.env.local` :
+
+```env
+NEXT_PUBLIC_SUPABASE_URL=https://xxx.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=sb_publishable_xxx
+SUPABASE_SERVICE_KEY=eyJ...  # uniquement pour le seed
+```
+
+## Base de donnees
+
+```bash
+# Executer le schema dans le SQL Editor Supabase
+# Fichier: supabase/schema.sql
+
+# Seed les projets
+npm run seed
+```
+
+## Scripts
+
+| Commande | Description |
+|----------|-------------|
+| `npm run dev` | Serveur de developpement |
+| `npm run build` | Build static (output: `out/`) |
+| `npm run seed` | Inserer les projets dans Supabase |
+| `npm run generate-sitemap` | Generer sitemap.xml |
