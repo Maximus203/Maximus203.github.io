@@ -1,17 +1,12 @@
 User-agent: *
 Allow: /
 
-# Sitemap
 Sitemap: https://maximus203.github.io/sitemap.xml
 
-# Éviter l'indexation des fichiers de développement
-Disallow: /node_modules/
-Disallow: /src/
-Disallow: /*.json
-Disallow: /*.config.*
-Disallow: /.github/
-Disallow: /scripts/
+# Block internal Next.js files
+Disallow: /_next/
+Disallow: /*.json$
+Disallow: /*.txt$
 
-# Permettre l'accès aux assets importants
+# Allow assets
 Allow: /assets/
-Allow: /documents/

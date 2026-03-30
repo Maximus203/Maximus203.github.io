@@ -26,16 +26,14 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Generate sitemap
-        run: npm run generate-sitemap
-
       - name: Build project
         run: npm run build
 
       - name: Prepare deployment package
         run: |
           mkdir -p deploy
-          cp -r dist/* deploy/
+          cp -r out/* deploy/
+          cp public/.htaccess deploy/ 2>/dev/null || true
           tar -czf site.tar.gz -C deploy .
 
       - name: Deploy via cPanel API
@@ -45,21 +43,21 @@ jobs:
           CPANEL_SERVER="${{ secrets.SERVER }}"
           CNAME="cherif-diouf.artist-dev.com"
           HOME_DIR="/home/${CPANEL_USER}"
-      
+
           [ -z "$CPANEL_USER" ] && echo "CPANEL_USER est vide !" && exit 1
           [ -z "$CPANEL_TOKEN" ] && echo "CPANEL_TOKEN est vide !" && exit 1
           [ -z "$CPANEL_SERVER" ] && echo "CPANEL_SERVER est vide !" && exit 1
-          
+
           curl -k -H "Authorization: cpanel ${CPANEL_USER}:${CPANEL_TOKEN}" \
                -F "file=@site.tar.gz;filename=site.tar.gz" \
                -F "dir=${CNAME}" \
                https://${CPANEL_SERVER}:2083/execute/Fileman/upload_files
-      
+
           ARCHIVE_PATH="${HOME_DIR}/${CNAME}/site.tar.gz"
           DEST_PATH="${HOME_DIR}/${CNAME}/"
 
           curl -k -H "Authorization: cpanel ${CPANEL_USER}:${CPANEL_TOKEN}" \
             "https://${CPANEL_SERVER}:2083/json-api/cpanel?cpanel_jsonapi_user=${CPANEL_USER}&cpanel_jsonapi_apiversion=2&cpanel_jsonapi_module=Fileman&cpanel_jsonapi_func=fileop&op=extract&sourcefiles=${ARCHIVE_PATH}&destfiles=${DEST_PATH}&doubledecode=1"
-      
+
           curl -k -H "Authorization: cpanel ${CPANEL_USER}:${CPANEL_TOKEN}" \
             "https://${CPANEL_SERVER}:2083/json-api/cpanel?cpanel_jsonapi_user=${CPANEL_USER}&cpanel_jsonapi_apiversion=2&cpanel_jsonapi_module=Fileman&cpanel_jsonapi_func=fileop&op=unlink&sourcefiles=${ARCHIVE_PATH}"
