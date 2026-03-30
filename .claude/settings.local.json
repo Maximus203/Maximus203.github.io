@@ -1,0 +1,32 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find /c/Projets/Maximus203.github.io -type f -name .*)",
+      "Bash(npm install:*)",
+      "Bash(npm uninstall:*)",
+      "Bash(npx next:*)",
+      "Bash(rm App.tsx index.tsx index.html vite.config.ts store.ts types.ts constants.tsx)",
+      "Bash(rm -rf components/ hooks/ dist/)",
+      "Bash(curl -s http://localhost:4000/ -o /dev/null -w \"%{http_code} %{redirect_url}\")",
+      "Bash(curl -s http://localhost:4000/fr/ -o /dev/null -w \"%{http_code}\")",
+      "Bash(curl -s http://localhost:4000/en/gallery/ -o /dev/null -w \"%{http_code}\")",
+      "Bash(curl -s http://localhost:4000/fr/tools/readme-generator/ -o /dev/null -w \"%{http_code}\")",
+      "Bash(curl -s http://localhost:4000/fr/)",
+      "Bash(lsof -ti:4000)",
+      "Bash(xargs kill:*)",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(netstat -ano)",
+      "Bash(taskkill //PID 34748 //F)",
+      "Bash(supabase --version)",
+      "Bash(npx supabase:*)",
+      "Bash(npm run:*)",
+      "Bash(node -e \"const p = require\\(''@supabase/supabase-js/package.json''\\); console.log\\(p.version\\)\")",
+      "Bash(node -e \":*)",
+      "Bash(for tool:*)",
+      "Bash(do echo:*)",
+      "Bash(for lang:*)",
+      "Read(//c/Projets/Maximus203.github.io/out/$lang/tools/$tool/**)",
+      "Bash(done)"
+    ]
+  }
+}
