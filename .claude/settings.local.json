@@ -46,7 +46,8 @@
       "WebFetch(domain:portofolio-eljah.netlify.app)",
       "WebFetch(domain:mamado886.github.io)",
       "WebFetch(domain:kine54.github.io)",
-      "WebFetch(domain:adjaabibatoudiop-bit.github.io)"
+      "WebFetch(domain:adjaabibatoudiop-bit.github.io)",
+      "Bash(gh run:*)"
     ]
   }
 }
