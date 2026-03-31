@@ -2,7 +2,7 @@
 
 import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, UploadCloud, File, CheckCircle, Send } from 'lucide-react';
+import { X, UploadCloud, File, CheckCircle, Send, AlertCircle } from 'lucide-react';
 import { getSupabase } from '@/lib/supabase';
 
 interface ProjectRequestModalProps {
@@ -21,11 +21,13 @@ const ProjectRequestModal: React.FC<ProjectRequestModalProps> = ({ isOpen, onClo
   const [file, setFile] = useState<File | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setErrorMsg(null);
 
     try {
       let fileUrl = null;
@@ -70,6 +72,7 @@ const ProjectRequestModal: React.FC<ProjectRequestModalProps> = ({ isOpen, onClo
     } catch (err) {
       console.error('Error submitting project request:', err);
       setIsSubmitting(false);
+      setErrorMsg('Une erreur est survenue. Veuillez réessayer ou me contacter directement par email.');
     }
   };
 
@@ -198,6 +201,13 @@ const ProjectRequestModal: React.FC<ProjectRequestModalProps> = ({ isOpen, onClo
                          )}
                        </div>
                     </div>
+
+                    {errorMsg && (
+                      <div className="flex items-start gap-3 p-3 rounded-xl bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800/40 text-red-600 dark:text-red-400 text-sm">
+                        <AlertCircle size={18} className="flex-shrink-0 mt-0.5" />
+                        <span>{errorMsg}</span>
+                      </div>
+                    )}
 
                     <div className="pt-4 flex gap-3">
                        <button
