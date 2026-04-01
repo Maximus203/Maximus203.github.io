@@ -2,15 +2,17 @@
 
 import { motion } from 'framer-motion';
 import React from 'react';
-import { Experience } from '@/types';
+import { Experience, ProfileType } from '@/types';
 
 interface ExperienceItemProps {
   exp: Experience;
   isLast: boolean;
   index: number;
+  activeProfile?: ProfileType | null;
 }
 
-const ExperienceItem: React.FC<ExperienceItemProps> = ({ exp, isLast, index }) => {
+const ExperienceItem: React.FC<ExperienceItemProps> = ({ exp, isLast, index, activeProfile }) => {
+  const descriptions = (activeProfile && exp.profileDescriptions?.[activeProfile]) ?? exp.description;
   return (
     <motion.div
         initial={{ opacity: 0, x: -20 }}
@@ -56,7 +58,7 @@ const ExperienceItem: React.FC<ExperienceItemProps> = ({ exp, isLast, index }) =
           </div>
 
           <ul className="space-y-2">
-            {exp.description.map((desc, i) => (
+            {descriptions.map((desc, i) => (
               <li key={i} className="flex items-start text-gray-600 dark:text-gray-300 text-sm md:text-base leading-relaxed">
                 <span className="mr-2 mt-1.5 w-1.5 h-1.5 bg-gray-300 dark:bg-gray-600 rounded-full flex-shrink-0" />
                 <span>{desc}</span>

@@ -47,7 +47,12 @@
       "WebFetch(domain:mamado886.github.io)",
       "WebFetch(domain:kine54.github.io)",
       "WebFetch(domain:adjaabibatoudiop-bit.github.io)",
-      "Bash(gh run:*)"
+      "Bash(gh run:*)",
+      "Bash(cp \"C:\\\\Users\\\\Cherif DIOUF\\\\Downloads\\\\Cynoia Spaces.gif\" \"C:\\\\Projets\\\\Maximus203.github.io\\\\public\\\\assets\\\\projets\\\\cynoia-spaces.gif\")",
+      "Bash(cp \"C:\\\\Users\\\\Cherif DIOUF\\\\Pictures\\\\Téranga Dev.jpg\" \"C:\\\\Projets\\\\Maximus203.github.io\\\\public\\\\assets\\\\entreprises\\\\teranga-dev.jpg\")",
+      "Bash(dir \"C:\\\\Projets\\\\Maximus203.github.io\\\\public\\\\assets\\\\entreprises\" \")",
+      "Bash(findstr teranga:*)",
+      "Bash(find C:/Projets/Maximus203.github.io/public -name robots* -o -name sitemap*)"
     ]
   }
 }

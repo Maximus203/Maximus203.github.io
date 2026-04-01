@@ -1,13 +1,14 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Briefcase, Code2, FolderGit2, GraduationCap, Plus, Search, X } from 'lucide-react';
+import { ArrowRight, Briefcase, Code2, FolderGit2, GraduationCap, MessageSquare, Plus, Search, Sparkles, X } from 'lucide-react';
 import ExperienceItem from '@/components/home/ExperienceItem';
 import ProjectCard from '@/components/home/ProjectCard';
 import TerminalBlock from '@/components/home/TerminalBlock';
 import { useAppStore } from '@/store/store';
 import { getLabels, getResumeData } from '@/lib/i18n';
-import type { Language } from '@/types';
+import type { Language, ProfileType } from '@/types';
+import { useEffect, useState } from 'react';
 
 interface HomePageClientProps {
   lang: Language;
@@ -17,6 +18,35 @@ export default function HomePageClient({ lang }: HomePageClientProps) {
   const { isProjectModalOpen, setProjectModalOpen, projectSearch, setProjectSearch } = useAppStore();
   const data = getResumeData(lang);
   const labels = getLabels(lang);
+
+  const [activeProfile, setActiveProfile] = useState<ProfileType | null>(null);
+
+  // Restore profile from localStorage on mount
+  useEffect(() => {
+    const saved = localStorage.getItem('portfolio-profile') as ProfileType | null;
+    if (saved && ['software', 'network', 'teaching'].includes(saved)) {
+      setActiveProfile(saved);
+    }
+  }, []);
+
+  // Persist profile to localStorage on change
+  useEffect(() => {
+    if (activeProfile) {
+      localStorage.setItem('portfolio-profile', activeProfile);
+    } else {
+      localStorage.removeItem('portfolio-profile');
+    }
+  }, [activeProfile]);
+
+  const profiles: { key: ProfileType; label: string }[] = [
+    { key: 'software', label: labels.profileSoftware },
+    { key: 'network', label: labels.profileNetwork },
+    { key: 'teaching', label: labels.profileTeaching },
+  ];
+
+  const filteredExperiences = activeProfile
+    ? data.experience.filter(exp => !exp.profiles || exp.profiles.includes(activeProfile))
+    : data.experience;
 
   const filteredProjects = data.projects.filter((project) => {
     const query = projectSearch.toLowerCase();
@@ -49,6 +79,27 @@ export default function HomePageClient({ lang }: HomePageClientProps) {
             {labels.and} {labels.mentor}.
           </h1>
           <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed max-w-xl">{data.profile.bioShort}</p>
+
+          {/* Hero CTAs */}
+          <div className="mt-8 flex items-center gap-3 flex-wrap">
+            {/* Primary CTA */}
+            <a
+              href="#projects"
+              className="group inline-flex items-center gap-2.5 px-7 py-3.5 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-sm transition-all duration-200 shadow-[0_4px_18px_rgba(99,102,241,0.3)] hover:shadow-[0_6px_22px_rgba(99,102,241,0.4)] hover:-translate-y-0.5"
+            >
+              {labels.viewProjects}
+              <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform duration-200" />
+            </a>
+
+            {/* Secondary CTA — ghost */}
+            <button
+              onClick={() => setProjectModalOpen(true)}
+              className="group inline-flex items-center gap-2.5 px-7 py-3.5 rounded-2xl border-2 border-gray-200 dark:border-slate-700 text-gray-700 dark:text-gray-200 hover:border-indigo-400 dark:hover:border-indigo-500 hover:text-indigo-600 dark:hover:text-indigo-400 font-bold text-sm transition-all duration-200 hover:-translate-y-0.5"
+            >
+              <MessageSquare size={16} className="group-hover:scale-110 transition-transform duration-200" />
+              {labels.contactCta}
+            </button>
+          </div>
         </motion.div>
 
         <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.2, duration: 0.5 }}>
@@ -84,13 +135,52 @@ export default function HomePageClient({ lang }: HomePageClientProps) {
 
       {/* Experience Section */}
       <section id="experience">
-        <div className="flex items-center gap-3 mb-8">
-          <Briefcase className="text-indigo-600 dark:text-indigo-400" />
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-white">{labels.workExperience}</h2>
+        <div className="flex items-center justify-between gap-4 mb-8">
+          {/* Titre — se réduit si besoin, ne wrap jamais */}
+          <div className="flex items-center gap-3 min-w-0 flex-shrink">
+            <Briefcase className="text-indigo-600 dark:text-indigo-400 flex-shrink-0" size={20} />
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white whitespace-nowrap truncate">
+              {labels.workExperience}
+            </h2>
+          </div>
+
+          {/* Profile switcher — ne wrap jamais, reste sur la même ligne */}
+          <div className="flex gap-2 flex-shrink-0">
+            {profiles.map((profile, idx) => {
+              const isActive = activeProfile === profile.key;
+              return (
+                <motion.button
+                  key={profile.key}
+                  onClick={() => setActiveProfile(isActive ? null : profile.key)}
+                  animate={!isActive ? { scale: [1, 1.07, 1] } : { scale: 1 }}
+                  transition={!isActive ? {
+                    duration: 1.4,
+                    repeat: Infinity,
+                    repeatDelay: 2 + idx * 0.6,
+                    ease: 'easeInOut',
+                  } : { duration: 0.15 }}
+                  className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-colors ${
+                    isActive
+                      ? 'bg-indigo-600 text-white shadow-sm'
+                      : 'bg-gray-100 dark:bg-slate-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-slate-700'
+                  }`}
+                >
+                  {profile.label}
+                </motion.button>
+              );
+            })}
+          </div>
         </div>
+
         <div className="space-y-2">
-          {data.experience.map((exp, index) => (
-            <ExperienceItem key={index} exp={exp} index={index} isLast={index === data.experience.length - 1} />
+          {filteredExperiences.map((exp, index) => (
+            <ExperienceItem
+              key={`${exp.company}-${exp.period}`}
+              exp={exp}
+              index={index}
+              isLast={index === filteredExperiences.length - 1}
+              activeProfile={activeProfile}
+            />
           ))}
         </div>
       </section>
@@ -105,17 +195,17 @@ export default function HomePageClient({ lang }: HomePageClientProps) {
             </div>
             <button
               onClick={() => setProjectModalOpen(true)}
-              className="hidden lg:flex items-center gap-2 px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-bold transition-all shadow-md hover:shadow-lg shadow-indigo-200 dark:shadow-none transform hover:-translate-y-0.5 whitespace-nowrap"
+              className="hidden lg:flex items-center gap-2 px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-bold transition-all duration-200 shadow-[0_2px_12px_rgba(99,102,241,0.3)] hover:shadow-[0_4px_16px_rgba(99,102,241,0.4)] hover:-translate-y-0.5 whitespace-nowrap"
             >
-              <Plus size={18} />
+              <Sparkles size={15} />
               {labels.startProject}
             </button>
             <button
               onClick={() => setProjectModalOpen(true)}
-              className="lg:hidden flex items-center justify-center w-10 h-10 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white shadow-md hover:shadow-lg shadow-indigo-200 dark:shadow-none transition-all hover:scale-105"
+              className="lg:hidden flex items-center justify-center w-10 h-10 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white shadow-[0_2px_10px_rgba(99,102,241,0.3)] transition-all hover:scale-105 hover:shadow-[0_4px_14px_rgba(99,102,241,0.4)]"
               aria-label={labels.startProject}
             >
-              <Plus size={20} />
+              <Sparkles size={18} />
             </button>
           </div>
           <div className="relative group w-full sm:w-72">

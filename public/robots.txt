@@ -1,12 +1,19 @@
 User-agent: *
 Allow: /
 
+# Sitemap
 Sitemap: https://maximus203.github.io/sitemap.xml
 
-# Block internal Next.js files
+# Bloquer les fichiers techniques de Next.js
 Disallow: /_next/
-Disallow: /*.json$
-Disallow: /*.txt$
+Disallow: /api/
 
-# Allow assets
+# Autoriser explicitement les assets
 Allow: /assets/
+
+# Crawl-delay indicatif pour les bots moins importants
+User-agent: AhrefsBot
+Crawl-delay: 10
+
+User-agent: SemrushBot
+Crawl-delay: 10
