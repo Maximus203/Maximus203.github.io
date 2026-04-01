@@ -1,6 +1,6 @@
 'use client';
 
-import { Briefcase, ChevronDown, Code2, FolderGit2, GraduationCap, Home, Image as ImageIcon, LayoutList, User, Wrench } from 'lucide-react';
+import { Briefcase, BookOpen, ChevronDown, Code2, FolderGit2, GraduationCap, Home, Image as ImageIcon, LayoutList, User, Wrench } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
@@ -117,6 +117,15 @@ export default function DesktopNav({ lang, labels }: DesktopNavProps) {
       >
         <GraduationCap size={15} />
         {labels.students}
+      </Link>
+
+      {/* Publications — hidden until content is ready */}
+      <Link
+        href={`/${lang}/publications/`}
+        className="hidden items-center gap-1.5 transition-colors whitespace-nowrap hover:text-gray-900 dark:hover:text-gray-200"
+      >
+        <BookOpen size={15} />
+        {labels.publications}
       </Link>
     </div>
   );

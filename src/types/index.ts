@@ -1,4 +1,5 @@
 export type Language = 'fr' | 'en' | 'zh' | 'ja';
+export type ProfileType = 'software' | 'network' | 'teaching';
 
 export interface Project {
   title: string;
@@ -16,6 +17,8 @@ export interface Experience {
   description: string[];
   location?: string;
   logo?: string;
+  profiles?: ProfileType[];
+  profileDescriptions?: Partial<Record<ProfileType, string[]>>;
 }
 
 export interface Education {
