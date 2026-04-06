@@ -2,7 +2,7 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://maximus203.github.io/sitemap.xml
+Sitemap: https://cherif-diouf.artist-dev.com/sitemap.xml
 
 # Bloquer les fichiers techniques de Next.js
 Disallow: /_next/

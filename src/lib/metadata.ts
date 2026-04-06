@@ -3,7 +3,7 @@ import type { Language } from '@/types';
 import { UI_LABELS } from '@/lib/constants/ui-labels';
 import { SUPPORTED_LANGUAGES } from '@/lib/i18n';
 
-const BASE_URL = 'https://maximus203.github.io';
+const BASE_URL = 'https://cherif-diouf.artist-dev.com';
 
 const LOCALE_MAP: Record<Language, string> = {
   fr: 'fr_FR',
