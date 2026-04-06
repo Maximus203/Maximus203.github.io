@@ -16,7 +16,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://maximus203.github.io'),
+  metadataBase: new URL('https://cherif-diouf.artist-dev.com'),
   icons: {
     icon: '/assets/logo.webp',
     shortcut: '/assets/logo.webp',
@@ -33,6 +33,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="fr" suppressHydrationWarning>
       <head>
+        {/* Google AdSense — remplacer ca-pub-XXXXXXXXXXXXXXXX par votre ID client */}
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"
+          crossOrigin="anonymous"
+        />
         {/* Person schema — identité complète */}
         <script
           type="application/ld+json"
@@ -40,11 +46,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             __html: JSON.stringify({
               '@context': 'https://schema.org',
               '@type': 'Person',
-              '@id': 'https://maximus203.github.io/#person',
+              '@id': 'https://cherif-diouf.artist-dev.com/#person',
               name: 'El Hadji Ahmadou Cherif Diouf',
               alternateName: ['Cherif Diouf', 'Ahmadou Cherif Diouf'],
-              url: 'https://maximus203.github.io/fr/',
-              image: 'https://maximus203.github.io/assets/photo-2.webp',
+              url: 'https://cherif-diouf.artist-dev.com/fr/',
+              image: 'https://cherif-diouf.artist-dev.com/assets/photo-2.webp',
               description:
                 'Expert en digitalisation et développeur Full-Stack (Laravel, React, Supabase, Next.js). Formateur en développement web et mobile au Sénégal. Doctorant en Sciences Techniques et Numériques. Spécialisé en prompt engineering et IA appliquée.',
               jobTitle: [
@@ -110,17 +116,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             __html: JSON.stringify({
               '@context': 'https://schema.org',
               '@type': 'WebSite',
-              '@id': 'https://maximus203.github.io/#website',
-              url: 'https://maximus203.github.io/fr/',
+              '@id': 'https://cherif-diouf.artist-dev.com/#website',
+              url: 'https://cherif-diouf.artist-dev.com/fr/',
               name: 'Cherif Diouf – Portfolio',
               description:
                 'Portfolio professionnel de El Hadji Ahmadou Cherif Diouf. Développeur Full-Stack, expert digitalisation, formateur web et prompt engineer au Sénégal.',
               inLanguage: ['fr', 'en', 'zh', 'ja'],
-              author: { '@id': 'https://maximus203.github.io/#person' },
-              publisher: { '@id': 'https://maximus203.github.io/#person' },
+              author: { '@id': 'https://cherif-diouf.artist-dev.com/#person' },
+              publisher: { '@id': 'https://cherif-diouf.artist-dev.com/#person' },
               potentialAction: {
                 '@type': 'SearchAction',
-                target: 'https://maximus203.github.io/fr/?q={search_term_string}',
+                target: 'https://cherif-diouf.artist-dev.com/fr/?q={search_term_string}',
                 'query-input': 'required name=search_term_string',
               },
             }),
