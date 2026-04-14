@@ -11,6 +11,7 @@ import LangSwitcher from '@/components/shared/LangSwitcher';
 import ThemeToggle from '@/components/shared/ThemeToggle';
 import IntroAnimation from '@/components/shared/IntroAnimation';
 import ProjectRequestModal from '@/components/shared/ProjectRequestModal';
+import AdSidebar from '@/components/ads/AdSidebar';
 import { useAppStore } from '@/store/store';
 import { getLabels, getResumeData } from '@/lib/i18n';
 import type { Language } from '@/types';
@@ -31,7 +32,7 @@ export function LangLayoutClient({ lang, children }: LangLayoutClientProps) {
 
   const isHome = pathname === `/${lang}` || pathname === `/${lang}/`;
   const isToolPage = pathname.includes('/tools/readme-generator') || pathname.includes('/tools/image-converter') || pathname.includes('/tools/meme-generator');
-  const isFullWidth = !isHome;
+  const isFullWidth = !isHome && !isToolPage;
   const showFooter = isHome || pathname.includes('/gallery') || pathname === `/${lang}/tools` || pathname === `/${lang}/tools/` || pathname.includes('/students');
 
   useEffect(() => {
@@ -60,12 +61,14 @@ export function LangLayoutClient({ lang, children }: LangLayoutClientProps) {
           <Navbar lang={lang} labels={labels} />
 
           <div className="max-w-7xl mx-auto px-6 py-8 lg:py-16 grid grid-cols-1 lg:grid-cols-12 gap-12 flex-grow w-full">
-            <main className={`${isFullWidth ? 'lg:col-span-12' : 'lg:col-span-7'} pt-16 lg:pt-0`}>
+            <main className={`${isFullWidth ? 'lg:col-span-12' : isToolPage ? 'lg:col-span-9' : 'lg:col-span-7'} pt-16 lg:pt-0`}>
               <DesktopNav lang={lang} labels={labels} />
               {children}
             </main>
 
-            {!isFullWidth && (
+            {isToolPage && <AdSidebar />}
+
+            {isHome && (
               <aside className="hidden lg:block lg:col-span-5 relative">
                 <div className="sticky top-8 pl-8 max-h-[calc(100vh-2rem)] overflow-y-auto hide-scrollbar pb-4">
                   <div className="flex justify-end mb-6 gap-3">

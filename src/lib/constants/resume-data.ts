@@ -85,7 +85,7 @@ export const RESUME_DATA: Record<Language, ResumeData> = {
         ],
         profileDescriptions: {
           software: [
-            "Conception et développement de Ndougalma (Laravel, React, Supabase).",
+            "Conception et développement de Ndougalma (Firebase, Flutter, React).",
             "Architecture technique : API REST, authentification, déploiement CI/CD.",
             "Gestion de projet : définition des specs, suivi des sprints."
           ],
@@ -294,7 +294,7 @@ export const RESUME_DATA: Record<Language, ResumeData> = {
         ],
         profileDescriptions: {
           software: [
-            "Design and development of Ndougalma (Laravel, React, Supabase).",
+            "Design and development of Ndougalma (Firebase, Flutter, React).",
             "Technical architecture: REST API, authentication, CI/CD deployment.",
             "Project management: spec definition, sprint tracking."
           ],
@@ -503,7 +503,7 @@ export const RESUME_DATA: Record<Language, ResumeData> = {
         ],
         profileDescriptions: {
           software: [
-            "设计和开发Ndougalma (Laravel, React, Supabase)。",
+            "设计和开发Ndougalma (Firebase, Flutter, React)。",
             "技术架构：REST API、身份验证、CI/CD部署。",
             "项目管理：规格定义、冲刺跟踪。"
           ],
@@ -712,7 +712,7 @@ export const RESUME_DATA: Record<Language, ResumeData> = {
         ],
         profileDescriptions: {
           software: [
-            "Ndougalmaの設計・開発 (Laravel, React, Supabase)。",
+            "Ndougalmaの設計・開発 (Firebase, Flutter, React)。",
             "技術アーキテクチャ：REST API、認証、CI/CDデプロイ。",
             "プロジェクト管理：仕様定義、スプリント管理。"
           ],
