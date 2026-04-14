@@ -52,7 +52,14 @@
       "Bash(cp \"C:\\\\Users\\\\Cherif DIOUF\\\\Pictures\\\\Téranga Dev.jpg\" \"C:\\\\Projets\\\\Maximus203.github.io\\\\public\\\\assets\\\\entreprises\\\\teranga-dev.jpg\")",
       "Bash(dir \"C:\\\\Projets\\\\Maximus203.github.io\\\\public\\\\assets\\\\entreprises\" \")",
       "Bash(findstr teranga:*)",
-      "Bash(find C:/Projets/Maximus203.github.io/public -name robots* -o -name sitemap*)"
+      "Bash(find C:/Projets/Maximus203.github.io/public -name robots* -o -name sitemap*)",
+      "Bash(grep -E \"^\\\\.|\\\\:$|^\\\\s\")",
+      "WebSearch",
+      "WebFetch(domain:pixabay.com)",
+      "WebFetch(domain:mixkit.co)",
+      "Bash(curl -sL \"https://assets.mixkit.co/active_storage/sfx/212/212.wav\" -o \"C:/Users/Cherif DIOUF/Documents/Projets/Maximus203.github.io/public/happy.mp3\" -w \"%{http_code}\")",
+      "Bash(mv happy.mp3 happy.wav)",
+      "Bash(ffmpeg -y -i happy.wav -codec:a libmp3lame -b:a 128k happy.mp3)"
     ]
   }
 }
