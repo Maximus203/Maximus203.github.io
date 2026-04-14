@@ -33,12 +33,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="fr" suppressHydrationWarning>
       <head>
-        {/* Google AdSense — remplacer ca-pub-XXXXXXXXXXXXXXXX par votre ID client */}
-        <script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"
-          crossOrigin="anonymous"
-        />
         {/* Person schema — identité complète */}
         <script
           type="application/ld+json"
