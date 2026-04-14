@@ -14,20 +14,6 @@ const IntroAnimation: React.FC<{ onComplete: () => void }> = ({ onComplete }) =>
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
-    // Audio Playback
-    const playAudio = async () => {
-      try {
-        const audio = new Audio('/happy.mp3');
-        audio.volume = 0.5;
-        await audio.play();
-      } catch (err) {
-        // Autoplay policies might block this without interaction,
-        // silently catch to avoid console errors.
-        console.log("Audio autoplay blocked or file not found.");
-      }
-    };
-    playAudio();
-
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -177,9 +163,12 @@ const IntroAnimation: React.FC<{ onComplete: () => void }> = ({ onComplete }) =>
         transition={{ duration: 1.5, ease: "easeOut" }}
         className="relative z-10 text-center px-4"
       >
-        <h1 className="text-3xl md:text-6xl font-black text-white font-mono uppercase mix-blend-difference">
+        <p
+          aria-hidden="true"
+          className="text-3xl md:text-6xl font-black text-white font-mono uppercase mix-blend-difference"
+        >
           Cherif Diouf | Portfolio
-        </h1>
+        </p>
       </motion.div>
     </motion.div>
   );
