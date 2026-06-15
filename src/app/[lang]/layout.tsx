@@ -142,11 +142,6 @@ export default async function LangLayout({
               inLanguage: ['fr', 'en', 'zh', 'ja'],
               author: { '@id': 'https://cherif-diouf.artist-dev.com/#person' },
               publisher: { '@id': 'https://cherif-diouf.artist-dev.com/#person' },
-              potentialAction: {
-                '@type': 'SearchAction',
-                target: `${localeUrl}?q={search_term_string}`,
-                'query-input': 'required name=search_term_string',
-              },
             }),
           }}
         />
