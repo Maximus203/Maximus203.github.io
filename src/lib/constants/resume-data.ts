@@ -232,6 +232,12 @@ export const RESUME_DATA: Record<Language, ResumeData> = {
         image: "/assets/projets/my-event-demo.gif"
       },
       {
+        title: "Nanobrowser Bridge",
+        description: "Pont HTTP local pour piloter Nanobrowser (agent IA Chrome) via un LLM local (Ollama). Validation humaine pour les actions sensibles.",
+        tags: ["IA", "Open Source", "Automatisation", "TypeScript"],
+        github: "https://github.com/Maximus203/nanobrowser-bridge",
+      },
+      {
         title: "Archive ESTM",
         description: "Plateforme d'archivage des mémoires avec ancrage Blockchain Ethereum pour l'intégrité.",
         tags: ["Blockchain", "Ethereum", "Archivage"],
@@ -245,8 +251,8 @@ export const RESUME_DATA: Record<Language, ResumeData> = {
       },
       {
         title: "Cynoia Spaces",
-        description: "SaaS de gestion d'espaces collaboratifs. Architecture microservices (Spring Boot, Gateway).",
-        tags: ["Spring Boot", "Microservices", "SaaS"],
+        description: "SaaS de gestion d'espaces collaboratifs. Stack Symfony 6.4 + React 18, déployé avec Docker.",
+        tags: ["Symfony", "React", "SaaS"],
         image: "/assets/projets/cynoia-spaces.gif"
       },
       {
@@ -441,6 +447,12 @@ export const RESUME_DATA: Record<Language, ResumeData> = {
         image: "/assets/projets/my-event-demo.gif"
       },
       {
+        title: "Nanobrowser Bridge",
+        description: "Local HTTP bridge to control Nanobrowser (Chrome AI agent) via a local LLM (Ollama). Human validation for sensitive actions.",
+        tags: ["AI", "Open Source", "Automation", "TypeScript"],
+        github: "https://github.com/Maximus203/nanobrowser-bridge",
+      },
+      {
         title: "Archive ESTM",
         description: "Thesis archiving platform with Ethereum Blockchain anchoring for integrity.",
         tags: ["Blockchain", "Ethereum", "Archiving"],
@@ -454,8 +466,8 @@ export const RESUME_DATA: Record<Language, ResumeData> = {
       },
       {
         title: "Cynoia Spaces",
-        description: "Collaborative space management SaaS. Microservices architecture (Spring Boot, Gateway).",
-        tags: ["Spring Boot", "Microservices", "SaaS"],
+        description: "Collaborative space management SaaS. Symfony 6.4 + React 18 stack, deployed with Docker.",
+        tags: ["Symfony", "React", "SaaS"],
         image: "/assets/projets/cynoia-spaces.gif"
       },
       {
@@ -650,6 +662,12 @@ export const RESUME_DATA: Record<Language, ResumeData> = {
         image: "/assets/projets/my-event-demo.gif"
       },
       {
+        title: "Nanobrowser Bridge",
+        description: "本地HTTP桥接，通过本地LLM（Ollama）控制Nanobrowser（Chrome AI代理）。敏感操作需人工验证。",
+        tags: ["AI", "开源", "自动化", "TypeScript"],
+        github: "https://github.com/Maximus203/nanobrowser-bridge",
+      },
+      {
         title: "Archive ESTM",
         description: "基于以太坊区块链锚定的论文归档平台，确保完整性.",
         tags: ["Blockchain", "Ethereum", "Archivage"],
@@ -663,8 +681,8 @@ export const RESUME_DATA: Record<Language, ResumeData> = {
       },
       {
         title: "Cynoia Spaces",
-        description: "协作空间管理SaaS. 微服务架构 (Spring Boot, Gateway).",
-        tags: ["Spring Boot", "Microservices", "SaaS"],
+        description: "协作空间管理SaaS。Symfony 6.4 + React 18技术栈，使用Docker部署。",
+        tags: ["Symfony", "React", "SaaS"],
         image: "/assets/projets/cynoia-spaces.gif"
       },
       {
@@ -859,6 +877,12 @@ export const RESUME_DATA: Record<Language, ResumeData> = {
         image: "/assets/projets/my-event-demo.gif"
       },
       {
+        title: "Nanobrowser Bridge",
+        description: "ローカルLLM（Ollama）でNanobrowser（Chrome AIエージェント）を制御するローカルHTTPブリッジ。機密アクションには人間の検証が必要。",
+        tags: ["AI", "オープンソース", "自動化", "TypeScript"],
+        github: "https://github.com/Maximus203/nanobrowser-bridge",
+      },
+      {
         title: "Archive ESTM",
         description: "完全性を確保するためのイーサリアムブロックチェーンアンカー付き論文アーカイブプラットフォーム.",
         tags: ["Blockchain", "Ethereum", "Archivage"],
@@ -872,8 +896,8 @@ export const RESUME_DATA: Record<Language, ResumeData> = {
       },
       {
         title: "Cynoia Spaces",
-        description: "コラボレーションスペース管理SaaS. マイクロサービスアーキテクチャ (Spring Boot, Gateway).",
-        tags: ["Spring Boot", "Microservices", "SaaS"],
+        description: "コラボレーションスペース管理SaaS。Symfony 6.4 + React 18構成、Dockerでデプロイ。",
+        tags: ["Symfony", "React", "SaaS"],
         image: "/assets/projets/cynoia-spaces.gif"
       },
       {
