@@ -50,6 +50,8 @@ export default async function LangLayout({
     notFound();
   }
 
+  const localeUrl = `https://cherif-diouf.artist-dev.com/${lang}/`;
+
   return (
     <html lang={lang} suppressHydrationWarning>
       <head>
@@ -63,7 +65,7 @@ export default async function LangLayout({
               '@id': 'https://cherif-diouf.artist-dev.com/#person',
               name: 'El Hadji Ahmadou Cherif Diouf',
               alternateName: ['Cherif Diouf', 'Ahmadou Cherif Diouf'],
-              url: 'https://cherif-diouf.artist-dev.com/fr/',
+              url: localeUrl,
               image: 'https://cherif-diouf.artist-dev.com/assets/photo-2.webp',
               description:
                 'Expert en digitalisation et développeur Full-Stack (Laravel, React, Supabase, Next.js). Formateur en développement web et mobile au Sénégal. Doctorant en Sciences Techniques et Numériques. Spécialisé en prompt engineering et IA appliquée.',
@@ -131,7 +133,7 @@ export default async function LangLayout({
               '@context': 'https://schema.org',
               '@type': 'WebSite',
               '@id': 'https://cherif-diouf.artist-dev.com/#website',
-              url: 'https://cherif-diouf.artist-dev.com/fr/',
+              url: localeUrl,
               name: 'Cherif Diouf – Portfolio',
               description:
                 'Portfolio professionnel de El Hadji Ahmadou Cherif Diouf. Développeur Full-Stack, expert digitalisation, formateur web et prompt engineer au Sénégal.',
@@ -140,7 +142,7 @@ export default async function LangLayout({
               publisher: { '@id': 'https://cherif-diouf.artist-dev.com/#person' },
               potentialAction: {
                 '@type': 'SearchAction',
-                target: 'https://cherif-diouf.artist-dev.com/fr/?q={search_term_string}',
+                target: `${localeUrl}?q={search_term_string}`,
                 'query-input': 'required name=search_term_string',
               },
             }),
