@@ -26,7 +26,11 @@ applyTo: '**'
 
 ---
 
-### **Fonctionnalité Clé : Le Sélecteur de Vues**
+### **Fonctionnalité Clé : Le Sélecteur de Vues** [TODO — non implémenté, voir issue #9]
+
+> **Status** : reporté. Le store Zustand ne connaît que `theme: 'light' | 'dark'`.
+> Les `profileDescriptions` dans `resume-data.ts` et les types `ProfileType` sont en place
+> mais aucun composant ne switche la présentation. À implémenter dans une future itération.
 
 Dans la barre de navigation, ajoute un composant (par exemple, un groupe de trois boutons ou un switch stylisé) qui permet de basculer entre les trois vues suivantes. Le changement de thème doit se faire par l'ajout d'une classe sur l'élément `<body>` (ex: `theme-frontend`, `theme-backend`) et des modifications dans le CSS.
 
