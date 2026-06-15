@@ -7,6 +7,8 @@ import { SUPPORTED_LANGUAGES } from '@/lib/i18n';
 import { LangLayoutClient } from './LangLayoutClient';
 import type { Language } from '@/types';
 
+const SITE_URL = 'https://cherif-diouf.artist-dev.com';
+
 const inter = Inter({
   subsets: ['latin'],
   variable: '--font-inter',
@@ -20,7 +22,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://cherif-diouf.artist-dev.com'),
+  metadataBase: new URL(SITE_URL),
   icons: {
     icon: '/assets/logo.webp',
     shortcut: '/assets/logo.webp',
@@ -50,7 +52,7 @@ export default async function LangLayout({
     notFound();
   }
 
-  const localeUrl = `https://cherif-diouf.artist-dev.com/${lang}/`;
+  const localeUrl = `${SITE_URL}/${lang}/`;
 
   return (
     <html lang={lang} suppressHydrationWarning>
