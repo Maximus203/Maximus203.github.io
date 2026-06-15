@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion } from 'framer-motion';
 import { usePathname } from 'next/navigation';
-import { useCallback, useEffect } from 'react';
+import { useCallback } from 'react';
 import Navbar from '@/components/layout/Navbar';
 import DesktopNav from '@/components/layout/DesktopNav';
 import Footer from '@/components/layout/Footer';
@@ -33,10 +33,6 @@ export function LangLayoutClient({ lang, children }: LangLayoutClientProps) {
   const isToolPage = pathname.includes('/tools/readme-generator') || pathname.includes('/tools/image-converter') || pathname.includes('/tools/meme-generator');
   const isFullWidth = !isHome && !isToolPage;
   const showFooter = isHome || pathname.includes('/gallery') || pathname === `/${lang}/tools` || pathname === `/${lang}/tools/` || pathname.includes('/students');
-
-  useEffect(() => {
-    document.documentElement.lang = lang;
-  }, [lang]);
 
   return (
     <>
