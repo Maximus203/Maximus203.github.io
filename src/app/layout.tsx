@@ -118,11 +118,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               inLanguage: ['fr', 'en', 'zh', 'ja'],
               author: { '@id': 'https://cherif-diouf.artist-dev.com/#person' },
               publisher: { '@id': 'https://cherif-diouf.artist-dev.com/#person' },
-              potentialAction: {
-                '@type': 'SearchAction',
-                target: 'https://cherif-diouf.artist-dev.com/fr/?q={search_term_string}',
-                'query-input': 'required name=search_term_string',
-              },
             }),
           }}
         />
