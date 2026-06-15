@@ -66,7 +66,7 @@ export function LangLayoutClient({ lang, children }: LangLayoutClientProps) {
               {children}
             </main>
 
-            {isToolPage && <AdSidebar />}
+            {/* AdSidebar désactivée — publisher ID AdSense non configuré (#12) */}
 
             {isHome && (
               <aside className="hidden lg:block lg:col-span-5 relative">
