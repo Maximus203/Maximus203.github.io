@@ -14,15 +14,17 @@ interface MemeGeneratorProps {
 
 const MemeGenerator: React.FC<MemeGeneratorProps> = ({ lang, labels }) => {
   const [image, setImage] = useState<string | null>(null);
-  const [topText, setTopText] = useState('');
-  const [bottomText, setBottomText] = useState('');
+  // #27 — texte d'exemple réellement dessiné sur le canvas par défaut (i18n via labels)
+  const [topText, setTopText] = useState(() => labels?.memeExampleTop ?? 'TOP TEXT');
+  const [bottomText, setBottomText] = useState(() => labels?.memeExampleBottom ?? 'BOTTOM TEXT');
   const [fontSize, setFontSize] = useState(40);
   const [textColor, setTextColor] = useState('#FFFFFF');
   const [strokeColor, setStrokeColor] = useState('#000000');
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const defaultImage = "https://images.unsplash.com/photo-1531259683007-016a7b628fc3?auto=format&fit=crop&q=80&w=1000";
+  // #27 — image de démo LOCALE (zéro dépendance réseau externe sur le 1er rendu)
+  const defaultImage = "/assets/tools/meme-demo.png";
 
   useEffect(() => {
     if (!image) {
@@ -37,7 +39,6 @@ const MemeGenerator: React.FC<MemeGeneratorProps> = ({ lang, labels }) => {
       if (!ctx) return;
 
       const img = new Image();
-      img.crossOrigin = 'anonymous';
       img.src = image;
       img.onload = () => {
         // Maintain aspect ratio but fit in container (max width/height)

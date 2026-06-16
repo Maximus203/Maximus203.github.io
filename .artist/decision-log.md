@@ -22,3 +22,20 @@
 
 ### Skills forge / install / trivial
 - Ce fix est **trivial** (refacto layout Next.js standard) → pas de skill à forger ni installer
+
+## 2026-06-16 — Lot : UX Onboarding outils (#24-#28)
+
+### Décisions tranchées seul (réversibles — UI/onboarding)
+- **#26** : implémenter **les deux** branches du « OU » de l'issue (illustration chiffrée du gain **+** bouton « image de démo »). Raison : « montrer ET faire accomplir » > l'un ou l'autre. Réversible (retrait d'un bloc JSX).
+- **#26** : l'image de démo réutilise un asset JPG **déjà présent** (`/assets/galerie/devfest-1.jpg`) pour démontrer un vrai gain JPG→WebP sans ajouter de binaire dédié.
+- **#27** : image de démo = PNG **généré localement** (scène neutre, copyright-safe) plutôt qu'un asset tiers ou une photo identifiable de la galerie. Stocké `/public/assets/tools/meme-demo.png`.
+- **#27** : texte d'exemple du meme via `ui-labels.ts` (clés `memeExampleTop`/`memeExampleBottom`, 4 locales) plutôt qu'en dur → respecte l'i18n existant.
+- **#28** : implémenter **les deux** (défauts neutres `your-username`/liens vides **+** champ pseudo proéminent au-dessus de l'aperçu). Réversible.
+
+### Contrainte projet appliquée
+- Pas d'emojis bruts dans le code → unicode escapes / icônes Lucide pour tout nouvel élément.
+
+### Identité / gate
+- Solo (pas de 2ᵉ identité reviewer) → EXIT loop = **« PR prête »**. APPROVE + merge `main` = gate humaine (déclenche le déploiement cPanel).
+
+### Aucune décision irréversible parquée.
