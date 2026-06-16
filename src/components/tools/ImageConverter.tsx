@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, Upload, Image as ImageIcon, FileOutput, Settings, Download, X, RefreshCw, CheckCircle, AlertCircle, Archive, ChevronDown } from 'lucide-react';
+import { ArrowLeft, Upload, Image as ImageIcon, FileOutput, Settings, Download, X, RefreshCw, CheckCircle, AlertCircle, Archive, ChevronDown, ArrowRight } from 'lucide-react';
 import JSZip from 'jszip';
 import saveAs from 'file-saver';
 import Link from 'next/link';
@@ -36,6 +36,8 @@ const ImageConverter: React.FC<ImageConverterProps> = ({ lang }) => {
   const [quality, setQuality] = useState(0.8);
   const [isDragging, setIsDragging] = useState(false);
   const [isZipping, setIsZipping] = useState(false);
+  const [isLoadingDemo, setIsLoadingDemo] = useState(false);
+  const [demoError, setDemoError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleDragOver = (e: React.DragEvent) => {
@@ -57,6 +59,8 @@ const ImageConverter: React.FC<ImageConverterProps> = ({ lang }) => {
       originalSize: file.size
     }));
     setFiles(prev => [...prev, ...newFiles]);
+    // #24 — conversion automatique au drop/sélection : plus de 2e clic distant
+    void convertFiles(newFiles);
   };
 
   const handleDrop = (e: React.DragEvent) => {
@@ -155,15 +159,38 @@ const ImageConverter: React.FC<ImageConverterProps> = ({ lang }) => {
     });
   };
 
-  const handleConvertAll = async () => {
-    // Reset errors or pending items to converting state
-    setFiles(prev => prev.map(f => f.status !== 'done' ? { ...f, status: 'converting', errorMessage: undefined } : f));
+  // Convertit une liste cible (séquentiel pour ne pas bloquer l'UI).
+  const convertFiles = async (targets: FileWithPreview[]) => {
+    if (targets.length === 0) return;
+    const ids = new Set(targets.map(t => t.id));
+    setFiles(prev => prev.map(f => (ids.has(f.id) ? { ...f, status: 'converting', errorMessage: undefined } : f)));
+    for (const file of targets) {
+      await convertImage(file);
+    }
+  };
 
-    // Process sequentially to avoid freezing UI
-    for (const file of files) {
-      if (file.status !== 'done') {
-        await convertImage(file);
-      }
+  // Bouton « Convertir Tout » : reconvertit tout avec les réglages courants
+  // (utile après un changement de format/qualité ; le 1er passage est déjà auto au drop).
+  const handleConvertAll = () => {
+    void convertFiles(files);
+  };
+
+  // #26 — charge une image de démo LOCALE (zéro réseau externe) et la convertit
+  // pour montrer la valeur (le gain de poids) avant que l'utilisateur engage son fichier.
+  const loadDemoImage = async () => {
+    setIsLoadingDemo(true);
+    setDemoError(null);
+    try {
+      const res = await fetch('/assets/galerie/devfest-1.jpg');
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const blob = await res.blob();
+      const demoFile = new File([blob], 'demo-devfest.jpg', { type: blob.type || 'image/jpeg' });
+      processFiles([demoFile]);
+    } catch (error) {
+      console.error('Impossible de charger l\'image de démo', error);
+      setDemoError("Impossible de charger l'image de démo. Réessayez ou déposez votre propre image.");
+    } finally {
+      setIsLoadingDemo(false);
     }
   };
 
@@ -204,6 +231,13 @@ const ImageConverter: React.FC<ImageConverterProps> = ({ lang }) => {
     const sizes = ['B', 'KB', 'MB', 'GB'];
     const i = Math.floor(Math.log(bytes) / Math.log(k));
     return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+  };
+
+  // #25 — gain de poids : pourcentage d'octets économisés (positif = plus léger).
+  const getReduction = (original: number, converted?: number) => {
+    if (!original || !converted) return null;
+    const pct = Math.round((1 - converted / original) * 100);
+    return pct === 0 ? null : pct; // pas de badge "−0 %" quand le poids ne change pas
   };
 
   const getDownloadName = (originalName: string) => {
@@ -367,18 +401,32 @@ const ImageConverter: React.FC<ImageConverterProps> = ({ lang }) => {
 
                              <div className="flex-grow min-w-0 flex flex-col justify-center">
                                  <h4 className="text-sm font-medium text-gray-900 dark:text-white truncate" title={file.file.name}>{file.file.name}</h4>
-                                 <p className="text-xs text-gray-500 mb-2">{formatSize(file.originalSize)}</p>
+                                 {file.status !== 'done' && (
+                                    <p className="text-xs text-gray-500 mb-2">{formatSize(file.originalSize)}</p>
+                                 )}
 
                                  {file.status === 'done' ? (
-                                     <div className="flex items-center justify-between">
-                                        <div className="flex items-center gap-1.5 text-xs text-green-600 dark:text-green-400 font-medium">
-                                            <CheckCircle size={14} />
-                                            <span>{formatSize(file.convertedSize || 0)}</span>
+                                     <div className="flex items-center justify-between gap-2">
+                                        <div className="flex items-center gap-1.5 text-xs font-medium min-w-0 flex-wrap">
+                                            <CheckCircle size={14} className="text-green-600 dark:text-green-400 flex-shrink-0" />
+                                            <span className="text-gray-500 dark:text-gray-400">{formatSize(file.originalSize)}</span>
+                                            <ArrowRight size={12} className="text-gray-400 flex-shrink-0" />
+                                            <span className="text-gray-900 dark:text-white font-semibold">{formatSize(file.convertedSize || 0)}</span>
+                                            {(() => {
+                                                const reduction = getReduction(file.originalSize, file.convertedSize);
+                                                if (reduction === null) return null;
+                                                const lighter = reduction >= 0;
+                                                return (
+                                                    <span className={lighter ? 'text-green-600 dark:text-green-400' : 'text-orange-500 dark:text-orange-400'} title={lighter ? 'Poids \u00E9conomis\u00E9' : 'Poids augment\u00E9'}>
+                                                        ({lighter ? '\u2212' : '+'}{Math.abs(reduction)}{'\u00A0'}%)
+                                                    </span>
+                                                );
+                                            })()}
                                         </div>
                                         <a
                                            href={file.convertedUrl}
                                            download={getDownloadName(file.file.name)}
-                                           className="p-1.5 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-lg hover:bg-blue-200 dark:hover:bg-blue-900/50 transition-colors"
+                                           className="p-1.5 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-lg hover:bg-blue-200 dark:hover:bg-blue-900/50 transition-colors flex-shrink-0"
                                            title="T\u00E9l\u00E9charger"
                                         >
                                             <Download size={16} />
@@ -407,8 +455,41 @@ const ImageConverter: React.FC<ImageConverterProps> = ({ lang }) => {
              </div>
 
              {files.length === 0 && (
-                 <div className="text-center py-12 text-gray-400">
-                     <p>Aucune image s&eacute;lectionn&eacute;e</p>
+                 <div className="flex flex-col items-center text-center py-10">
+                     {/* #26 — mini-démo de valeur : montrer le gain de poids AVANT d'engager un fichier */}
+                     <div className="flex items-center gap-2 sm:gap-3 mb-4">
+                         <div className="px-3 sm:px-4 py-3 rounded-xl bg-white dark:bg-slate-800 border border-gray-200 dark:border-gray-700 shadow-sm">
+                             <p className="text-[10px] uppercase tracking-wider text-gray-400 mb-0.5">Avant</p>
+                             <p className="text-base sm:text-lg font-bold text-gray-500 dark:text-gray-400">1.5 MB</p>
+                             <p className="text-[10px] text-gray-400">PNG</p>
+                         </div>
+                         <ArrowRight className="text-blue-500 flex-shrink-0" size={26} />
+                         <div className="px-3 sm:px-4 py-3 rounded-xl bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 shadow-sm">
+                             <p className="text-[10px] uppercase tracking-wider text-blue-400 mb-0.5">Apr&egrave;s</p>
+                             <p className="text-base sm:text-lg font-bold text-blue-600 dark:text-blue-400">410 KB</p>
+                             <p className="text-[10px] text-blue-400">WebP</p>
+                         </div>
+                         <div className="ml-1 px-3 py-2 rounded-xl bg-green-100 dark:bg-green-900/30">
+                             <p className="text-lg sm:text-xl font-extrabold text-green-600 dark:text-green-400">&minus;73&nbsp;%</p>
+                             <p className="text-[10px] text-green-700 dark:text-green-500">de poids</p>
+                         </div>
+                     </div>
+                     <p className="text-sm text-gray-500 dark:text-gray-400 mb-4 max-w-md">
+                         D&eacute;posez vos images ci-dessus : la conversion est automatique et vous voyez aussit&ocirc;t le poids &eacute;conomis&eacute;.
+                     </p>
+                     <button
+                        onClick={loadDemoImage}
+                        disabled={isLoadingDemo}
+                        className="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 disabled:opacity-60 disabled:cursor-wait text-white text-sm font-medium rounded-xl transition-colors flex items-center gap-2 shadow-sm"
+                     >
+                        {isLoadingDemo ? <RefreshCw size={16} className="animate-spin" /> : <ImageIcon size={16} />}
+                        Essayer avec une image de d&eacute;mo
+                     </button>
+                     {demoError && (
+                         <p className="mt-3 text-xs text-red-500 dark:text-red-400 flex items-center gap-1.5">
+                             <AlertCircle size={14} /> {demoError}
+                         </p>
+                     )}
                  </div>
              )}
         </div>
