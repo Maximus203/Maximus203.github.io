@@ -37,6 +37,7 @@ const ImageConverter: React.FC<ImageConverterProps> = ({ lang }) => {
   const [isDragging, setIsDragging] = useState(false);
   const [isZipping, setIsZipping] = useState(false);
   const [isLoadingDemo, setIsLoadingDemo] = useState(false);
+  const [demoError, setDemoError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleDragOver = (e: React.DragEvent) => {
@@ -178,13 +179,16 @@ const ImageConverter: React.FC<ImageConverterProps> = ({ lang }) => {
   // pour montrer la valeur (le gain de poids) avant que l'utilisateur engage son fichier.
   const loadDemoImage = async () => {
     setIsLoadingDemo(true);
+    setDemoError(null);
     try {
       const res = await fetch('/assets/galerie/devfest-1.jpg');
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const blob = await res.blob();
       const demoFile = new File([blob], 'demo-devfest.jpg', { type: blob.type || 'image/jpeg' });
       processFiles([demoFile]);
     } catch (error) {
       console.error('Impossible de charger l\'image de démo', error);
+      setDemoError("Impossible de charger l'image de démo. Réessayez ou déposez votre propre image.");
     } finally {
       setIsLoadingDemo(false);
     }
@@ -232,7 +236,8 @@ const ImageConverter: React.FC<ImageConverterProps> = ({ lang }) => {
   // #25 — gain de poids : pourcentage d'octets économisés (positif = plus léger).
   const getReduction = (original: number, converted?: number) => {
     if (!original || !converted) return null;
-    return Math.round((1 - converted / original) * 100);
+    const pct = Math.round((1 - converted / original) * 100);
+    return pct === 0 ? null : pct; // pas de badge "−0 %" quand le poids ne change pas
   };
 
   const getDownloadName = (originalName: string) => {
@@ -480,6 +485,11 @@ const ImageConverter: React.FC<ImageConverterProps> = ({ lang }) => {
                         {isLoadingDemo ? <RefreshCw size={16} className="animate-spin" /> : <ImageIcon size={16} />}
                         Essayer avec une image de d&eacute;mo
                      </button>
+                     {demoError && (
+                         <p className="mt-3 text-xs text-red-500 dark:text-red-400 flex items-center gap-1.5">
+                             <AlertCircle size={14} /> {demoError}
+                         </p>
+                     )}
                  </div>
              )}
         </div>
