@@ -27,6 +27,13 @@
 - **EXIT** : U1-U6 verts + PB-24..28 verts + 0 high/crit introduit + review postée.
 - **Gate humaine** : APPROVE / merge `main` (→ déploiement cPanel automatique).
 
+### Review (auteur ≠ reviewer)
+- **PR** : [#29](https://github.com/Maximus203/Maximus203.github.io/pull/29) (auteur `printf_cherif`).
+- **Revue adversariale** (3 angles + vérification réfutante) : verdict **OK_WITH_NITS** — 32 bruts → 4 confirmés, tous **low/nit**, 0 critical/high.
+- **Fixes appliqués** (commit `d410d24`) : `loadDemoImage` (`res.ok` + erreur inline), `getReduction` (pas de « −0 % »). Re-vérifié E2E : démo → `−41 %` OK.
+- **Review postée** sur la PR. → **EXIT « PR prête » atteint** (CI à re-confirmer sur `d410d24`).
+- ⚠️ **Déploiement auto sur PR** : `deploy.yml` déploie sur chaque PR (pas seulement merge) → changements déjà **live** en prod. Tâche de durcissement CI créée (gate `push:main`).
+
 ## Acte 2 — Clôture  ⬜ à faire après PR
 
 - decision-log : décisions #26/#27/#28 (réversibles) journalisées.
