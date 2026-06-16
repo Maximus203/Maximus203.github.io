@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Copy, Check, ArrowLeft, Github, Palette, Type, Code, Eye, Layers, Terminal, Settings, User, Trophy, Activity, Users, AlignLeft, AlignCenter, AlignRight, LayoutGrid, Tag } from 'lucide-react';
+import { Copy, Check, ArrowLeft, ArrowDown, Github, Palette, Type, Code, Eye, Layers, Terminal, Settings, User, Trophy, Activity, Users, AlignLeft, AlignCenter, AlignRight, LayoutGrid, Tag } from 'lucide-react';
 import Link from 'next/link';
 import { Language } from '@/types';
 
@@ -100,7 +100,8 @@ const ReadmeGenerator: React.FC<ReadmeGeneratorProps> = ({ lang }) => {
   const [outputTab, setOutputTab] = useState<'markdown' | 'workflow'>('markdown');
 
   const [formData, setFormData] = useState({
-    username: 'Maximus203',
+    // #28 \u2014 d\u00e9fauts NEUTRES : l'aper\u00e7u n'appartient \u00e0 personne tant que le visiteur n'a pas saisi son pseudo
+    username: 'your-username',
     theme: 'radical',
     font: 'inter',
     alignment: 'center' as 'left' | 'center' | 'right',
@@ -110,15 +111,15 @@ const ReadmeGenerator: React.FC<ReadmeGeneratorProps> = ({ lang }) => {
     title: 'Hi there \u{1F44B}',
     subtitle: "I'm a passionate developer!",
     about: 'I\u2019m currently working on open source projects and learning new technologies.',
-    avatarUrl: 'https://cherif-diouf.artist-dev.com/assets/photo.webp',
+    avatarUrl: '',
 
-    // Links
-    portfolioUrl: 'https://cherif-diouf.artist-dev.com/',
-    linkedinUrl: 'https://www.linkedin.com/in/cherif-diouf-59747b17b/',
-    cvUrl: 'https://github.com/Maximus203/Maximus203/blob/main/cv.pdf',
+    // Links (vides par d\u00e9faut \u2014 le visiteur ajoute les siens)
+    portfolioUrl: '',
+    linkedinUrl: '',
+    cvUrl: '',
 
     // Typing SVG Config
-    typingLines: 'Cherif Diouf;Artist-Dev;Full Stack Developer;Code => Art;<dev />',
+    typingLines: 'Full Stack Developer;Open Source Enthusiast;Always Learning',
 
     // Stats & Addons
     showStats: true,
@@ -340,6 +341,26 @@ jobs:
         <ArrowLeft size={20} />
         <span>Retour aux outils</span>
       </Link>
+
+      {/* #28 — point de départ proéminent : rendre l'aperçu sien en UN geste, au-dessus de l'aperçu */}
+      <div className="bg-gradient-to-r from-indigo-50 to-white dark:from-indigo-900/20 dark:to-slate-900 border border-indigo-200 dark:border-indigo-800 rounded-2xl p-5 mb-6 shadow-sm">
+        <label htmlFor="github-username-start" className="flex items-center flex-wrap gap-2 text-sm font-semibold text-indigo-700 dark:text-indigo-300 mb-2">
+          <Github size={18} />
+          <span>Ton pseudo GitHub</span>
+          <span className="inline-flex items-center gap-1 text-xs font-normal text-indigo-500 dark:text-indigo-400">
+            <ArrowDown size={14} /> commence ici
+          </span>
+        </label>
+        <input
+          id="github-username-start"
+          type="text"
+          value={formData.username}
+          onChange={(e) => setFormData({ ...formData, username: e.target.value })}
+          placeholder="your-username"
+          className="w-full px-4 py-3 rounded-xl bg-white dark:bg-slate-900 border-2 border-indigo-300 dark:border-indigo-700 focus:border-indigo-500 outline-none text-base font-medium text-gray-900 dark:text-white"
+        />
+        <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">Saisis ton pseudo : l&apos;aper&ccedil;u et les statistiques deviennent les tiens instantan&eacute;ment.</p>
+      </div>
 
       {/* TOP: LIVE PREVIEW */}
       <div className="bg-white dark:bg-[#0d1117] border border-gray-200 dark:border-gray-800 rounded-2xl p-8 mb-8 shadow-sm">

@@ -55,6 +55,8 @@ export const UI_LABELS: Record<Language, Record<string, string>> = {
     memeTextColor: 'Couleur du texte',
     memeStrokeColor: 'Couleur du contour',
     memeDragDrop: 'Glissez une image ici',
+    memeExampleTop: 'QUAND LE CODE MARCHE',
+    memeExampleBottom: 'DU PREMIER COUP',
     // Footer
     footerQuote: 'Développeur Full-stack créant des expériences web modernes.',
     sections: 'Sections',
@@ -141,6 +143,8 @@ export const UI_LABELS: Record<Language, Record<string, string>> = {
     memeTextColor: 'Text Color',
     memeStrokeColor: 'Outline Color',
     memeDragDrop: 'Drag & Drop an image here',
+    memeExampleTop: 'WHEN THE CODE WORKS',
+    memeExampleBottom: 'ON THE FIRST TRY',
     // Footer
     footerQuote: 'Full-stack developer crafting modern web experiences.',
     sections: 'Sections',
@@ -227,6 +231,8 @@ export const UI_LABELS: Record<Language, Record<string, string>> = {
     memeTextColor: '文字颜色',
     memeStrokeColor: '描边颜色',
     memeDragDrop: '将图片拖放到此处',
+    memeExampleTop: '当代码运行成功',
+    memeExampleBottom: '而且是第一次',
     // Footer
     footerQuote: '打造现代网络体验的全栈开发人员。',
     sections: '章节',
@@ -313,6 +319,8 @@ export const UI_LABELS: Record<Language, Record<string, string>> = {
     memeTextColor: 'テキストの色',
     memeStrokeColor: 'アウトラインの色',
     memeDragDrop: 'ここに画像をドラッグ＆ドロップ',
+    memeExampleTop: 'コードが動いた',
+    memeExampleBottom: 'しかも一発で',
     // Footer
     footerQuote: 'モダンなWeb体験を作り出すフルスタック開発者。',
     sections: 'セクション',
