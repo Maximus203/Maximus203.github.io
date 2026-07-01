@@ -57,6 +57,14 @@ export default async function LangLayout({
   return (
     <html lang={lang} suppressHydrationWarning>
       <head>
+        {/* Plausible Analytics - Privacy-first, no cookies, GDPR compliant */}
+        <script
+          defer
+          data-domain={process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN || 'maximus203.github.io'}
+          data-api={process.env.NEXT_PUBLIC_PLAUSIBLE_API_HOST || 'https://plausible.io'}
+          src="https://plausible.io/js/script.js"
+        />
+
         {/* Person schema — identité complète */}
         <script
           type="application/ld+json"

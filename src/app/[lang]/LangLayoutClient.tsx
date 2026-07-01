@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion } from 'framer-motion';
 import { usePathname } from 'next/navigation';
-import { useCallback } from 'react';
+import { useCallback, Suspense } from 'react';
 import Navbar from '@/components/layout/Navbar';
 import DesktopNav from '@/components/layout/DesktopNav';
 import Footer from '@/components/layout/Footer';
@@ -11,6 +11,7 @@ import LangSwitcher from '@/components/shared/LangSwitcher';
 import ThemeToggle from '@/components/shared/ThemeToggle';
 import IntroAnimation from '@/components/shared/IntroAnimation';
 import ProjectRequestModal from '@/components/shared/ProjectRequestModal';
+import { Analytics } from '@/components/shared/Analytics';
 import { useAppStore } from '@/store/store';
 import { getLabels, getResumeData } from '@/lib/i18n';
 import type { Language } from '@/types';
@@ -36,14 +37,16 @@ export function LangLayoutClient({ lang, children }: LangLayoutClientProps) {
 
   return (
     <>
+      <Analytics />
       <AnimatePresence mode="wait">
-        {showIntro && <IntroAnimation onComplete={handleIntroComplete} />}
+        {showIntro && <IntroAnimation onComplete={handleIntroComplete} labels={labels} />}
       </AnimatePresence>
 
       <ProjectRequestModal
         isOpen={isProjectModalOpen}
         onClose={() => setProjectModalOpen(false)}
         labels={labels}
+        language={lang}
       />
 
       {!showIntro && (
@@ -59,7 +62,7 @@ export function LangLayoutClient({ lang, children }: LangLayoutClientProps) {
             {/* AdSidebar désactivée (#12) : les pages outils passent en pleine largeur tant que la sidebar ads n'est pas rendue */}
             <main className={`${isFullWidth ? 'lg:col-span-12' : isToolPage ? 'lg:col-span-12' : 'lg:col-span-7'} pt-16 lg:pt-0`}>
               <DesktopNav lang={lang} labels={labels} />
-              {children}
+              <Suspense fallback={null}>{children}</Suspense>
             </main>
 
             {/* AdSidebar désactivée — publisher ID AdSense non configuré (#12) */}
@@ -71,7 +74,7 @@ export function LangLayoutClient({ lang, children }: LangLayoutClientProps) {
                     <ThemeToggle />
                     <LangSwitcher currentLang={lang} />
                   </div>
-                  <StickySidebar data={data.profile} labels={labels} />
+                  <StickySidebar data={data.profile} labels={labels} language={lang} />
                 </div>
               </aside>
             )}

@@ -7,6 +7,12 @@ const getSystemTheme = (): 'light' | 'dark' => {
   return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
 };
 
+// Check if intro has been shown this session
+const getInitialShowIntro = (): boolean => {
+  if (typeof window === 'undefined') return true;
+  return !sessionStorage.getItem('introShown');
+};
+
 interface AppState {
   theme: 'light' | 'dark';
   showIntro: boolean;
@@ -25,21 +31,27 @@ interface AppState {
 
 export const useAppStore = create<AppState>((set) => ({
   theme: 'light',
-  showIntro: true,
+  showIntro: true, // Default to true, will be overridden by client-side init
   isMobileMenuOpen: false,
   isProjectModalOpen: false,
   projectSearch: '',
 
   setTheme: (theme) => set({ theme }),
   toggleTheme: () => set((state) => ({ theme: state.theme === 'light' ? 'dark' : 'light' })),
-  setShowIntro: (showIntro) => set({ showIntro }),
+  setShowIntro: (showIntro) => {
+    if (typeof window !== 'undefined' && !showIntro) {
+      sessionStorage.setItem('introShown', 'true');
+    }
+    set({ showIntro });
+  },
   toggleMobileMenu: () => set((state) => ({ isMobileMenuOpen: !state.isMobileMenuOpen })),
   setMobileMenuOpen: (isMobileMenuOpen) => set({ isMobileMenuOpen }),
   setProjectModalOpen: (isProjectModalOpen) => set({ isProjectModalOpen }),
   setProjectSearch: (projectSearch) => set({ projectSearch }),
 }));
 
-// Initialize theme on client side
+// Initialize theme and intro state on client side
 if (typeof window !== 'undefined') {
   useAppStore.setState({ theme: getSystemTheme() });
+  useAppStore.setState({ showIntro: getInitialShowIntro() });
 }

@@ -6,6 +6,7 @@ import { motion } from 'framer-motion';
 import { UI_LABELS } from '@/lib/constants/ui-labels';
 import Link from 'next/link';
 import { Language } from '@/types';
+import { useToolLaunchTracking } from '@/lib/analytics';
 
 interface MemeGeneratorProps {
   lang: Language;
@@ -13,6 +14,8 @@ interface MemeGeneratorProps {
 }
 
 const MemeGenerator: React.FC<MemeGeneratorProps> = ({ lang, labels }) => {
+  const trackToolLaunch = useToolLaunchTracking(lang);
+  
   const [image, setImage] = useState<string | null>(null);
   // #27 — texte d'exemple réellement dessiné sur le canvas par défaut (i18n via labels)
   const [topText, setTopText] = useState(() => labels?.memeExampleTop ?? 'TOP TEXT');
@@ -25,6 +28,11 @@ const MemeGenerator: React.FC<MemeGeneratorProps> = ({ lang, labels }) => {
 
   // #27 — image de démo LOCALE (zéro dépendance réseau externe sur le 1er rendu)
   const defaultImage = "/assets/tools/meme-demo.png";
+
+  // Track tool launch on mount
+  useEffect(() => {
+    trackToolLaunch('meme');
+  }, [trackToolLaunch]);
 
   useEffect(() => {
     if (!image) {

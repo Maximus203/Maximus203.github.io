@@ -1,12 +1,13 @@
 'use client';
 
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, Upload, Image as ImageIcon, FileOutput, Settings, Download, X, RefreshCw, CheckCircle, AlertCircle, Archive, ChevronDown, ArrowRight } from 'lucide-react';
 import JSZip from 'jszip';
 import saveAs from 'file-saver';
 import Link from 'next/link';
 import { Language } from '@/types';
+import { useToolLaunchTracking } from '@/lib/analytics';
 
 interface ImageConverterProps {
   lang: Language;
@@ -31,6 +32,9 @@ const FORMATS = [
 ];
 
 const ImageConverter: React.FC<ImageConverterProps> = ({ lang }) => {
+  // Analytics tracking for tool launch
+  const trackToolLaunch = useToolLaunchTracking(lang);
+
   const [files, setFiles] = useState<FileWithPreview[]>([]);
   const [targetFormat, setTargetFormat] = useState('image/webp');
   const [quality, setQuality] = useState(0.8);
@@ -39,6 +43,11 @@ const ImageConverter: React.FC<ImageConverterProps> = ({ lang }) => {
   const [isLoadingDemo, setIsLoadingDemo] = useState(false);
   const [demoError, setDemoError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Track tool launch on mount
+  useEffect(() => {
+    trackToolLaunch('image-converter');
+  }, [trackToolLaunch]);
 
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();

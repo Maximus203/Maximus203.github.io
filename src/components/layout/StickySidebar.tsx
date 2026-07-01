@@ -1,16 +1,18 @@
 'use client';
 
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
-import { Coffee, Download, Github, Linkedin, Mail, MapPin } from 'lucide-react';
+import { Download, Github, Linkedin, Mail, MapPin, Zap } from 'lucide-react';
 import React from 'react';
 import { ResumeData } from '@/types';
+import { useCvDownloadTracking } from '@/lib/analytics';
 
 interface StickySidebarProps {
   data: ResumeData['profile'];
   labels: Record<string, string>;
+  language: string;
 }
 
-const StickySidebar: React.FC<StickySidebarProps> = ({ data, labels }) => {
+const StickySidebar: React.FC<StickySidebarProps> = ({ data, labels, language }) => {
   // 3D Tilt Effect Logic
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -37,6 +39,9 @@ const StickySidebar: React.FC<StickySidebarProps> = ({ data, labels }) => {
     x.set(0);
     y.set(0);
   };
+
+  // Track CV download
+  const trackCvDownload = useCvDownloadTracking(language);
 
   return (
     <div className="space-y-6">
@@ -96,6 +101,7 @@ const StickySidebar: React.FC<StickySidebarProps> = ({ data, labels }) => {
           href="/assets/documents/CV.pdf"
           target="_blank"
           download="Cherif_Diouf_CV.pdf"
+          onClick={trackCvDownload}
           whileHover={{ scale: 1.02 }}
           className="bg-indigo-600 dark:bg-indigo-600 text-white p-4 rounded-3xl shadow-lg shadow-indigo-200 dark:shadow-none flex flex-col justify-between h-32 cursor-pointer group transition-colors duration-300 hover:bg-indigo-700"
         >
@@ -119,16 +125,14 @@ const StickySidebar: React.FC<StickySidebarProps> = ({ data, labels }) => {
         <SocialButton href={`https://${data.github}`} icon={<Github size={20} />} label="GitHub" />
       </div>
 
-      {/* Fun Widget: Coffee & Code */}
-      <div className="bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-slate-800 dark:to-slate-800 p-6 rounded-3xl border border-indigo-100/50 dark:border-slate-700 transition-colors duration-300">
+      {/* Impact Metric Widget */}
+      <div className="bg-gradient-to-br from-amber-50 to-orange-50 dark:from-slate-800 dark:to-slate-800 p-6 rounded-3xl border border-amber-100/50 dark:border-slate-700 transition-colors duration-300">
         <div className="flex items-center gap-3 mb-3">
-          <Coffee className="text-indigo-600 dark:text-indigo-400" size={20} />
-          <h3 className="font-semibold text-gray-800 dark:text-white">{labels.status}</h3>
+          <Zap className="text-amber-600 dark:text-amber-400" size={20} />
+          <h3 className="font-semibold text-gray-800 dark:text-white">{labels.impactMetricLabel}</h3>
         </div>
-        <div className="font-mono text-sm text-gray-600 dark:text-gray-300 bg-white/60 dark:bg-slate-900/50 p-3 rounded-xl backdrop-blur-sm">
-          <span className="text-purple-600 dark:text-purple-400">const</span> mood = <span className="text-green-600 dark:text-green-400">"Focused"</span>;
-          <br />
-          <span className="text-purple-600 dark:text-purple-400">await</span> coffee.drink();
+        <div className="font-mono text-2xl font-bold text-gray-800 dark:text-white bg-white/60 dark:bg-slate-900/50 p-4 rounded-xl backdrop-blur-sm text-center">
+          {data.keyMetric || labels.impactMetricLabel}
         </div>
       </div>
     </div>

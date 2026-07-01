@@ -16,7 +16,7 @@ export default function ContactPageClient({ lang }: { lang: Language }) {
       </div>
 
       <div className="bg-white dark:bg-slate-800 rounded-3xl p-8 border border-gray-100 dark:border-slate-700 shadow-sm">
-        <ProjectRequestModal isOpen={true} onClose={() => {}} labels={labels} />
+        <ProjectRequestModal isOpen={true} onClose={() => {}} labels={labels} language={lang} />
       </div>
     </motion.div>
   );
