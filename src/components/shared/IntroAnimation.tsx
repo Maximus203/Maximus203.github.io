@@ -35,7 +35,7 @@ const IntroAnimation: React.FC<{ onComplete: () => void }> = ({ onComplete }) =>
     const acceleration = 1.02; // Accélération progressive
 
     let animationFrameId: number;
-    let startTime = Date.now();
+    const startTime = Date.now();
     const duration = 2500; // Durée
 
     // Redimensionnement
