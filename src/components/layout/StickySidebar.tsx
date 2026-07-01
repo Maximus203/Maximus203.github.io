@@ -4,13 +4,15 @@ import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { Download, Github, Linkedin, Mail, MapPin, Zap } from 'lucide-react';
 import React from 'react';
 import { ResumeData } from '@/types';
+import { useCvDownloadTracking } from '@/lib/analytics';
 
 interface StickySidebarProps {
   data: ResumeData['profile'];
   labels: Record<string, string>;
+  language: string;
 }
 
-const StickySidebar: React.FC<StickySidebarProps> = ({ data, labels }) => {
+const StickySidebar: React.FC<StickySidebarProps> = ({ data, labels, language }) => {
   // 3D Tilt Effect Logic
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -37,6 +39,9 @@ const StickySidebar: React.FC<StickySidebarProps> = ({ data, labels }) => {
     x.set(0);
     y.set(0);
   };
+
+  // Track CV download
+  const trackCvDownload = useCvDownloadTracking(language);
 
   return (
     <div className="space-y-6">
@@ -96,6 +101,7 @@ const StickySidebar: React.FC<StickySidebarProps> = ({ data, labels }) => {
           href="/assets/documents/CV.pdf"
           target="_blank"
           download="Cherif_Diouf_CV.pdf"
+          onClick={trackCvDownload}
           whileHover={{ scale: 1.02 }}
           className="bg-indigo-600 dark:bg-indigo-600 text-white p-4 rounded-3xl shadow-lg shadow-indigo-200 dark:shadow-none flex flex-col justify-between h-32 cursor-pointer group transition-colors duration-300 hover:bg-indigo-700"
         >

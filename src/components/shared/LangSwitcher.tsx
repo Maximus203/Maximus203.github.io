@@ -1,6 +1,7 @@
 'use client';
 
 import { usePathname, useRouter } from 'next/navigation';
+import { useLanguageChangeTracking } from '@/lib/analytics';
 import type { Language } from '@/types';
 
 interface LangSwitcherProps {
@@ -11,11 +12,14 @@ interface LangSwitcherProps {
 export default function LangSwitcher({ currentLang, variant = 'desktop' }: LangSwitcherProps) {
   const pathname = usePathname();
   const router = useRouter();
+  const trackLanguageChange = useLanguageChangeTracking();
 
   const switchLang = (newLang: Language) => {
     const segments = pathname.split('/');
+    const oldLang = segments[1];
     segments[1] = newLang;
     router.push(segments.join('/'));
+    trackLanguageChange(oldLang, newLang);
   };
 
   const langs: Language[] = ['fr', 'en', 'zh', 'ja'];
