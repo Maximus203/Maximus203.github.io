@@ -126,7 +126,7 @@ const StickySidebar: React.FC<StickySidebarProps> = ({ data, labels }) => {
           <h3 className="font-semibold text-gray-800 dark:text-white">{labels.impactMetricLabel}</h3>
         </div>
         <div className="font-mono text-2xl font-bold text-gray-800 dark:text-white bg-white/60 dark:bg-slate-900/50 p-4 rounded-xl backdrop-blur-sm text-center">
-          {labels.impactMetric}
+          {data.keyMetric || labels.impactMetricLabel}
         </div>
       </div>
     </div>

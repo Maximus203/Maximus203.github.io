@@ -18,7 +18,6 @@ export const UI_LABELS: Record<Language, Record<string, string>> = {
     resume: 'CV',
     base: 'Base',
     status: 'Statut',
-    impactMetric: '6h → 35 min',
     impactMetricLabel: 'Gain process FIDECA',
     top: 'Haut',
     selectedProjects: 'Projets sélectionnés',
@@ -68,8 +67,6 @@ export const UI_LABELS: Record<Language, Record<string, string>> = {
     hostedOn: 'Hébergé sur',
     rights: 'Tous droits réservés.',
     allProjects: 'Tous les projets',
-    // Intro Animation
-    skip: 'Ignorer',
     // Students
     students: 'Étudiants',
     studentsTitle: 'Réalisations de mes étudiants',
@@ -110,7 +107,6 @@ export const UI_LABELS: Record<Language, Record<string, string>> = {
     resume: 'Resume',
     base: 'Base',
     status: 'Status',
-    impactMetric: '6h → 35 min',
     impactMetricLabel: 'Process gain FIDECA',
     top: 'Top',
     selectedProjects: 'Selected projects',
@@ -160,8 +156,6 @@ export const UI_LABELS: Record<Language, Record<string, string>> = {
     hostedOn: 'Hosted on',
     rights: 'All rights reserved.',
     allProjects: 'All projects',
-    // Intro Animation
-    skip: 'Skip',
     // Students
     students: 'Students',
     studentsTitle: 'Student achievements',
@@ -202,7 +196,6 @@ export const UI_LABELS: Record<Language, Record<string, string>> = {
     resume: '简历',
     base: '常驻',
     status: '状态',
-    impactMetric: '6h → 35 min',
     impactMetricLabel: 'FIDECA 流程提速',
     top: '顶部',
     selectedProjects: '精选项目',
@@ -252,8 +245,6 @@ export const UI_LABELS: Record<Language, Record<string, string>> = {
     hostedOn: '托管于',
     rights: '版权所有。',
     allProjects: '所有项目',
-    // Intro Animation
-    skip: '跳过',
     // Students
     students: '学生',
     studentsTitle: '学生作品',
@@ -294,7 +285,6 @@ export const UI_LABELS: Record<Language, Record<string, string>> = {
     resume: '履歴書',
     base: '拠点',
     status: 'ステータス',
-    impactMetric: '6h → 35 min',
     impactMetricLabel: 'FIDECA 業務短縮',
     top: 'トップ',
     selectedProjects: '主なプロジェクト',
@@ -344,8 +334,6 @@ export const UI_LABELS: Record<Language, Record<string, string>> = {
     hostedOn: 'ホスティング',
     rights: '無断複写・転載を禁じます。',
     allProjects: 'すべてのプロジェクト',
-    // Intro Animation
-    skip: 'スキップ',
     // Students
     students: '学生',
     studentsTitle: '学生の実績',
