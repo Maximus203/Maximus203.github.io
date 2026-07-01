@@ -1,7 +1,8 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { useAppStore } from '@/store/store';
 
 interface Star {
   x: number;
@@ -10,8 +11,26 @@ interface Star {
   pz: number; // Previous Z
 }
 
-const IntroAnimation: React.FC<{ onComplete: () => void }> = ({ onComplete }) => {
+interface IntroAnimationProps {
+  onComplete: () => void;
+  labels: Record<string, string>;
+}
+
+const IntroAnimation: React.FC<IntroAnimationProps> = ({ onComplete, labels }) => {
+  const { setShowIntro } = useAppStore();
+  const [showSkip, setShowSkip] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  // Show skip button after 1 second
+  useEffect(() => {
+    const timer = setTimeout(() => setShowSkip(true), 1000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  const handleSkip = () => {
+    setShowIntro(false);
+    onComplete();
+  };
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -170,6 +189,22 @@ const IntroAnimation: React.FC<{ onComplete: () => void }> = ({ onComplete }) =>
           Cherif Diouf | Portfolio
         </p>
       </motion.div>
+
+      {/* Skip button - appears after 1 second */}
+      {showSkip && (
+        <motion.button
+          type="button"
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.8 }}
+          transition={{ duration: 0.2 }}
+          onClick={handleSkip}
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 px-6 py-2 text-sm font-medium text-white border border-white/30 rounded-full hover:bg-white/10 hover:border-white/50 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-[#020617]"
+          aria-label={labels.skip}
+        >
+          {labels.skip}
+        </motion.button>
+      )}
     </motion.div>
   );
 };
