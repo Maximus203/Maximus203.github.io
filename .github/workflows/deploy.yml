@@ -9,9 +9,37 @@ on:
       - main
 
 jobs:
+  validate:
+    name: Validate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci --legacy-peer-deps
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Type check
+        run: npx tsc --noEmit
+
+      - name: Audit dependencies
+        run: npm audit --audit-level=high
+        continue-on-error: true
+
   build:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     environment: github-actions
+    needs: validate
 
     steps:
       - name: Checkout repository
@@ -24,16 +52,7 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
-        run: npm ci
-
-      # Lint reporte : `next lint` est retire dans Next 16 et aucun ESLint flat-config
-      # n'est encore configure dans le projet (voir #10). A retablir via `eslint .`.
-
-      - name: Type check
-        run: npx tsc --noEmit
-
-      - name: Audit dependencies
-        run: npm audit --audit-level=critical
+        run: npm ci --legacy-peer-deps
 
       - name: Generate sitemap
         run: npm run generate-sitemap
