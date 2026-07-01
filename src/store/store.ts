@@ -10,7 +10,11 @@ const getSystemTheme = (): 'light' | 'dark' => {
 // Check if intro has been shown this session
 const getInitialShowIntro = (): boolean => {
   if (typeof window === 'undefined') return true;
-  return !sessionStorage.getItem('introShown');
+  try {
+    return !sessionStorage.getItem('introShown');
+  } catch {
+    return true;
+  }
 };
 
 interface AppState {
@@ -40,7 +44,11 @@ export const useAppStore = create<AppState>((set) => ({
   toggleTheme: () => set((state) => ({ theme: state.theme === 'light' ? 'dark' : 'light' })),
   setShowIntro: (showIntro) => {
     if (typeof window !== 'undefined' && !showIntro) {
-      sessionStorage.setItem('introShown', 'true');
+      try {
+        sessionStorage.setItem('introShown', 'true');
+      } catch {
+        // storage unavailable (private browsing, restricted context) — non-fatal
+      }
     }
     set({ showIntro });
   },

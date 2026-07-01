@@ -125,9 +125,15 @@ const StickySidebar: React.FC<StickySidebarProps> = ({ data, labels }) => {
           <Zap className="text-amber-600 dark:text-amber-400" size={20} />
           <h3 className="font-semibold text-gray-800 dark:text-white">{labels.impactMetricLabel}</h3>
         </div>
-        <div className="font-mono text-2xl font-bold text-gray-800 dark:text-white bg-white/60 dark:bg-slate-900/50 p-4 rounded-xl backdrop-blur-sm text-center">
+        <div
+          className="font-mono text-2xl font-bold text-gray-800 dark:text-white bg-white/60 dark:bg-slate-900/50 p-4 rounded-xl backdrop-blur-sm text-center"
+          aria-hidden="true"
+        >
           {data.keyMetric || labels.impactMetricLabel}
         </div>
+        <span className="sr-only">
+          {(data.keyMetric || labels.impactMetricLabel).replace('→', labels.impactMetricTransition || 'to')}
+        </span>
       </div>
     </div>
   );
