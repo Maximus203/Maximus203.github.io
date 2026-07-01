@@ -87,6 +87,7 @@ export const UI_LABELS: Record<Language, Record<string, string>> = {
     profileTeaching: 'Enseignement',
     viewProjects: 'Explorer mes réalisations',
     contactCta: 'Discutons ensemble',
+    discussProject: 'Discutons de votre projet',
     publications: 'Publications',
   },
   en: {
@@ -175,6 +176,7 @@ export const UI_LABELS: Record<Language, Record<string, string>> = {
     profileTeaching: 'Teaching',
     viewProjects: 'Explore my work',
     contactCta: "Let's talk",
+    discussProject: "Let's discuss your project",
     publications: 'Publications',
   },
   zh: {
@@ -263,6 +265,7 @@ export const UI_LABELS: Record<Language, Record<string, string>> = {
     profileTeaching: '教学',
     viewProjects: '探索我的项目',
     contactCta: '一起合作',
+    discussProject: '聊聊您的项目',
     publications: '发表论文',
   },
   ja: {
@@ -351,6 +354,7 @@ export const UI_LABELS: Record<Language, Record<string, string>> = {
     profileTeaching: '教育',
     viewProjects: '作品を見る →',
     contactCta: '話しましょう',
+    discussProject: 'プロジェクトについて相談する',
     publications: '論文',
   }
 };
