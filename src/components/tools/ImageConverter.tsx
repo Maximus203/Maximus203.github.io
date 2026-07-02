@@ -7,9 +7,11 @@ import JSZip from 'jszip';
 import saveAs from 'file-saver';
 import Link from 'next/link';
 import { Language } from '@/types';
+import { UI_LABELS } from '@/lib/constants/ui-labels';
 
 interface ImageConverterProps {
   lang: Language;
+  labels: Record<string, string>;
 }
 
 interface FileWithPreview {
@@ -30,7 +32,7 @@ const FORMATS = [
   { value: 'image/x-icon', label: 'ICO (.ico)', ext: 'ico' }, // Simulation via resizing
 ];
 
-const ImageConverter: React.FC<ImageConverterProps> = ({ lang }) => {
+const ImageConverter: React.FC<ImageConverterProps> = ({ lang, labels }) => {
   const [files, setFiles] = useState<FileWithPreview[]>([]);
   const [targetFormat, setTargetFormat] = useState('image/webp');
   const [quality, setQuality] = useState(0.8);
@@ -417,7 +419,7 @@ const ImageConverter: React.FC<ImageConverterProps> = ({ lang }) => {
                                                 if (reduction === null) return null;
                                                 const lighter = reduction >= 0;
                                                 return (
-                                                    <span className={lighter ? 'text-green-600 dark:text-green-400' : 'text-orange-500 dark:text-orange-400'} title={lighter ? 'Poids \u00E9conomis\u00E9' : 'Poids augment\u00E9'}>
+                                                    <span className={lighter ? 'text-green-600 dark:text-green-400' : 'text-orange-500 dark:text-orange-400'} title={lighter ? labels.toolConverterWeightSavedTooltip : labels.toolConverterWeightIncreasedTooltip}>
                                                         ({lighter ? '\u2212' : '+'}{Math.abs(reduction)}{'\u00A0'}%)
                                                     </span>
                                                 );
