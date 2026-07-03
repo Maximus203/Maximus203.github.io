@@ -41,7 +41,6 @@ const IntroAnimation: React.FC<IntroAnimationProps> = ({ onComplete, labels }) =
     if (prefersReducedMotion) {
       triggerSkip();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [prefersReducedMotion]);
 
   // Gérer la touche Échap pour sauter l'animation
@@ -54,7 +53,6 @@ const IntroAnimation: React.FC<IntroAnimationProps> = ({ onComplete, labels }) =
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [shouldSkip]);
 
   // Focus le bouton Skip une fois affiché
