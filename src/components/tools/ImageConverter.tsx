@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef, useCallback } from "react";
+import React, { useState, useRef, useCallback, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   ArrowLeft,
@@ -22,6 +22,7 @@ import saveAs from "file-saver";
 import Link from "next/link";
 import { Language } from "@/types";
 import { UI_LABELS } from "@/lib/constants/ui-labels";
+import { useToolLaunchTracking } from "@/lib/analytics";
 
 // Keys used by ImageConverter for type safety
 type ImageConverterLabelKeys = keyof (typeof UI_LABELS)["fr"];
@@ -58,6 +59,9 @@ const ImageConverter: React.FC<ImageConverterProps> = ({ lang, labels }) => {
     pct: number,
   ) => labels[key].replace("{pct}", String(pct));
 
+  // Analytics tracking for tool launch
+  const trackToolLaunch = useToolLaunchTracking(lang);
+
   const [files, setFiles] = useState<FileWithPreview[]>([]);
   const [targetFormat, setTargetFormat] = useState("image/webp");
   const [quality, setQuality] = useState(0.8);
@@ -66,6 +70,11 @@ const ImageConverter: React.FC<ImageConverterProps> = ({ lang, labels }) => {
   const [isLoadingDemo, setIsLoadingDemo] = useState(false);
   const [demoError, setDemoError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Track tool launch on mount
+  useEffect(() => {
+    trackToolLaunch('image-converter');
+  }, [trackToolLaunch]);
 
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();
