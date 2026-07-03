@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
-import { Coffee, Download, Github, Linkedin, Mail, MapPin } from 'lucide-react';
+import { Download, Github, Linkedin, Mail, MapPin, Zap } from 'lucide-react';
 import React from 'react';
 import { ResumeData } from '@/types';
 
@@ -119,17 +119,21 @@ const StickySidebar: React.FC<StickySidebarProps> = ({ data, labels }) => {
         <SocialButton href={`https://${data.github}`} icon={<Github size={20} />} label="GitHub" />
       </div>
 
-      {/* Fun Widget: Coffee & Code */}
-      <div className="bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-slate-800 dark:to-slate-800 p-6 rounded-3xl border border-indigo-100/50 dark:border-slate-700 transition-colors duration-300">
+      {/* Impact Metric Widget */}
+      <div className="bg-gradient-to-br from-amber-50 to-orange-50 dark:from-slate-800 dark:to-slate-800 p-6 rounded-3xl border border-amber-100/50 dark:border-slate-700 transition-colors duration-300">
         <div className="flex items-center gap-3 mb-3">
-          <Coffee className="text-indigo-600 dark:text-indigo-400" size={20} />
-          <h3 className="font-semibold text-gray-800 dark:text-white">{labels.status}</h3>
+          <Zap className="text-amber-600 dark:text-amber-400" size={20} />
+          <h3 className="font-semibold text-gray-800 dark:text-white">{labels.impactMetricLabel}</h3>
         </div>
-        <div className="font-mono text-sm text-gray-600 dark:text-gray-300 bg-white/60 dark:bg-slate-900/50 p-3 rounded-xl backdrop-blur-sm">
-          <span className="text-purple-600 dark:text-purple-400">const</span> mood = <span className="text-green-600 dark:text-green-400">"Focused"</span>;
-          <br />
-          <span className="text-purple-600 dark:text-purple-400">await</span> coffee.drink();
+        <div
+          className="font-mono text-2xl font-bold text-gray-800 dark:text-white bg-white/60 dark:bg-slate-900/50 p-4 rounded-xl backdrop-blur-sm text-center"
+          aria-hidden="true"
+        >
+          {data.keyMetric || labels.impactMetricLabel}
         </div>
+        <span className="sr-only">
+          {(data.keyMetric || labels.impactMetricLabel).replace('→', labels.impactMetricTransition || 'to')}
+        </span>
       </div>
     </div>
   );

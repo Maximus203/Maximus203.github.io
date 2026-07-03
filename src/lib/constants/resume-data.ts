@@ -70,6 +70,7 @@ export const RESUME_DATA: Record<Language, ResumeData> = {
       avatar: "/assets/photo-2.webp",
       bioShort: "Expert en digitalisation & Formateur-développeur Full-Stack. Je conçois des solutions numériques sur mesure et forme la prochaine génération de développeurs.",
       bio: "Passionné par le développement web et la transmission de savoir, je combine une expertise technique solide (Laravel, React, DevOps, Supabase) avec une pédagogie éprouvée. Mon approche se base sur des projets réels, la qualité du code et l'autonomie.",
+      keyMetric: "6h → 35 min",
     },
     experience: [
       {
@@ -285,6 +286,7 @@ export const RESUME_DATA: Record<Language, ResumeData> = {
       avatar: "/assets/photo-2.webp",
       bioShort: "Digitalization Expert & Full-Stack Developer/Trainer. I build tailored digital solutions and train the next generation of developers.",
       bio: "Passionate about web development and knowledge sharing, I combine solid technical expertise (Laravel, React, DevOps, Supabase) with proven pedagogy. My approach is based on real-world projects, code quality, and autonomy.",
+      keyMetric: "6h → 35 min",
     },
     experience: [
       {
@@ -500,6 +502,7 @@ export const RESUME_DATA: Record<Language, ResumeData> = {
       avatar: "/assets/photo-2.webp",
       bioShort: "数字化转型专家 & 全栈开发讲师。我打造定制化数字解决方案，并培育下一代开发者。",
       bio: "热衷于Web开发和知识分享，我将扎实的技术专长 (Laravel, React, DevOps, Supabase) 与成熟的教学方法相结合。我的方法基于真实项目、代码质量和自主性。",
+      keyMetric: "6h → 35 min",
     },
     experience: [
       {
@@ -715,6 +718,7 @@ export const RESUME_DATA: Record<Language, ResumeData> = {
       avatar: "/assets/photo-2.webp",
       bioShort: "デジタル化推進の専門家 & フルスタック開発/講師。カスタムデジタルソリューションを構築し、次世代の開発者を育成します。",
       bio: "Web開発と知識共有に情熱を注いでおり、確かな技術力 (Laravel, React, DevOps, Supabase) と実績のある教育法を組み合わせています。私の手法は、実際のプロジェクト、コード品質、自律性に基づいています。",
+      keyMetric: "6h → 35 min",
     },
     experience: [
       {

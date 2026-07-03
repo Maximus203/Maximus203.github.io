@@ -10,6 +10,7 @@ import { Language } from '@/types';
 
 interface ImageConverterProps {
   lang: Language;
+  labels?: Record<string, string>;
 }
 
 interface FileWithPreview {
@@ -30,7 +31,8 @@ const FORMATS = [
   { value: 'image/x-icon', label: 'ICO (.ico)', ext: 'ico' }, // Simulation via resizing
 ];
 
-const ImageConverter: React.FC<ImageConverterProps> = ({ lang }) => {
+const ImageConverter: React.FC<ImageConverterProps> = ({ lang, labels }) => {
+  const t = (key: string) => labels?.[key] ?? key;
   const [files, setFiles] = useState<FileWithPreview[]>([]);
   const [targetFormat, setTargetFormat] = useState('image/webp');
   const [quality, setQuality] = useState(0.8);
@@ -406,33 +408,42 @@ const ImageConverter: React.FC<ImageConverterProps> = ({ lang }) => {
                                  )}
 
                                  {file.status === 'done' ? (
-                                     <div className="flex items-center justify-between gap-2">
-                                        <div className="flex items-center gap-1.5 text-xs font-medium min-w-0 flex-wrap">
-                                            <CheckCircle size={14} className="text-green-600 dark:text-green-400 flex-shrink-0" />
-                                            <span className="text-gray-500 dark:text-gray-400">{formatSize(file.originalSize)}</span>
-                                            <ArrowRight size={12} className="text-gray-400 flex-shrink-0" />
-                                            <span className="text-gray-900 dark:text-white font-semibold">{formatSize(file.convertedSize || 0)}</span>
-                                            {(() => {
-                                                const reduction = getReduction(file.originalSize, file.convertedSize);
-                                                if (reduction === null) return null;
-                                                const lighter = reduction >= 0;
-                                                return (
-                                                    <span className={lighter ? 'text-green-600 dark:text-green-400' : 'text-orange-500 dark:text-orange-400'} title={lighter ? 'Poids \u00E9conomis\u00E9' : 'Poids augment\u00E9'}>
-                                                        ({lighter ? '\u2212' : '+'}{Math.abs(reduction)}{'\u00A0'}%)
-                                                    </span>
-                                                );
-                                            })()}
-                                        </div>
-                                        <a
-                                           href={file.convertedUrl}
-                                           download={getDownloadName(file.file.name)}
-                                           className="p-1.5 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-lg hover:bg-blue-200 dark:hover:bg-blue-900/50 transition-colors flex-shrink-0"
-                                           title="T\u00E9l\u00E9charger"
-                                        >
-                                            <Download size={16} />
-                                        </a>
-                                     </div>
-                                 ) : file.status === 'error' ? (
+    <div className="flex items-center justify-between gap-2">
+       <div className="flex items-center gap-2">
+           <div className="flex items-center gap-1.5 text-xs font-medium">
+               <CheckCircle size={14} className="text-green-600 dark:text-green-400 flex-shrink-0" />
+               <span className="text-gray-500 dark:text-gray-400">{formatSize(file.originalSize)}</span>
+               <ArrowRight size={12} className="text-gray-400 flex-shrink-0" />
+               <span className="text-gray-900 dark:text-white font-semibold">{formatSize(file.convertedSize || 0)}</span>
+           </div>
+           {(() => {
+               const reduction = getReduction(file.originalSize, file.convertedSize);
+               if (reduction === null) return null;
+               const lighter = reduction >= 0;
+               const pct = Math.abs(reduction);
+               return (
+                   <span 
+                       className={lighter 
+                           ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 px-2 py-0.5 rounded-full text-xs font-bold whitespace-nowrap'
+                           : 'bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 px-2 py-0.5 rounded-full text-xs font-bold whitespace-nowrap'
+                       } 
+                       title={lighter ? t('converterWeightSaved') : t('converterWeightIncreased')}
+                   >
+                       {lighter ? '\u2212' : '+'}{pct}% {lighter ? t('converterPercentageSaved') : t('converterPercentageIncreased')}
+                   </span>
+               );
+           })()}
+       </div>
+       <a
+          href={file.convertedUrl}
+          download={getDownloadName(file.file.name)}
+          className="p-1.5 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-lg hover:bg-blue-200 dark:hover:bg-blue-900/50 transition-colors flex-shrink-0"
+          title="T\u00E9l\u00E9charger"
+       >
+           <Download size={16} />
+       </a>
+    </div>
+) : file.status === 'error' ? (
                                     <div className="flex flex-col gap-1">
                                         <div className="flex items-center gap-1.5 text-xs text-red-600 dark:text-red-400 font-medium">
                                             <AlertCircle size={14} />
@@ -459,23 +470,23 @@ const ImageConverter: React.FC<ImageConverterProps> = ({ lang }) => {
                      {/* #26 — mini-démo de valeur : montrer le gain de poids AVANT d'engager un fichier */}
                      <div className="flex items-center gap-2 sm:gap-3 mb-4">
                          <div className="px-3 sm:px-4 py-3 rounded-xl bg-white dark:bg-slate-800 border border-gray-200 dark:border-gray-700 shadow-sm">
-                             <p className="text-[10px] uppercase tracking-wider text-gray-400 mb-0.5">Avant</p>
+                             <p className="text-[10px] uppercase tracking-wider text-gray-400 mb-0.5">{t('converterBefore')}</p>
                              <p className="text-base sm:text-lg font-bold text-gray-500 dark:text-gray-400">1.5 MB</p>
                              <p className="text-[10px] text-gray-400">PNG</p>
                          </div>
                          <ArrowRight className="text-blue-500 flex-shrink-0" size={26} />
                          <div className="px-3 sm:px-4 py-3 rounded-xl bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 shadow-sm">
-                             <p className="text-[10px] uppercase tracking-wider text-blue-400 mb-0.5">Apr&egrave;s</p>
+                             <p className="text-[10px] uppercase tracking-wider text-blue-400 mb-0.5">{t('converterAfter')}</p>
                              <p className="text-base sm:text-lg font-bold text-blue-600 dark:text-blue-400">410 KB</p>
                              <p className="text-[10px] text-blue-400">WebP</p>
                          </div>
                          <div className="ml-1 px-3 py-2 rounded-xl bg-green-100 dark:bg-green-900/30">
                              <p className="text-lg sm:text-xl font-extrabold text-green-600 dark:text-green-400">&minus;73&nbsp;%</p>
-                             <p className="text-[10px] text-green-700 dark:text-green-500">de poids</p>
+                             <p className="text-[10px] text-green-700 dark:text-green-500">{t('converterWeightReduced')}</p>
                          </div>
                      </div>
                      <p className="text-sm text-gray-500 dark:text-gray-400 mb-4 max-w-md">
-                         D&eacute;posez vos images ci-dessus : la conversion est automatique et vous voyez aussit&ocirc;t le poids &eacute;conomis&eacute;.
+                         {t('converterDropImages')}
                      </p>
                      <button
                         onClick={loadDemoImage}
@@ -483,7 +494,7 @@ const ImageConverter: React.FC<ImageConverterProps> = ({ lang }) => {
                         className="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 disabled:opacity-60 disabled:cursor-wait text-white text-sm font-medium rounded-xl transition-colors flex items-center gap-2 shadow-sm"
                      >
                         {isLoadingDemo ? <RefreshCw size={16} className="animate-spin" /> : <ImageIcon size={16} />}
-                        Essayer avec une image de d&eacute;mo
+                        {t('converterTryDemo')}
                      </button>
                      {demoError && (
                          <p className="mt-3 text-xs text-red-500 dark:text-red-400 flex items-center gap-1.5">
