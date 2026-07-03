@@ -324,50 +324,5 @@
     <xhtml:link rel="alternate" hreflang="ja" href="https://cherif-diouf.artist-dev.com/ja/tools/meme-generator/"/>
   </url>
 
-  <!-- CONTACT -->
-  <url>
-    <loc>https://cherif-diouf.artist-dev.com/fr/contact/</loc>
-    <lastmod>2026-04-06</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.6</priority>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://cherif-diouf.artist-dev.com/fr/contact/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://cherif-diouf.artist-dev.com/fr/contact/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://cherif-diouf.artist-dev.com/en/contact/"/>
-    <xhtml:link rel="alternate" hreflang="zh" href="https://cherif-diouf.artist-dev.com/zh/contact/"/>
-    <xhtml:link rel="alternate" hreflang="ja" href="https://cherif-diouf.artist-dev.com/ja/contact/"/>
-  </url>
-  <url>
-    <loc>https://cherif-diouf.artist-dev.com/en/contact/</loc>
-    <lastmod>2026-04-06</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.6</priority>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://cherif-diouf.artist-dev.com/fr/contact/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://cherif-diouf.artist-dev.com/fr/contact/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://cherif-diouf.artist-dev.com/en/contact/"/>
-    <xhtml:link rel="alternate" hreflang="zh" href="https://cherif-diouf.artist-dev.com/zh/contact/"/>
-    <xhtml:link rel="alternate" hreflang="ja" href="https://cherif-diouf.artist-dev.com/ja/contact/"/>
-  </url>
-  <url>
-    <loc>https://cherif-diouf.artist-dev.com/zh/contact/</loc>
-    <lastmod>2026-04-06</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.4</priority>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://cherif-diouf.artist-dev.com/fr/contact/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://cherif-diouf.artist-dev.com/fr/contact/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://cherif-diouf.artist-dev.com/en/contact/"/>
-    <xhtml:link rel="alternate" hreflang="zh" href="https://cherif-diouf.artist-dev.com/zh/contact/"/>
-    <xhtml:link rel="alternate" hreflang="ja" href="https://cherif-diouf.artist-dev.com/ja/contact/"/>
-  </url>
-  <url>
-    <loc>https://cherif-diouf.artist-dev.com/ja/contact/</loc>
-    <lastmod>2026-04-06</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.4</priority>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://cherif-diouf.artist-dev.com/fr/contact/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://cherif-diouf.artist-dev.com/fr/contact/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://cherif-diouf.artist-dev.com/en/contact/"/>
-    <xhtml:link rel="alternate" hreflang="zh" href="https://cherif-diouf.artist-dev.com/zh/contact/"/>
-    <xhtml:link rel="alternate" hreflang="ja" href="https://cherif-diouf.artist-dev.com/ja/contact/"/>
-  </url>
 
 </urlset>
