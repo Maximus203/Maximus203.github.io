@@ -1,7 +1,7 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import React, { useEffect, useRef } from 'react';
+import { motion, useReducedMotion } from 'framer-motion';
+import React, { useEffect, useRef, useState } from 'react';
 
 interface Star {
   x: number;
@@ -12,8 +12,42 @@ interface Star {
 
 const IntroAnimation: React.FC<{ onComplete: () => void }> = ({ onComplete }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const skipButtonRef = useRef<HTMLButtonElement>(null);
+  const prefersReducedMotion = useReducedMotion();
+  const [shouldSkip, setShouldSkip] = useState(false);
 
+  // Gérer prefers-reduced-motion : sauter l'animation immédiatement
   useEffect(() => {
+    if (prefersReducedMotion) {
+      setShouldSkip(true);
+      onComplete();
+    }
+  }, [prefersReducedMotion, onComplete]);
+
+  // Gérer la touche Échap pour sauter l'animation
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && !shouldSkip) {
+        setShouldSkip(true);
+        onComplete();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [shouldSkip, onComplete]);
+
+  // Focus le bouton Skip au montage
+  useEffect(() => {
+    if (skipButtonRef.current && !shouldSkip) {
+      skipButtonRef.current.focus();
+    }
+  }, [shouldSkip]);
+
+  // Animation du vortex (ne s'exécute que si pas de reduced-motion)
+  useEffect(() => {
+    if (shouldSkip) return;
+
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -71,12 +105,12 @@ const IntroAnimation: React.FC<{ onComplete: () => void }> = ({ onComplete }) =>
 
       // Fond Slate 950 avec opacité pour l'effet de traînée (Trail effect)
       // Correspond à la couleur dark:bg-slate-950 du site
-      ctx.fillStyle = "rgba(2, 6, 23, 0.3)";
+      ctx.fillStyle = 'rgba(2, 6, 23, 0.3)';
       ctx.fillRect(0, 0, width, height);
 
       // Accélération jusqu'à une vitesse max
       if (speed < maxSpeed) {
-          speed *= acceleration;
+        speed *= acceleration;
       }
 
       // Couleur des étoiles : Indigo (Brand Color) qui devient plus lumineux/blanc
@@ -117,11 +151,11 @@ const IntroAnimation: React.FC<{ onComplete: () => void }> = ({ onComplete }) =>
         const size = (1 - star.z / width); // Plus gros si proche
 
         if (star.z < width - 10) { // Éviter de dessiner les étoiles qui viennent d'apparaitre au fond
-            ctx.lineWidth = size * 2;
-            ctx.beginPath();
-            ctx.moveTo(px, py);
-            ctx.lineTo(x, y);
-            ctx.stroke();
+          ctx.lineWidth = size * 2;
+          ctx.beginPath();
+          ctx.moveTo(px, py);
+          ctx.lineTo(x, y);
+          ctx.stroke();
         }
       }
 
@@ -144,23 +178,31 @@ const IntroAnimation: React.FC<{ onComplete: () => void }> = ({ onComplete }) =>
       cancelAnimationFrame(animationFrameId);
       clearTimeout(fallbackTimeout);
     };
-  }, [onComplete]);
+  }, [onComplete, shouldSkip]);
+
+  // Si reduced-motion ou Échap pressé : ne rien afficher et appeler onComplete
+  if (shouldSkip) {
+    return null;
+  }
 
   return (
     <motion.div
       initial={{ opacity: 1 }}
-      exit={{ opacity: 0, filter: "brightness(300%)" }} // Flash blanc à la fin
-      transition={{ duration: 0.5, ease: "easeInOut" }}
+      exit={{ opacity: 0, filter: 'brightness(300%)' }} // Flash blanc à la fin
+      transition={{ duration: 0.5, ease: 'easeInOut' }}
       className="fixed inset-0 z-[100] bg-[#020617] overflow-hidden flex items-center justify-center"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Animation d'introduction"
     >
-      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />
+      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" aria-hidden="true" />
 
       {/* Texte centré et stable */}
       <motion.div
-        initial={{ opacity: 0, scale: 0.9, letterSpacing: "0.1em" }}
-        animate={{ opacity: 1, scale: 1, letterSpacing: "0.2em" }}
-        exit={{ opacity: 0, scale: 1.2, letterSpacing: "0.5em" }}
-        transition={{ duration: 1.5, ease: "easeOut" }}
+        initial={{ opacity: 0, scale: 0.9, letterSpacing: '0.1em' }}
+        animate={{ opacity: 1, scale: 1, letterSpacing: '0.2em' }}
+        exit={{ opacity: 0, scale: 1.2, letterSpacing: '0.5em' }}
+        transition={{ duration: 1.5, ease: 'easeOut' }}
         className="relative z-10 text-center px-4"
       >
         <p
@@ -170,6 +212,19 @@ const IntroAnimation: React.FC<{ onComplete: () => void }> = ({ onComplete }) =>
           Cherif Diouf | Portfolio
         </p>
       </motion.div>
+
+      {/* Bouton Skip accessible */}
+      <button
+        ref={skipButtonRef}
+        onClick={() => {
+          setShouldSkip(true);
+          onComplete();
+        }}
+        className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 px-4 py-2 text-sm font-medium text-white bg-white/10 backdrop-blur-sm rounded-full border border-white/20 hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 focus:ring-offset-[#020617] transition-all"
+        aria-label="Passer l'animation d'introduction"
+      >
+        Passer
+      </button>
     </motion.div>
   );
 };
