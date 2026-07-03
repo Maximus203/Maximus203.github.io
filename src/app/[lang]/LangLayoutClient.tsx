@@ -37,7 +37,7 @@ export function LangLayoutClient({ lang, children }: LangLayoutClientProps) {
   return (
     <>
       <AnimatePresence mode="wait">
-        {showIntro && <IntroAnimation onComplete={handleIntroComplete} />}
+        {showIntro && <IntroAnimation onComplete={handleIntroComplete} labels={labels} />}
       </AnimatePresence>
 
       <ProjectRequestModal

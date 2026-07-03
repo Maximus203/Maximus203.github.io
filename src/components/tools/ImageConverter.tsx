@@ -198,7 +198,7 @@ const ImageConverter: React.FC<ImageConverterProps> = ({ lang, labels }) => {
                 ? {
                     ...f,
                     status: "error",
-                    errorMessage: "Erreur inattendue lors du traitement.",
+                    errorMessage: t("converterUnexpectedError"),
                   }
                 : f,
             ),
@@ -214,7 +214,7 @@ const ImageConverter: React.FC<ImageConverterProps> = ({ lang, labels }) => {
               ? {
                   ...f,
                   status: "error",
-                  errorMessage: "Fichier image corrompu ou illisible.",
+                  errorMessage: t("converterCorruptedFile"),
                 }
               : f,
           ),
@@ -263,9 +263,7 @@ const ImageConverter: React.FC<ImageConverterProps> = ({ lang, labels }) => {
       processFiles([demoFile]);
     } catch (error) {
       console.error("Impossible de charger l'image de démo", error);
-      setDemoError(
-        "Impossible de charger l'image de démo. Réessayez ou déposez votre propre image.",
-      );
+      setDemoError(t("converterDemoLoadError"));
     } finally {
       setIsLoadingDemo(false);
     }
@@ -297,7 +295,7 @@ const ImageConverter: React.FC<ImageConverterProps> = ({ lang, labels }) => {
       saveAs(content, "converted_images.zip");
     } catch (error) {
       console.error("Error creating zip", error);
-      alert("Une erreur est survenue lors de la cr\u00E9ation de l'archive.");
+      alert(t("converterArchiveError"));
     } finally {
       setIsZipping(false);
     }
@@ -579,7 +577,7 @@ const ImageConverter: React.FC<ImageConverterProps> = ({ lang, labels }) => {
                           href={file.convertedUrl}
                           download={getDownloadName(file.file.name)}
                           className="p-1.5 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-lg hover:bg-blue-200 dark:hover:bg-blue-900/50 transition-colors flex-shrink-0"
-                          title="T\u00E9l\u00E9charger"
+                          title={t("download")}
                         >
                           <Download size={16} />
                         </a>
@@ -588,7 +586,7 @@ const ImageConverter: React.FC<ImageConverterProps> = ({ lang, labels }) => {
                       <div className="flex flex-col gap-1">
                         <div className="flex items-center gap-1.5 text-xs text-red-600 dark:text-red-400 font-medium">
                           <AlertCircle size={14} />
-                          <span>&Eacute;chec</span>
+                          <span>{t("converterFailed")}</span>
                         </div>
                         {file.errorMessage && (
                           <p className="text-[10px] text-red-500 dark:text-red-300 leading-tight">
@@ -599,7 +597,7 @@ const ImageConverter: React.FC<ImageConverterProps> = ({ lang, labels }) => {
                     ) : (
                       <div className="flex items-center gap-1.5 text-xs text-gray-400 font-medium">
                         <ImageIcon size={14} />
-                        <span>En attente</span>
+                        <span>{t("converterPending")}</span>
                       </div>
                     )}
                   </div>
