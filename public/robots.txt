@@ -4,19 +4,14 @@ Allow: /
 # Sitemap
 Sitemap: https://cherif-diouf.artist-dev.com/sitemap.xml
 
-# Autoriser explicitement les assets statiques Next.js
-# (CSS, JS, polices — INDISPENSABLES pour que Googlebot puisse rendre les pages)
-Allow: /_next/static/
-Allow: /_next/image
+# Éviter l'indexation des fichiers de développement
+Disallow: /node_modules/
+Disallow: /src/
+Disallow: /*.json
+Disallow: /*.config.*
+Disallow: /.github/
+Disallow: /scripts/
+
+# Permettre l'accès aux assets importants
 Allow: /assets/
-
-# Bloquer uniquement les endpoints de données internes
-Disallow: /_next/data/
-Disallow: /api/
-
-# Crawl-delay indicatif pour les bots moins importants
-User-agent: AhrefsBot
-Crawl-delay: 10
-
-User-agent: SemrushBot
-Crawl-delay: 10
+Allow: /documents/
