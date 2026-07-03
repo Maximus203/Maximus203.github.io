@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { Copy, Check, ArrowLeft, ArrowDown, Github, Palette, Type, Code, Eye, Layers, Terminal, Settings, User, Trophy, Activity, Users, AlignLeft, AlignCenter, AlignRight, LayoutGrid, Tag } from 'lucide-react';
 import Link from 'next/link';
 import { Language } from '@/types';
+import { useToolLaunchTracking } from '@/lib/analytics';
 
 interface ReadmeGeneratorProps {
   lang: Language;
@@ -100,6 +101,9 @@ const ReadmeGenerator: React.FC<ReadmeGeneratorProps> = ({ lang, labels }) => {
   const t = (key: string) => labels?.[key] || key;
   const [activeTab, setActiveTab] = useState<'profile' | 'skills' | 'stats'>('profile');
   const [outputTab, setOutputTab] = useState<'markdown' | 'workflow'>('markdown');
+  
+  // Analytics tracking for tool launch
+  const trackToolLaunch = useToolLaunchTracking(lang);
 
   const [formData, setFormData] = useState({
     // #28 \u2014 d\u00e9fauts NEUTRES : l'aper\u00e7u n'appartient \u00e0 personne tant que le visiteur n'a pas saisi son pseudo
@@ -137,6 +141,11 @@ const ReadmeGenerator: React.FC<ReadmeGeneratorProps> = ({ lang, labels }) => {
   const [markdown, setMarkdown] = useState('');
   const [workflowCode, setWorkflowCode] = useState('');
   const [copied, setCopied] = useState(false);
+
+  // Track tool launch on mount
+  useEffect(() => {
+    trackToolLaunch('readme');
+  }, [trackToolLaunch]);
 
   const toggleSkill = (skillName: string) => {
     setSelectedSkills(prev =>

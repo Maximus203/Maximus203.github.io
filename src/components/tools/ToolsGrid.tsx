@@ -1,10 +1,11 @@
 'use client';
 
-import React from 'react';
+import React, { useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { FileText, Smile, Image, ArrowRight, Zap, RefreshCw, Github } from 'lucide-react';
 import Link from 'next/link';
 import { Language } from '@/types';
+import { useToolLaunchTracking } from '@/lib/analytics';
 
 interface ToolsGridProps {
   labels: Record<string, string>;
@@ -12,6 +13,8 @@ interface ToolsGridProps {
 }
 
 const ToolsGrid: React.FC<ToolsGridProps> = ({ labels, lang }) => {
+  const trackToolLaunch = useToolLaunchTracking(lang);
+
   const tools = [
     {
       id: 'readme',
@@ -41,6 +44,10 @@ const ToolsGrid: React.FC<ToolsGridProps> = ({ labels, lang }) => {
       actionIcon: <Image size={18} />
     }
   ];
+
+  const handleToolClick = useCallback((toolId: string) => {
+    trackToolLaunch(toolId);
+  }, [trackToolLaunch]);
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -74,6 +81,7 @@ const ToolsGrid: React.FC<ToolsGridProps> = ({ labels, lang }) => {
 
             <Link
               href={`/${lang}/tools/${tool.slug}/`}
+              onClick={() => handleToolClick(tool.id)}
               className="mt-auto w-full py-3 px-4 rounded-xl bg-gray-50 dark:bg-slate-700/50 text-gray-700 dark:text-white font-medium text-sm flex items-center justify-center gap-2 group-hover:bg-gray-900 group-hover:text-white dark:group-hover:bg-indigo-600 transition-all duration-300"
             >
                {tool.actionIcon}

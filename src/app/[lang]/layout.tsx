@@ -57,6 +57,19 @@ export default async function LangLayout({
   return (
     <html lang={lang} suppressHydrationWarning>
       <head>
+        {/* Plausible Analytics - Privacy-first, no cookies, GDPR compliant.
+            Prod-only + script.manual.js: we drive every pageview (incl. the
+            first) ourselves via usePageViewTracking, since App Router
+            navigation never triggers a full reload the auto script would see. */}
+        {process.env.NODE_ENV === 'production' && (
+          <script
+            defer
+            data-domain={process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN || 'maximus203.github.io'}
+            data-api={`${process.env.NEXT_PUBLIC_PLAUSIBLE_API_HOST || 'https://plausible.io'}/api/event`}
+            src="https://plausible.io/js/script.manual.js"
+          />
+        )}
+
         {/* Person schema — identité complète */}
         <script
           type="application/ld+json"

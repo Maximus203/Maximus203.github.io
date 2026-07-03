@@ -1,17 +1,19 @@
 'use client';
 
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, UploadCloud, File, CheckCircle, Send, AlertCircle } from 'lucide-react';
 import { getSupabase } from '@/lib/supabase';
+import { useContactModalTracking, useContactFormSubmitTracking } from '@/lib/analytics';
 
 interface ProjectRequestModalProps {
   isOpen: boolean;
   onClose: () => void;
   labels: Record<string, string>;
+  language: string;
 }
 
-const ProjectRequestModal: React.FC<ProjectRequestModalProps> = ({ isOpen, onClose, labels }) => {
+const ProjectRequestModal: React.FC<ProjectRequestModalProps> = ({ isOpen, onClose, labels, language }) => {
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -23,6 +25,16 @@ const ProjectRequestModal: React.FC<ProjectRequestModalProps> = ({ isOpen, onClo
   const [isSuccess, setIsSuccess] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Track contact modal open / form submit
+  const trackContactModalOpen = useContactModalTracking(language);
+  const trackContactFormSubmit = useContactFormSubmitTracking(language);
+
+  useEffect(() => {
+    if (isOpen) {
+      trackContactModalOpen();
+    }
+  }, [isOpen, trackContactModalOpen]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -63,6 +75,9 @@ const ProjectRequestModal: React.FC<ProjectRequestModalProps> = ({ isOpen, onClo
       setIsSubmitting(false);
       setIsSuccess(true);
 
+      // Track successful form submission
+      trackContactFormSubmit(true);
+
       setTimeout(() => {
         setIsSuccess(false);
         setFormData({ firstName: '', lastName: '', email: '', details: '' });
@@ -73,6 +88,9 @@ const ProjectRequestModal: React.FC<ProjectRequestModalProps> = ({ isOpen, onClo
       console.error('Error submitting project request:', err);
       setIsSubmitting(false);
       setErrorMsg('Une erreur est survenue. Veuillez réessayer ou me contacter directement par email.');
+
+      // Track failed form submission
+      trackContactFormSubmit(false);
     }
   };
 
