@@ -82,23 +82,23 @@ export default function HomePageClient({ lang }: HomePageClientProps) {
 
           {/* Hero CTAs */}
           <div className="mt-8 flex items-center gap-3 flex-wrap">
-            {/* Primary CTA */}
+            {/* Primary CTA - Opens Project Modal */}
+            <button
+              onClick={() => setProjectModalOpen(true)}
+              className="group inline-flex items-center gap-2.5 px-7 py-3.5 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-sm transition-all duration-200 shadow-[0_4px_18px_rgba(99,102,241,0.3)] hover:shadow-[0_6px_22px_rgba(99,102,241,0.4)] hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-slate-900"
+            >
+              <MessageSquare size={16} className="group-hover:scale-110 transition-transform duration-200" />
+              {labels.discussProject}
+            </button>
+
+            {/* Secondary CTA — ghost */}
             <a
               href="#projects"
-              className="group inline-flex items-center gap-2.5 px-7 py-3.5 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-sm transition-all duration-200 shadow-[0_4px_18px_rgba(99,102,241,0.3)] hover:shadow-[0_6px_22px_rgba(99,102,241,0.4)] hover:-translate-y-0.5"
+              className="group inline-flex items-center gap-2.5 px-7 py-3.5 rounded-2xl border-2 border-gray-300 dark:border-slate-600 text-gray-700 dark:text-gray-200 hover:border-indigo-400 dark:hover:border-indigo-500 hover:text-indigo-600 dark:hover:text-indigo-400 font-bold text-sm transition-all duration-200 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-slate-900"
             >
               {labels.viewProjects}
               <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform duration-200" />
             </a>
-
-            {/* Secondary CTA — ghost */}
-            <button
-              onClick={() => setProjectModalOpen(true)}
-              className="group inline-flex items-center gap-2.5 px-7 py-3.5 rounded-2xl border-2 border-gray-200 dark:border-slate-700 text-gray-700 dark:text-gray-200 hover:border-indigo-400 dark:hover:border-indigo-500 hover:text-indigo-600 dark:hover:text-indigo-400 font-bold text-sm transition-all duration-200 hover:-translate-y-0.5"
-            >
-              <MessageSquare size={16} className="group-hover:scale-110 transition-transform duration-200" />
-              {labels.contactCta}
-            </button>
           </div>
         </motion.div>
 

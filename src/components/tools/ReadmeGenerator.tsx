@@ -9,6 +9,7 @@ import { useToolLaunchTracking } from '@/lib/analytics';
 
 interface ReadmeGeneratorProps {
   lang: Language;
+  labels?: Record<string, string>;
 }
 
 const THEMES = [
@@ -96,7 +97,8 @@ const SKILL_CATEGORIES = {
   ]
 };
 
-const ReadmeGenerator: React.FC<ReadmeGeneratorProps> = ({ lang }) => {
+const ReadmeGenerator: React.FC<ReadmeGeneratorProps> = ({ lang, labels }) => {
+  const t = (key: string) => labels?.[key] || key;
   const [activeTab, setActiveTab] = useState<'profile' | 'skills' | 'stats'>('profile');
   const [outputTab, setOutputTab] = useState<'markdown' | 'workflow'>('markdown');
   
@@ -355,9 +357,9 @@ jobs:
       <div className="bg-gradient-to-r from-indigo-50 to-white dark:from-indigo-900/20 dark:to-slate-900 border border-indigo-200 dark:border-indigo-800 rounded-2xl p-5 mb-6 shadow-sm">
         <label htmlFor="github-username-start" className="flex items-center flex-wrap gap-2 text-sm font-semibold text-indigo-700 dark:text-indigo-300 mb-2">
           <Github size={18} />
-          <span>Ton pseudo GitHub</span>
+          <span>{t('readmeStartUsername')}</span>
           <span className="inline-flex items-center gap-1 text-xs font-normal text-indigo-500 dark:text-indigo-400">
-            <ArrowDown size={14} /> commence ici
+            <ArrowDown size={14} /> {t('readmeStartHere')}
           </span>
         </label>
         <input
@@ -368,7 +370,7 @@ jobs:
           placeholder="your-username"
           className="w-full px-4 py-3 rounded-xl bg-white dark:bg-slate-900 border-2 border-indigo-300 dark:border-indigo-700 focus:border-indigo-500 outline-none text-base font-medium text-gray-900 dark:text-white"
         />
-        <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">Saisis ton pseudo : l&apos;aper&ccedil;u et les statistiques deviennent les tiens instantan&eacute;ment.</p>
+        <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">{t('readmeStartHelp')}</p>
       </div>
 
       {/* TOP: LIVE PREVIEW */}

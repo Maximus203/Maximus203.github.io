@@ -5,16 +5,11 @@ import { usePathname } from 'next/navigation';
 
 // Analytics event types
 export type AnalyticsEvent =
-  | 'pageview'
   | 'cv_download'
   | 'contact_modal_open'
+  | 'contact_form_submit'
   | 'language_change'
   | 'tool_launch';
-
-interface AnalyticsEventData {
-  event: AnalyticsEvent;
-  props?: Record<string, string | number | boolean>;
-}
 
 // Check if analytics is enabled (only in production, no localhost)
 const isAnalyticsEnabled = (): boolean => {
@@ -24,7 +19,7 @@ const isAnalyticsEnabled = (): boolean => {
   return hostname !== 'localhost' && hostname !== '127.0.0.1' && !hostname.includes('localhost');
 };
 
-// Send event to Plausible
+// Send a custom event to Plausible (never used for pageviews — see sendPageview)
 const sendEvent = (event: AnalyticsEvent, props?: Record<string, string | number | boolean>) => {
   if (!isAnalyticsEnabled()) {
     // Log in development for debugging
@@ -43,15 +38,32 @@ const sendEvent = (event: AnalyticsEvent, props?: Record<string, string | number
   }
 };
 
+// Send a real Plausible pageview (not a custom event). script.manual.js
+// disables auto-tracking entirely, so this drives every pageview ourselves —
+// including the first, since App Router navigation never triggers a full
+// reload the standard auto-tracking script would otherwise see.
+const sendPageview = (url: string) => {
+  if (!isAnalyticsEnabled()) {
+    if (process.env.NODE_ENV === 'development') {
+      console.log('[Analytics] pageview', url);
+    }
+    return;
+  }
+
+  if (typeof window !== 'undefined' && (window as any).plausible) {
+    (window as any).plausible('pageview', { u: url });
+  } else if (typeof window !== 'undefined' && (window as any).umami) {
+    (window as any).umami.track();
+  }
+};
+
 // Track page views automatically
 export function usePageViewTracking() {
   const pathname = usePathname();
 
   useEffect(() => {
     if (!pathname) return;
-
-    // Track page view with language in path
-    sendEvent('pageview', { path: pathname });
+    sendPageview(window.location.origin + pathname);
   }, [pathname]);
 }
 
@@ -79,8 +91,8 @@ export const analytics = {
     sendEvent('tool_launch', { tool: toolName, language });
   },
 
-  trackPageView: (path: string) => {
-    sendEvent('pageview', { path });
+  trackContactFormSubmit: (success: boolean, language: string) => {
+    sendEvent('contact_form_submit', { success, language });
   },
 };
 
@@ -103,6 +115,13 @@ export function useLanguageChangeTracking() {
   return useCallback((fromLang: string, toLang: string) => {
     analytics.trackLanguageChange(fromLang, toLang);
   }, []);
+}
+
+// Custom hook for tracking contact form submission
+export function useContactFormSubmitTracking(language: string) {
+  return useCallback((success: boolean) => {
+    analytics.trackContactFormSubmit(success, language);
+  }, [language]);
 }
 
 // Custom hook for tracking tool launches

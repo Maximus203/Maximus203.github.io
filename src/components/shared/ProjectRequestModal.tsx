@@ -4,7 +4,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, UploadCloud, File, CheckCircle, Send, AlertCircle } from 'lucide-react';
 import { getSupabase } from '@/lib/supabase';
-import { useContactModalTracking } from '@/lib/analytics';
+import { useContactModalTracking, useContactFormSubmitTracking } from '@/lib/analytics';
 
 interface ProjectRequestModalProps {
   isOpen: boolean;
@@ -26,8 +26,9 @@ const ProjectRequestModal: React.FC<ProjectRequestModalProps> = ({ isOpen, onClo
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // Track contact modal open
+  // Track contact modal open / form submit
   const trackContactModalOpen = useContactModalTracking(language);
+  const trackContactFormSubmit = useContactFormSubmitTracking(language);
 
   useEffect(() => {
     if (isOpen) {
@@ -75,11 +76,7 @@ const ProjectRequestModal: React.FC<ProjectRequestModalProps> = ({ isOpen, onClo
       setIsSuccess(true);
 
       // Track successful form submission
-      if (typeof window !== 'undefined' && (window as any).plausible) {
-        (window as any).plausible('contact_form_submit', { props: { success: true, language } });
-      } else if (typeof window !== 'undefined' && (window as any).umami) {
-        (window as any).umami.track('contact_form_submit', { success: true, language });
-      }
+      trackContactFormSubmit(true);
 
       setTimeout(() => {
         setIsSuccess(false);
@@ -93,11 +90,7 @@ const ProjectRequestModal: React.FC<ProjectRequestModalProps> = ({ isOpen, onClo
       setErrorMsg('Une erreur est survenue. Veuillez réessayer ou me contacter directement par email.');
 
       // Track failed form submission
-      if (typeof window !== 'undefined' && (window as any).plausible) {
-        (window as any).plausible('contact_form_submit', { props: { success: false, language } });
-      } else if (typeof window !== 'undefined' && (window as any).umami) {
-        (window as any).umami.track('contact_form_submit', { success: false, language });
-      }
+      trackContactFormSubmit(false);
     }
   };
 
