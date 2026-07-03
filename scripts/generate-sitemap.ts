@@ -17,55 +17,56 @@ const validateChangefreq = (freq: string): string => {
   return freq;
 };
 
+// Langues supportées
+const LANGUAGES = ['fr', 'en', 'zh', 'ja'];
+
+// Routes principales (sans /contact qui retourne 404)
+const MAIN_ROUTES = [
+  { path: '/', changefreq: 'monthly', priority: '1.0' },
+  { path: '/gallery', changefreq: 'monthly', priority: '0.8' },
+  { path: '/students', changefreq: 'monthly', priority: '0.8' },
+  { path: '/tools', changefreq: 'monthly', priority: '0.9' },
+  { path: '/tools/image-converter', changefreq: 'monthly', priority: '0.8' },
+  { path: '/tools/meme-generator', changefreq: 'monthly', priority: '0.8' },
+  { path: '/tools/readme-generator', changefreq: 'monthly', priority: '0.8' },
+];
+
+// Ancres de la page d'accueil (pour référence, pas indexées comme URLs distinctes par Google)
+const HOME_ANCHORS = [
+  { path: '/#projects', changefreq: 'monthly', priority: '0.9' },
+  { path: '/#skills', changefreq: 'monthly', priority: '0.8' },
+  { path: '/#experience', changefreq: 'monthly', priority: '0.8' },
+  { path: '/#education', changefreq: 'yearly', priority: '0.7' },
+  { path: '/#certifications', changefreq: 'monthly', priority: '0.7' },
+  { path: '/#languages', changefreq: 'yearly', priority: '0.6' },
+  { path: '/#interests', changefreq: 'yearly', priority: '0.5' },
+];
+
+// Générer toutes les URLs
 const urls = [
+  // Racine sans langue (redirige vers la langue par défaut)
   {
     loc: SITE_URL + '/',
     lastmod: currentDate,
     changefreq: 'monthly',
     priority: '1.0'
   },
-  {
-    loc: SITE_URL + '/#projects',
+  // Routes localisées pour chaque langue
+  ...LANGUAGES.flatMap(lang =>
+    MAIN_ROUTES.map(route => ({
+      loc: `${SITE_URL}/${lang}${route.path}`,
+      lastmod: currentDate,
+      changefreq: route.changefreq,
+      priority: route.priority
+    }))
+  ),
+  // Ancres de la page d'accueil (une seule fois, sans langue)
+  ...HOME_ANCHORS.map(anchor => ({
+    loc: SITE_URL + anchor.path,
     lastmod: currentDate,
-    changefreq: 'monthly',
-    priority: '0.9'
-  },
-  {
-    loc: SITE_URL + '/#skills',
-    lastmod: currentDate,
-    changefreq: 'monthly',
-    priority: '0.8'
-  },
-  {
-    loc: SITE_URL + '/#experience',
-    lastmod: currentDate,
-    changefreq: 'monthly',
-    priority: '0.8'
-  },
-  {
-    loc: SITE_URL + '/#education',
-    lastmod: currentDate,
-    changefreq: 'yearly',
-    priority: '0.7'
-  },
-  {
-    loc: SITE_URL + '/#certifications',
-    lastmod: currentDate,
-    changefreq: 'monthly',
-    priority: '0.7'
-  },
-  {
-    loc: SITE_URL + '/#languages',
-    lastmod: currentDate,
-    changefreq: 'yearly',
-    priority: '0.6'
-  },
-  {
-    loc: SITE_URL + '/#interests',
-    lastmod: currentDate,
-    changefreq: 'yearly',
-    priority: '0.5'
-  }
+    changefreq: anchor.changefreq,
+    priority: anchor.priority
+  }))
 ];
 
 const generateSitemap = () => {
