@@ -55,6 +55,7 @@ export interface ResumeData {
     bio: string;
     bioShort: string;
     avatar?: string;
+    keyMetric?: string;
   };
   experience: Experience[];
   education: Education[];

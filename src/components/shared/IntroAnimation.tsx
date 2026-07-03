@@ -2,6 +2,7 @@
 
 import { motion, useReducedMotion } from 'framer-motion';
 import React, { useEffect, useRef, useState } from 'react';
+import { useAppStore } from '@/store/store';
 
 interface Star {
   x: number;
@@ -10,41 +11,59 @@ interface Star {
   pz: number; // Previous Z
 }
 
-const IntroAnimation: React.FC<{ onComplete: () => void }> = ({ onComplete }) => {
+interface IntroAnimationProps {
+  onComplete: () => void;
+  labels: Record<string, string>;
+}
+
+const IntroAnimation: React.FC<IntroAnimationProps> = ({ onComplete, labels }) => {
+  const { setShowIntro } = useAppStore();
+  const [showSkip, setShowSkip] = useState(false);
+  const [shouldSkip, setShouldSkip] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const skipButtonRef = useRef<HTMLButtonElement>(null);
   const prefersReducedMotion = useReducedMotion();
-  const [shouldSkip, setShouldSkip] = useState(false);
+
+  const triggerSkip = () => {
+    setShouldSkip(true);
+    setShowIntro(false);
+    onComplete();
+  };
+
+  // Show skip button after 1 second
+  useEffect(() => {
+    const timer = setTimeout(() => setShowSkip(true), 1000);
+    return () => clearTimeout(timer);
+  }, []);
 
   // Gérer prefers-reduced-motion : sauter l'animation immédiatement
   useEffect(() => {
     if (prefersReducedMotion) {
-      setShouldSkip(true);
-      onComplete();
+      triggerSkip();
     }
-  }, [prefersReducedMotion, onComplete]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [prefersReducedMotion]);
 
   // Gérer la touche Échap pour sauter l'animation
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape' && !shouldSkip) {
-        setShouldSkip(true);
-        onComplete();
+        triggerSkip();
       }
     };
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [shouldSkip, onComplete]);
-
-  // Focus le bouton Skip au montage
-  useEffect(() => {
-    if (skipButtonRef.current && !shouldSkip) {
-      skipButtonRef.current.focus();
-    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [shouldSkip]);
 
-  // Animation du vortex (ne s'exécute que si pas de reduced-motion)
+  // Focus le bouton Skip une fois affiché
+  useEffect(() => {
+    if (showSkip && skipButtonRef.current && !shouldSkip) {
+      skipButtonRef.current.focus();
+    }
+  }, [showSkip, shouldSkip]);
+
   useEffect(() => {
     if (shouldSkip) return;
 
@@ -193,7 +212,7 @@ const IntroAnimation: React.FC<{ onComplete: () => void }> = ({ onComplete }) =>
       className="fixed inset-0 z-[100] bg-[#020617] overflow-hidden flex items-center justify-center"
       role="dialog"
       aria-modal="true"
-      aria-label="Animation d'introduction"
+      aria-label={labels.introDialogLabel}
     >
       <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" aria-hidden="true" />
 
@@ -213,18 +232,22 @@ const IntroAnimation: React.FC<{ onComplete: () => void }> = ({ onComplete }) =>
         </p>
       </motion.div>
 
-      {/* Bouton Skip accessible */}
-      <button
-        ref={skipButtonRef}
-        onClick={() => {
-          setShouldSkip(true);
-          onComplete();
-        }}
-        className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 px-4 py-2 text-sm font-medium text-white bg-white/10 backdrop-blur-sm rounded-full border border-white/20 hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 focus:ring-offset-[#020617] transition-all"
-        aria-label="Passer l'animation d'introduction"
-      >
-        Passer
-      </button>
+      {/* Skip button - appears after 1 second */}
+      {showSkip && (
+        <motion.button
+          ref={skipButtonRef}
+          type="button"
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.8 }}
+          transition={{ duration: 0.2 }}
+          onClick={triggerSkip}
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 px-6 py-2 text-sm font-medium text-white border border-white/30 rounded-full hover:bg-white/10 hover:border-white/50 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-[#020617]"
+          aria-label={labels.skip}
+        >
+          {labels.skip}
+        </motion.button>
+      )}
     </motion.div>
   );
 };
