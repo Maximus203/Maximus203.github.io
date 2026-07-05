@@ -1,9 +1,8 @@
 'use client';
 
 import React, { useState, useRef, useEffect } from 'react';
-import { ArrowLeft, Upload, Download, Type, Palette, Image as ImageIcon, RefreshCcw } from 'lucide-react';
+import { ArrowLeft, Upload, Download, Type, Image as ImageIcon } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { UI_LABELS } from '@/lib/constants/ui-labels';
 import Link from 'next/link';
 import { Language } from '@/types';
 
