@@ -8,6 +8,7 @@ export interface Project {
   link?: string;
   github?: string;
   image?: string;
+  profiles?: ProfileType[];
 }
 
 export interface Experience {

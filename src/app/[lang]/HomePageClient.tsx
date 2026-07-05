@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { ArrowRight, Briefcase, Code2, FolderGit2, GraduationCap, MessageSquare, Plus, Search, Sparkles, X } from 'lucide-react';
+import { ArrowRight, Briefcase, Code2, FolderGit2, Globe, GraduationCap, MessageSquare, Plus, Search, Sparkles, X } from 'lucide-react';
 import ExperienceItem from '@/components/home/ExperienceItem';
 import ProjectCard from '@/components/home/ProjectCard';
 import TerminalBlock from '@/components/home/TerminalBlock';
@@ -48,9 +48,12 @@ export default function HomePageClient({ lang }: HomePageClientProps) {
     ? data.experience.filter(exp => !exp.profiles || exp.profiles.includes(activeProfile))
     : data.experience;
 
+  // Optimized: compute matchesSearch once, then combine with profile match
+  const query = projectSearch.toLowerCase();
   const filteredProjects = data.projects.filter((project) => {
-    const query = projectSearch.toLowerCase();
-    return project.title.toLowerCase().includes(query) || project.tags.some((tag) => tag.toLowerCase().includes(query));
+    const matchesSearch = project.title.toLowerCase().includes(query) || project.tags.some((tag) => tag.toLowerCase().includes(query));
+    const matchesProfile = !activeProfile || !project.profiles || project.profiles.includes(activeProfile);
+    return matchesSearch && matchesProfile;
   });
 
   return (
@@ -71,17 +74,61 @@ export default function HomePageClient({ lang }: HomePageClientProps) {
             {labels.available}
           </div>
           <h1 className="text-4xl lg:text-6xl font-extrabold text-gray-900 dark:text-white tracking-tight leading-[1.1] mb-6">
-            {labels.role}{' '}
+            {(() => {
+              if (activeProfile === 'software') return labels.roleSoftware;
+              if (activeProfile === 'network') return labels.roleNetwork;
+              if (activeProfile === 'teaching') return labels.roleTeaching;
+              return labels.role;
+            })()}{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400">
-              Full-Stack
+              {activeProfile === 'software' ? labels.roleSoftware : activeProfile === 'network' ? labels.roleNetwork : activeProfile === 'teaching' ? labels.roleTeaching : 'Full-Stack'}
             </span>
             <br />
             {labels.and} {labels.mentor}.
           </h1>
-          <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed max-w-xl">{data.profile.bioShort}</p>
+          <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed max-w-xl">
+            {activeProfile === 'software' ? labels.bioShortSoftware : activeProfile === 'network' ? labels.bioShortNetwork : activeProfile === 'teaching' ? labels.bioShortTeaching : data.profile.bioShort}
+          </p>
 
-          {/* Hero CTAs */}
-          <div className="mt-8 flex items-center gap-3 flex-wrap">
+          {/* Hero CTAs - Entry points for different visitor targets (issue #22) */}
+          <div className="mt-8 flex flex-col sm:flex-row items-center gap-3 flex-wrap">
+            {/* Entry CTAs for different visitor targets */}
+            <div className="flex items-center gap-2.5 flex-wrap w-full sm:w-auto">
+              <button
+                onClick={() => setActiveProfile('software')}
+                className={`group inline-flex items-center gap-2.5 px-5 py-3 rounded-xl text-sm font-medium transition-all duration-200 ${
+                  activeProfile === 'software'
+                    ? 'bg-indigo-600 text-white shadow-[0_4px_18px_rgba(99,102,241,0.3)]'
+                    : 'bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-gray-200 hover:bg-indigo-50 dark:hover:bg-indigo-900/30'
+                }`}
+              >
+                <Code2 size={15} className="group-hover:scale-110 transition-transform duration-200" />
+                {labels.heroCtaDev}
+              </button>
+              <button
+                onClick={() => setActiveProfile('network')}
+                className={`group inline-flex items-center gap-2.5 px-5 py-3 rounded-xl text-sm font-medium transition-all duration-200 ${
+                  activeProfile === 'network'
+                    ? 'bg-amber-600 text-white shadow-[0_4px_18px_rgba(245,158,11,0.3)]'
+                    : 'bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-gray-200 hover:bg-amber-50 dark:hover:bg-amber-900/30'
+                }`}
+              >
+                <Globe size={15} className="group-hover:scale-110 transition-transform duration-200" />
+                {labels.heroCtaDigitalization}
+              </button>
+              <button
+                onClick={() => setActiveProfile('teaching')}
+                className={`group inline-flex items-center gap-2.5 px-5 py-3 rounded-xl text-sm font-medium transition-all duration-200 ${
+                  activeProfile === 'teaching'
+                    ? 'bg-emerald-600 text-white shadow-[0_4px_18px_rgba(16,185,129,0.3)]'
+                    : 'bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-gray-200 hover:bg-emerald-50 dark:hover:bg-emerald-900/30'
+                }`}
+              >
+                <GraduationCap size={15} className="group-hover:scale-110 transition-transform duration-200" />
+                {labels.heroCtaTrainer}
+              </button>
+            </div>
+
             {/* Primary CTA - Opens Project Modal */}
             <button
               onClick={() => setProjectModalOpen(true)}
