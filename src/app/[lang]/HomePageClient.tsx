@@ -56,6 +56,16 @@ export default function HomePageClient({ lang }: HomePageClientProps) {
     return matchesSearch && matchesProfile;
   });
 
+  const heroRole = activeProfile === 'software'
+    ? labels.roleSoftware
+    : activeProfile === 'network'
+      ? labels.roleNetwork
+      : activeProfile === 'teaching'
+        ? labels.roleTeaching
+        : labels.role;
+  const heroHighlight = !activeProfile || activeProfile === 'software' ? 'Full-Stack' : null;
+  const heroSuffix = activeProfile === 'teaching' ? null : `${labels.and} ${labels.mentor}.`;
+
   return (
     <motion.div
       key="home"
@@ -74,17 +84,21 @@ export default function HomePageClient({ lang }: HomePageClientProps) {
             {labels.available}
           </div>
           <h1 className="text-4xl lg:text-6xl font-extrabold text-gray-900 dark:text-white tracking-tight leading-[1.1] mb-6">
-            {(() => {
-              if (activeProfile === 'software') return labels.roleSoftware;
-              if (activeProfile === 'network') return labels.roleNetwork;
-              if (activeProfile === 'teaching') return labels.roleTeaching;
-              return labels.role;
-            })()}{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400">
-              {activeProfile === 'software' ? labels.roleSoftware : activeProfile === 'network' ? labels.roleNetwork : activeProfile === 'teaching' ? labels.roleTeaching : 'Full-Stack'}
-            </span>
-            <br />
-            {labels.and} {labels.mentor}.
+            {heroRole}
+            {heroHighlight && (
+              <>
+                {' '}
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400">
+                  {heroHighlight}
+                </span>
+              </>
+            )}
+            {heroSuffix && (
+              <>
+                <br />
+                {heroSuffix}
+              </>
+            )}
           </h1>
           <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed max-w-xl">
             {activeProfile === 'software' ? labels.bioShortSoftware : activeProfile === 'network' ? labels.bioShortNetwork : activeProfile === 'teaching' ? labels.bioShortTeaching : data.profile.bioShort}

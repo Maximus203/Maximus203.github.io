@@ -5,6 +5,8 @@ import type { Language } from '@/types';
 
 const SITE_URL = 'https://cherif-diouf.artist-dev.com';
 
+export const dynamicParams = false;
+
 export function generateStaticParams() {
   return SUPPORTED_LANGUAGES.map((lang) => ({ lang }));
 }

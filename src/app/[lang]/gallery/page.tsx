@@ -4,6 +4,8 @@ import { buildPageMetadata } from '@/lib/metadata';
 import type { Language } from '@/types';
 import GalleryPageClient from './GalleryPageClient';
 
+export const dynamicParams = false;
+
 export function generateStaticParams() {
   return SUPPORTED_LANGUAGES.map((lang) => ({ lang }));
 }

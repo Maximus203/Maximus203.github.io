@@ -84,7 +84,8 @@ export function buildPageMetadata(
   descKey: string,
   overrides?: { title?: string; description?: string },
 ): Metadata {
-  const labels = UI_LABELS[lang];
+  const safeLang = SUPPORTED_LANGUAGES.includes(lang) ? lang : 'fr';
+  const labels = UI_LABELS[safeLang];
   const title = overrides?.title || labels[titleKey] || titleKey;
   const description = overrides?.description || labels[descKey] || descKey;
   const ogImage = `${BASE_URL}/assets/photo-2.webp`;
@@ -92,8 +93,8 @@ export function buildPageMetadata(
   return {
     title,
     description,
-    keywords: KEYWORDS[lang],
-    authors: [{ name: 'El Hadji Ahmadou Cherif Diouf', url: `${BASE_URL}/${lang}/` }],
+    keywords: KEYWORDS[safeLang],
+    authors: [{ name: 'El Hadji Ahmadou Cherif Diouf', url: `${BASE_URL}/${safeLang}/` }],
     creator: 'El Hadji Ahmadou Cherif Diouf',
     publisher: 'El Hadji Ahmadou Cherif Diouf',
     robots: {
@@ -109,7 +110,7 @@ export function buildPageMetadata(
     openGraph: {
       title,
       description,
-      url: `${BASE_URL}/${lang}${path}`,
+      url: `${BASE_URL}/${safeLang}${path}`,
       siteName: 'Cherif Diouf – Portfolio',
       images: [
         {
@@ -119,7 +120,7 @@ export function buildPageMetadata(
           alt: 'El Hadji Ahmadou Cherif Diouf – Développeur Full-Stack & Expert Digitalisation',
         },
       ],
-      locale: LOCALE_MAP[lang],
+      locale: LOCALE_MAP[safeLang],
       type: 'website',
     },
     twitter: {
@@ -130,6 +131,6 @@ export function buildPageMetadata(
       creator: '@Maximus203',
       site: '@Maximus203',
     },
-    alternates: buildAlternates(lang, path),
+    alternates: buildAlternates(safeLang, path),
   };
 }

@@ -5,6 +5,8 @@ import { UI_LABELS } from '@/lib/constants/ui-labels';
 import type { Language } from '@/types';
 import MemeGeneratorClient from './MemeGeneratorClient';
 
+export const dynamicParams = false;
+
 export function generateStaticParams() {
   return SUPPORTED_LANGUAGES.map((lang) => ({ lang }));
 }
