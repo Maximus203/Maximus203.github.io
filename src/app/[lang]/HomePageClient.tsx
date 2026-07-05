@@ -80,8 +80,34 @@ export default function HomePageClient({ lang }: HomePageClientProps) {
           </h1>
           <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed max-w-xl">{data.profile.bioShort}</p>
 
-          {/* Hero CTAs */}
-          <div className="mt-8 flex items-center gap-3 flex-wrap">
+          {/* Hero CTAs - Entry points for different visitor targets (issue #22) */}
+          <div className="mt-8 flex flex-col sm:flex-row items-center gap-3 flex-wrap">
+            {/* Entry CTAs for different visitor targets */}
+            <div className="flex items-center gap-2.5 flex-wrap w-full sm:w-auto">
+              <button
+                onClick={() => setActiveProfile('software')}
+                className={`group inline-flex items-center gap-2.5 px-5 py-3 rounded-xl text-sm font-medium transition-all duration-200 ${
+                  activeProfile === 'software'
+                    ? 'bg-indigo-600 text-white shadow-[0_4px_18px_rgba(99,102,241,0.3)]'
+                    : 'bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-gray-200 hover:bg-indigo-50 dark:hover:bg-indigo-900/30'
+                }`}
+              >
+                <Code2 size={15} className="group-hover:scale-110 transition-transform duration-200" />
+                {labels.heroCtaDev}
+              </button>
+              <button
+                onClick={() => setActiveProfile('teaching')}
+                className={`group inline-flex items-center gap-2.5 px-5 py-3 rounded-xl text-sm font-medium transition-all duration-200 ${
+                  activeProfile === 'teaching'
+                    ? 'bg-emerald-600 text-white shadow-[0_4px_18px_rgba(16,185,129,0.3)]'
+                    : 'bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-gray-200 hover:bg-emerald-50 dark:hover:bg-emerald-900/30'
+                }`}
+              >
+                <GraduationCap size={15} className="group-hover:scale-110 transition-transform duration-200" />
+                {labels.heroCtaTrainer}
+              </button>
+            </div>
+
             {/* Primary CTA - Opens Project Modal */}
             <button
               onClick={() => setProjectModalOpen(true)}

@@ -111,6 +111,9 @@ export const UI_LABELS: Record<Language, Record<string, string>> = {
     profileSoftware: 'Génie Logiciel',
     profileNetwork: 'Admin Réseaux',
     profileTeaching: 'Enseignement',
+    // Hero entry CTAs (issue #22)
+    heroCtaDev: 'Je cherche un développeur',
+    heroCtaTrainer: 'Je cherche un formateur',
     viewProjects: 'Explorer mes réalisations',
     contactCta: 'Discutons ensemble',
     discussProject: 'Discutons de votre projet',
@@ -226,6 +229,9 @@ export const UI_LABELS: Record<Language, Record<string, string>> = {
     profileSoftware: 'Software Engineering',
     profileNetwork: 'Network Admin',
     profileTeaching: 'Teaching',
+    // Hero entry CTAs (issue #22)
+    heroCtaDev: 'I need a developer',
+    heroCtaTrainer: 'I need a trainer',
     viewProjects: 'Explore my work',
     contactCta: "Let's talk",
     discussProject: "Let's discuss your project",
@@ -341,6 +347,9 @@ export const UI_LABELS: Record<Language, Record<string, string>> = {
     profileSoftware: '软件工程',
     profileNetwork: '网络管理',
     profileTeaching: '教学',
+    // Hero entry CTAs (issue #22)
+    heroCtaDev: '我要找开发者',
+    heroCtaTrainer: '我要找讲师',
     viewProjects: '探索我的项目',
     contactCta: '一起合作',
     discussProject: '聊聊您的项目',
@@ -456,6 +465,9 @@ export const UI_LABELS: Record<Language, Record<string, string>> = {
     profileSoftware: 'ソフトウェア工学',
     profileNetwork: 'ネットワーク管理',
     profileTeaching: '教育',
+    // Hero entry CTAs (issue #22)
+    heroCtaDev: '開発者を探している',
+    heroCtaTrainer: '講師を探している',
     viewProjects: '作品を見る →',
     contactCta: '話しましょう',
     discussProject: 'プロジェクトについて相談する',
