@@ -12,11 +12,12 @@ export const UI_LABELS: Record<Language, Record<string, string>> = {
     education: 'Formation',
     available: 'Disponible pour nouveaux projets',
     role: 'Développeur',
+    and: '&',
+    mentor: 'Formateur',
+    // Profile-specific roles for H1 (issue #22)
     roleSoftware: 'Développeur',
     roleNetwork: 'Expert Digitalisation',
     roleTeaching: 'Formateur',
-    and: '&',
-    mentor: 'Formateur',
     download: 'Télécharger',
     resume: 'CV',
     base: 'Base',
@@ -114,10 +115,6 @@ export const UI_LABELS: Record<Language, Record<string, string>> = {
     profileSoftware: 'Génie Logiciel',
     profileNetwork: 'Admin Réseaux',
     profileTeaching: 'Enseignement',
-    // Profile-specific roles for H1 (issue #22)
-    roleSoftware: 'Développeur',
-    roleNetwork: 'Expert Digitalisation',
-    roleTeaching: 'Formateur',
     // Hero entry CTAs (issue #22)
     heroCtaDev: 'Je cherche un développeur',
     heroCtaDigitalization: 'Je cherche un expert digitalisation',
@@ -142,11 +139,12 @@ export const UI_LABELS: Record<Language, Record<string, string>> = {
     education: 'Education',
     available: 'Available for new projects',
     role: 'Developer',
+    and: '&',
+    mentor: 'Mentor',
+    // Profile-specific roles for H1 (issue #22)
     roleSoftware: 'Developer',
     roleNetwork: 'Digitalization Expert',
     roleTeaching: 'Trainer',
-    and: '&',
-    mentor: 'Mentor',
     download: 'Download',
     resume: 'Resume',
     base: 'Base',
@@ -244,10 +242,6 @@ export const UI_LABELS: Record<Language, Record<string, string>> = {
     profileSoftware: 'Software Engineering',
     profileNetwork: 'Network Admin',
     profileTeaching: 'Teaching',
-    // Profile-specific roles for H1 (issue #22)
-    roleSoftware: 'Developer',
-    roleNetwork: 'Digitalization Expert',
-    roleTeaching: 'Trainer',
     // Hero entry CTAs (issue #22)
     heroCtaDev: 'I need a developer',
     heroCtaDigitalization: 'I need a digitalization expert',
@@ -272,11 +266,12 @@ export const UI_LABELS: Record<Language, Record<string, string>> = {
     education: '教育',
     available: '可接受新项目',
     role: '开发者',
+    and: '&',
+    mentor: '导师',
+    // Profile-specific roles for H1 (issue #22)
     roleSoftware: '开发者',
     roleNetwork: '数字化专家',
     roleTeaching: '讲师',
-    and: '&',
-    mentor: '导师',
     download: '下载',
     resume: '简历',
     base: '常驻',
@@ -374,10 +369,6 @@ export const UI_LABELS: Record<Language, Record<string, string>> = {
     profileSoftware: '软件工程',
     profileNetwork: '网络管理',
     profileTeaching: '教学',
-    // Profile-specific roles for H1 (issue #22)
-    roleSoftware: '开发者',
-    roleNetwork: '数字化专家',
-    roleTeaching: '讲师',
     // Hero entry CTAs (issue #22)
     heroCtaDev: '我要找开发者',
     heroCtaDigitalization: '我要找数字化专家',
@@ -402,11 +393,12 @@ export const UI_LABELS: Record<Language, Record<string, string>> = {
     education: '学歴',
     available: '新規案件募集中',
     role: '開発者',
+    and: '&',
+    mentor: '講師',
+    // Profile-specific roles for H1 (issue #22)
     roleSoftware: '開発者',
     roleNetwork: 'デジタル化専門家',
     roleTeaching: '講師',
-    and: '&',
-    mentor: '講師',
     download: 'ダウンロード',
     resume: '履歴書',
     base: '拠点',
@@ -504,10 +496,6 @@ export const UI_LABELS: Record<Language, Record<string, string>> = {
     profileSoftware: 'ソフトウェア工学',
     profileNetwork: 'ネットワーク管理',
     profileTeaching: '教育',
-    // Profile-specific roles for H1 (issue #22)
-    roleSoftware: '開発者',
-    roleNetwork: 'デジタル化専門家',
-    roleTeaching: '講師',
     // Hero entry CTAs (issue #22)
     heroCtaDev: '開発者を探している',
     heroCtaDigitalization: 'デジタル化専門家を探している',
