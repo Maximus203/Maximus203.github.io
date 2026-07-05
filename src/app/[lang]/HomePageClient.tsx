@@ -48,17 +48,13 @@ export default function HomePageClient({ lang }: HomePageClientProps) {
     ? data.experience.filter(exp => !exp.profiles || exp.profiles.includes(activeProfile))
     : data.experience;
 
-  const filteredProjects = activeProfile
-    ? data.projects.filter((project) => {
-        const query = projectSearch.toLowerCase();
-        const matchesSearch = project.title.toLowerCase().includes(query) || project.tags.some((tag) => tag.toLowerCase().includes(query));
-        const matchesProfile = !project.profiles || project.profiles.includes(activeProfile);
-        return matchesSearch && matchesProfile;
-      })
-    : data.projects.filter((project) => {
-        const query = projectSearch.toLowerCase();
-        return project.title.toLowerCase().includes(query) || project.tags.some((tag) => tag.toLowerCase().includes(query));
-      });
+  // Optimized: compute matchesSearch once, then combine with profile match
+  const query = projectSearch.toLowerCase();
+  const filteredProjects = data.projects.filter((project) => {
+    const matchesSearch = project.title.toLowerCase().includes(query) || project.tags.some((tag) => tag.toLowerCase().includes(query));
+    const matchesProfile = !activeProfile || !project.profiles || project.profiles.includes(activeProfile);
+    return matchesSearch && matchesProfile;
+  });
 
   return (
     <motion.div
@@ -80,12 +76,14 @@ export default function HomePageClient({ lang }: HomePageClientProps) {
           <h1 className="text-4xl lg:text-6xl font-extrabold text-gray-900 dark:text-white tracking-tight leading-[1.1] mb-6">
             {labels.role}{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400">
-              Full-Stack
+              {activeProfile === 'software' ? labels.roleSoftware : activeProfile === 'network' ? labels.roleNetwork : activeProfile === 'teaching' ? labels.roleTeaching : 'Full-Stack'}
             </span>
             <br />
             {labels.and} {labels.mentor}.
           </h1>
-          <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed max-w-xl">{data.profile.bioShort}</p>
+          <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed max-w-xl">
+            {activeProfile === 'software' ? labels.bioShortSoftware : activeProfile === 'network' ? labels.bioShortNetwork : activeProfile === 'teaching' ? labels.bioShortTeaching : data.profile.bioShort}
+          </p>
 
           {/* Hero CTAs - Entry points for different visitor targets (issue #22) */}
           <div className="mt-8 flex flex-col sm:flex-row items-center gap-3 flex-wrap">

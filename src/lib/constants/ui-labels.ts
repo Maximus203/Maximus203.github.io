@@ -111,6 +111,10 @@ export const UI_LABELS: Record<Language, Record<string, string>> = {
     profileSoftware: 'Génie Logiciel',
     profileNetwork: 'Admin Réseaux',
     profileTeaching: 'Enseignement',
+    // Profile-specific roles for H1 (issue #22)
+    roleSoftware: 'Développeur',
+    roleNetwork: 'Expert Digitalisation',
+    roleTeaching: 'Formateur',
     // Hero entry CTAs (issue #22)
     heroCtaDev: 'Je cherche un développeur',
     heroCtaDigitalization: 'Je cherche un expert digitalisation',
@@ -119,6 +123,10 @@ export const UI_LABELS: Record<Language, Record<string, string>> = {
     contactCta: 'Discutons ensemble',
     discussProject: 'Discutons de votre projet',
     publications: 'Publications',
+    // Profile-specific bios (issue #22)
+    bioShortSoftware: 'Développeur Full-Stack. Je conçois des applications web modernes, performantes et évolutives (React, Laravel, Supabase, DevOps).',
+    bioShortNetwork: 'Expert digitalisation & Admin Systèmes. J\'optimise infrastructures, réseaux et processus métier pour gains de temps massifs.',
+    bioShortTeaching: 'Formateur développeur. J\'accompagne étudiants et équipes vers l\'autonomie technique par la pratique projet et la pédagogie.',
   },
   en: {
     home: 'Home',
@@ -230,6 +238,10 @@ export const UI_LABELS: Record<Language, Record<string, string>> = {
     profileSoftware: 'Software Engineering',
     profileNetwork: 'Network Admin',
     profileTeaching: 'Teaching',
+    // Profile-specific roles for H1 (issue #22)
+    roleSoftware: 'Developer',
+    roleNetwork: 'Digitalization Expert',
+    roleTeaching: 'Trainer',
     // Hero entry CTAs (issue #22)
     heroCtaDev: 'I need a developer',
     heroCtaDigitalization: 'I need a digitalization expert',
@@ -238,6 +250,10 @@ export const UI_LABELS: Record<Language, Record<string, string>> = {
     contactCta: "Let's talk",
     discussProject: "Let's discuss your project",
     publications: 'Publications',
+    // Profile-specific bios (issue #22)
+    bioShortSoftware: 'Full-Stack Developer. I build modern, performant, scalable web applications (React, Laravel, Supabase, DevOps).',
+    bioShortNetwork: 'Digitalization Expert & SysAdmin. I optimize infrastructure, networks and business processes for massive time savings.',
+    bioShortTeaching: 'Developer Trainer. I guide students and teams to technical autonomy through project-based practice and pedagogy.',
   },
   zh: {
     home: '首页',
@@ -349,6 +365,10 @@ export const UI_LABELS: Record<Language, Record<string, string>> = {
     profileSoftware: '软件工程',
     profileNetwork: '网络管理',
     profileTeaching: '教学',
+    // Profile-specific roles for H1 (issue #22)
+    roleSoftware: '开发者',
+    roleNetwork: '数字化专家',
+    roleTeaching: '讲师',
     // Hero entry CTAs (issue #22)
     heroCtaDev: '我要找开发者',
     heroCtaDigitalization: '我要找数字化专家',
@@ -357,6 +377,10 @@ export const UI_LABELS: Record<Language, Record<string, string>> = {
     contactCta: '一起合作',
     discussProject: '聊聊您的项目',
     publications: '发表论文',
+    // Profile-specific bios (issue #22)
+    bioShortSoftware: '全栈开发者。构建现代、高性能、可扩展的Web应用 (React, Laravel, Supabase, DevOps)。',
+    bioShortNetwork: '数字化专家 & 系统管理员。优化基础设施、网络和业务流程，实现大幅时间节省。',
+    bioShortTeaching: '开发讲师。通过项目实战和教学法，引导学生和团队走向技术自主。',
   },
   ja: {
     home: 'ホーム',
@@ -468,6 +492,10 @@ export const UI_LABELS: Record<Language, Record<string, string>> = {
     profileSoftware: 'ソフトウェア工学',
     profileNetwork: 'ネットワーク管理',
     profileTeaching: '教育',
+    // Profile-specific roles for H1 (issue #22)
+    roleSoftware: '開発者',
+    roleNetwork: 'デジタル化専門家',
+    roleTeaching: '講師',
     // Hero entry CTAs (issue #22)
     heroCtaDev: '開発者を探している',
     heroCtaDigitalization: 'デジタル化専門家を探している',
@@ -476,5 +504,9 @@ export const UI_LABELS: Record<Language, Record<string, string>> = {
     contactCta: '話しましょう',
     discussProject: 'プロジェクトについて相談する',
     publications: '論文',
+    // Profile-specific bios (issue #22)
+    bioShortSoftware: 'フルスタック開発者。モダンで高性能、スケーラブルなWebアプリを構築 (React, Laravel, Supabase, DevOps)。',
+    bioShortNetwork: 'デジタル化推進の専門家 & システム管理者。インフラ、ネットワーク、業務プロセスを最適化し、大幅な時間短縮を実現。',
+    bioShortTeaching: '開発講師。プロジェクト実践と教育法で、学生とチームを技術的自立へ導く。',
   }
 };
