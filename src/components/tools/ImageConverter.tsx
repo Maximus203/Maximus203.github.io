@@ -187,7 +187,7 @@ const ImageConverter: React.FC<ImageConverterProps> = ({ lang, labels }) => {
                       ? {
                           ...f,
                           status: "error",
-                          errorMessage: t("conversionFailed"),
+                          errorMessage: t("converterFailed"),
                         }
                       : f,
                   ),
