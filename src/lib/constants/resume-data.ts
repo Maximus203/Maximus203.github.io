@@ -223,52 +223,60 @@ export const RESUME_DATA: Record<Language, ResumeData> = {
         description: "Service Open Source de conversion d'images en WebP. Optimisation SEO et éco-conception.",
         tags: ["OpenSource", "WebP", "Performance"],
         github: "https://github.com/Maximus203/image-converter",
-        image: "/assets/projets/image-converter.gif"
+        image: "/assets/projets/image-converter.gif",
+        profiles: ['software']
       },
       {
         title: "MyEvent",
         description: "Application complète de création et gestion d'événements.",
         tags: ["Laravel", "React", "Management"],
         github: "https://github.com/Maximus203/my-event-app",
-        image: "/assets/projets/my-event-demo.gif"
+        image: "/assets/projets/my-event-demo.gif",
+        profiles: ['software']
       },
       {
         title: "Nanobrowser Bridge",
         description: "Pont HTTP local pour piloter Nanobrowser (agent IA Chrome) via un LLM local (Ollama). Validation humaine pour les actions sensibles.",
         tags: ["IA", "Open Source", "Automatisation", "TypeScript"],
         github: "https://github.com/Maximus203/nanobrowser-bridge",
+        profiles: ['software']
       },
       {
         title: "Archive ESTM",
         description: "Plateforme d'archivage des mémoires avec ancrage Blockchain Ethereum pour l'intégrité.",
         tags: ["Blockchain", "Ethereum", "Archivage"],
-        image: "/assets/projets/Archive-ESTM.webp"
+        image: "/assets/projets/Archive-ESTM.webp",
+        profiles: ['network']
       },
       {
         title: "App SAP – Société Africaine de Pétrole",
         description: "Application web de gestion interne (stocks, RH, finance). Déployée en production pour la SAP.",
         tags: ["Laravel", "React", "MySQL"],
-        image: "/assets/projets/sap-demo.gif"
+        image: "/assets/projets/sap-demo.gif",
+        profiles: ['network']
       },
       {
         title: "Cynoia Spaces",
         description: "SaaS de gestion d'espaces collaboratifs. Stack Symfony 6.4 + React 18, déployé avec Docker.",
         tags: ["Symfony", "React", "SaaS"],
-        image: "/assets/projets/cynoia-spaces.gif"
+        image: "/assets/projets/cynoia-spaces.gif",
+        profiles: ['network']
       },
       {
         title: "Momentum",
         description: "Plateforme de quiz interactifs en temps réel avec classement instantané. Idéale pour cours, événements et team-building.",
         tags: ["React", "Temps réel", "Quiz", "Éducation"],
         link: "https://momentum.artist-dev.com/",
-        image: "/assets/projets/momentum-demo.gif"
+        image: "/assets/projets/momentum-demo.gif",
+        profiles: ['teaching']
       },
       {
         title: "Les chats sont mignons",
         description: "Projet pédagogique HTML/CSS pour étudiants L1 : structure sémantique, Grid, animations et responsive design.",
         tags: ["HTML", "CSS", "Pédagogie", "Responsive"],
         github: "https://github.com/Maximus203/Les-chats-sont-mignons",
-        image: "/assets/projets/les-chats-sont-mignons.png"
+        image: "/assets/projets/les-chats-sont-mignons.png",
+        profiles: ['teaching']
       }
     ],
     skills: getSkills('fr'),
@@ -439,52 +447,60 @@ export const RESUME_DATA: Record<Language, ResumeData> = {
         description: "Open Source service for WebP image conversion. SEO optimization and eco-design.",
         tags: ["OpenSource", "WebP", "Performance"],
         github: "https://github.com/Maximus203/image-converter",
-        image: "/assets/projets/image-converter.gif"
+        image: "/assets/projets/image-converter.gif",
+        profiles: ['software']
       },
       {
         title: "MyEvent",
         description: "Complete application for event creation and management.",
         tags: ["Laravel", "React", "Management"],
         github: "https://github.com/Maximus203/my-event-app",
-        image: "/assets/projets/my-event-demo.gif"
+        image: "/assets/projets/my-event-demo.gif",
+        profiles: ['software']
       },
       {
         title: "Nanobrowser Bridge",
         description: "Local HTTP bridge to control Nanobrowser (Chrome AI agent) via a local LLM (Ollama). Human validation for sensitive actions.",
         tags: ["AI", "Open Source", "Automation", "TypeScript"],
         github: "https://github.com/Maximus203/nanobrowser-bridge",
+        profiles: ['software']
       },
       {
         title: "Archive ESTM",
         description: "Thesis archiving platform with Ethereum Blockchain anchoring for integrity.",
         tags: ["Blockchain", "Ethereum", "Archiving"],
-        image: "/assets/projets/Archive-ESTM.webp"
+        image: "/assets/projets/Archive-ESTM.webp",
+        profiles: ['network']
       },
       {
         title: "SAP App – Société Africaine de Pétrole",
         description: "Internal management web application (inventory, HR, finance). Deployed in production for SAP.",
         tags: ["Laravel", "React", "MySQL"],
-        image: "/assets/projets/sap-demo.gif"
+        image: "/assets/projets/sap-demo.gif",
+        profiles: ['network']
       },
       {
         title: "Cynoia Spaces",
         description: "Collaborative space management SaaS. Symfony 6.4 + React 18 stack, deployed with Docker.",
         tags: ["Symfony", "React", "SaaS"],
-        image: "/assets/projets/cynoia-spaces.gif"
+        image: "/assets/projets/cynoia-spaces.gif",
+        profiles: ['network']
       },
       {
         title: "Momentum",
         description: "Real-time interactive quiz platform with instant leaderboard. Ideal for classes, events and team-building.",
         tags: ["React", "Real-time", "Quiz", "Education"],
         link: "https://momentum.artist-dev.com/",
-        image: "/assets/projets/momentum-demo.gif"
+        image: "/assets/projets/momentum-demo.gif",
+        profiles: ['teaching']
       },
       {
         title: "Les chats sont mignons",
         description: "Educational HTML/CSS project for L1 students: semantic structure, Grid, animations and responsive design.",
         tags: ["HTML", "CSS", "Pedagogy", "Responsive"],
         github: "https://github.com/Maximus203/Les-chats-sont-mignons",
-        image: "/assets/projets/les-chats-sont-mignons.png"
+        image: "/assets/projets/les-chats-sont-mignons.png",
+        profiles: ['teaching']
       }
     ],
     skills: getSkills('en'),
@@ -655,52 +671,60 @@ export const RESUME_DATA: Record<Language, ResumeData> = {
         description: "WebP图像转换开源服务. SEO优化和生态设计.",
         tags: ["OpenSource", "WebP", "Performance"],
         github: "https://github.com/Maximus203/image-converter",
-        image: "/assets/projets/image-converter.gif"
+        image: "/assets/projets/image-converter.gif",
+        profiles: ['software']
       },
       {
         title: "MyEvent",
         description: "完整的活动创建和管理应用程序.",
         tags: ["Laravel", "React", "Management"],
         github: "https://github.com/Maximus203/my-event-app",
-        image: "/assets/projets/my-event-demo.gif"
+        image: "/assets/projets/my-event-demo.gif",
+        profiles: ['software']
       },
       {
         title: "Nanobrowser Bridge",
         description: "本地HTTP桥接，通过本地LLM（Ollama）控制Nanobrowser（Chrome AI代理）。敏感操作需人工验证。",
         tags: ["AI", "开源", "自动化", "TypeScript"],
         github: "https://github.com/Maximus203/nanobrowser-bridge",
+        profiles: ['software']
       },
       {
         title: "Archive ESTM",
         description: "基于以太坊区块链锚定的论文归档平台，确保完整性.",
         tags: ["Blockchain", "Ethereum", "Archivage"],
-        image: "/assets/projets/Archive-ESTM.webp"
+        image: "/assets/projets/Archive-ESTM.webp",
+        profiles: ['network']
       },
       {
         title: "SAP应用 – 非洲石油公司",
         description: "内部管理Web应用（库存、人力资源、财务）。已在SAP投入生产使用。",
         tags: ["Laravel", "React", "MySQL"],
-        image: "/assets/projets/sap-demo.gif"
+        image: "/assets/projets/sap-demo.gif",
+        profiles: ['network']
       },
       {
         title: "Cynoia Spaces",
         description: "协作空间管理SaaS。Symfony 6.4 + React 18技术栈，使用Docker部署。",
         tags: ["Symfony", "React", "SaaS"],
-        image: "/assets/projets/cynoia-spaces.gif"
+        image: "/assets/projets/cynoia-spaces.gif",
+        profiles: ['network']
       },
       {
         title: "Momentum",
         description: "实时互动问答平台，即时排行榜。适用于课程、活动和团队建设。",
         tags: ["React", "实时", "问答", "教育"],
         link: "https://momentum.artist-dev.com/",
-        image: "/assets/projets/momentum-demo.gif"
+        image: "/assets/projets/momentum-demo.gif",
+        profiles: ['teaching']
       },
       {
         title: "Les chats sont mignons",
         description: "面向L1学生的HTML/CSS教学项目：语义结构、Grid布局、动画和响应式设计。",
         tags: ["HTML", "CSS", "教学", "响应式"],
         github: "https://github.com/Maximus203/Les-chats-sont-mignons",
-        image: "/assets/projets/les-chats-sont-mignons.png"
+        image: "/assets/projets/les-chats-sont-mignons.png",
+        profiles: ['teaching']
       }
     ],
     skills: getSkills('zh'),
@@ -871,52 +895,60 @@ export const RESUME_DATA: Record<Language, ResumeData> = {
         description: "WebP画像変換オープンソースサービス. SEO最適化とエコデザイン.",
         tags: ["OpenSource", "WebP", "Performance"],
         github: "https://github.com/Maximus203/image-converter",
-        image: "/assets/projets/image-converter.gif"
+        image: "/assets/projets/image-converter.gif",
+        profiles: ['software']
       },
       {
         title: "MyEvent",
         description: "イベント作成および管理のための完全なアプリケーション.",
         tags: ["Laravel", "React", "Management"],
         github: "https://github.com/Maximus203/my-event-app",
-        image: "/assets/projets/my-event-demo.gif"
+        image: "/assets/projets/my-event-demo.gif",
+        profiles: ['software']
       },
       {
         title: "Nanobrowser Bridge",
         description: "ローカルLLM（Ollama）でNanobrowser（Chrome AIエージェント）を制御するローカルHTTPブリッジ。機密アクションには人間の検証が必要。",
         tags: ["AI", "オープンソース", "自動化", "TypeScript"],
         github: "https://github.com/Maximus203/nanobrowser-bridge",
+        profiles: ['software']
       },
       {
         title: "Archive ESTM",
         description: "完全性を確保するためのイーサリアムブロックチェーンアンカー付き論文アーカイブプラットフォーム.",
         tags: ["Blockchain", "Ethereum", "Archivage"],
-        image: "/assets/projets/Archive-ESTM.webp"
+        image: "/assets/projets/Archive-ESTM.webp",
+        profiles: ['network']
       },
       {
         title: "SAPアプリ – Société Africaine de Pétrole",
         description: "社内管理Webアプリ（在庫・人事・財務）。SAP社で本番稼働中。",
         tags: ["Laravel", "React", "MySQL"],
-        image: "/assets/projets/sap-demo.gif"
+        image: "/assets/projets/sap-demo.gif",
+        profiles: ['network']
       },
       {
         title: "Cynoia Spaces",
         description: "コラボレーションスペース管理SaaS。Symfony 6.4 + React 18構成、Dockerでデプロイ。",
         tags: ["Symfony", "React", "SaaS"],
-        image: "/assets/projets/cynoia-spaces.gif"
+        image: "/assets/projets/cynoia-spaces.gif",
+        profiles: ['network']
       },
       {
         title: "Momentum",
         description: "リアルタイムインタラクティブクイズプラットフォーム。即時ランキング表示。授業、イベント、チームビルディングに最適。",
         tags: ["React", "リアルタイム", "クイズ", "教育"],
         link: "https://momentum.artist-dev.com/",
-        image: "/assets/projets/momentum-demo.gif"
+        image: "/assets/projets/momentum-demo.gif",
+        profiles: ['teaching']
       },
       {
         title: "Les chats sont mignons",
         description: "L1学生向けHTML/CSS教育プロジェクト：セマンティック構造、Grid、アニメーション、レスポンシブデザイン。",
         tags: ["HTML", "CSS", "教育", "レスポンシブ"],
         github: "https://github.com/Maximus203/Les-chats-sont-mignons",
-        image: "/assets/projets/les-chats-sont-mignons.png"
+        image: "/assets/projets/les-chats-sont-mignons.png",
+        profiles: ['teaching']
       }
     ],
     skills: getSkills('ja'),

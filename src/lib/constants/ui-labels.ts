@@ -113,6 +113,7 @@ export const UI_LABELS: Record<Language, Record<string, string>> = {
     profileTeaching: 'Enseignement',
     // Hero entry CTAs (issue #22)
     heroCtaDev: 'Je cherche un développeur',
+    heroCtaDigitalization: 'Je cherche un expert digitalisation',
     heroCtaTrainer: 'Je cherche un formateur',
     viewProjects: 'Explorer mes réalisations',
     contactCta: 'Discutons ensemble',
@@ -231,6 +232,7 @@ export const UI_LABELS: Record<Language, Record<string, string>> = {
     profileTeaching: 'Teaching',
     // Hero entry CTAs (issue #22)
     heroCtaDev: 'I need a developer',
+    heroCtaDigitalization: 'I need a digitalization expert',
     heroCtaTrainer: 'I need a trainer',
     viewProjects: 'Explore my work',
     contactCta: "Let's talk",
@@ -349,6 +351,7 @@ export const UI_LABELS: Record<Language, Record<string, string>> = {
     profileTeaching: '教学',
     // Hero entry CTAs (issue #22)
     heroCtaDev: '我要找开发者',
+    heroCtaDigitalization: '我要找数字化专家',
     heroCtaTrainer: '我要找讲师',
     viewProjects: '探索我的项目',
     contactCta: '一起合作',
@@ -467,6 +470,7 @@ export const UI_LABELS: Record<Language, Record<string, string>> = {
     profileTeaching: '教育',
     // Hero entry CTAs (issue #22)
     heroCtaDev: '開発者を探している',
+    heroCtaDigitalization: 'デジタル化専門家を探している',
     heroCtaTrainer: '講師を探している',
     viewProjects: '作品を見る →',
     contactCta: '話しましょう',

@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { ArrowRight, Briefcase, Code2, FolderGit2, GraduationCap, MessageSquare, Plus, Search, Sparkles, X } from 'lucide-react';
+import { ArrowRight, Briefcase, Code2, FolderGit2, Globe, GraduationCap, MessageSquare, Plus, Search, Sparkles, X } from 'lucide-react';
 import ExperienceItem from '@/components/home/ExperienceItem';
 import ProjectCard from '@/components/home/ProjectCard';
 import TerminalBlock from '@/components/home/TerminalBlock';
@@ -48,10 +48,17 @@ export default function HomePageClient({ lang }: HomePageClientProps) {
     ? data.experience.filter(exp => !exp.profiles || exp.profiles.includes(activeProfile))
     : data.experience;
 
-  const filteredProjects = data.projects.filter((project) => {
-    const query = projectSearch.toLowerCase();
-    return project.title.toLowerCase().includes(query) || project.tags.some((tag) => tag.toLowerCase().includes(query));
-  });
+  const filteredProjects = activeProfile
+    ? data.projects.filter((project) => {
+        const query = projectSearch.toLowerCase();
+        const matchesSearch = project.title.toLowerCase().includes(query) || project.tags.some((tag) => tag.toLowerCase().includes(query));
+        const matchesProfile = !project.profiles || project.profiles.includes(activeProfile);
+        return matchesSearch && matchesProfile;
+      })
+    : data.projects.filter((project) => {
+        const query = projectSearch.toLowerCase();
+        return project.title.toLowerCase().includes(query) || project.tags.some((tag) => tag.toLowerCase().includes(query));
+      });
 
   return (
     <motion.div
@@ -94,6 +101,17 @@ export default function HomePageClient({ lang }: HomePageClientProps) {
               >
                 <Code2 size={15} className="group-hover:scale-110 transition-transform duration-200" />
                 {labels.heroCtaDev}
+              </button>
+              <button
+                onClick={() => setActiveProfile('network')}
+                className={`group inline-flex items-center gap-2.5 px-5 py-3 rounded-xl text-sm font-medium transition-all duration-200 ${
+                  activeProfile === 'network'
+                    ? 'bg-amber-600 text-white shadow-[0_4px_18px_rgba(245,158,11,0.3)]'
+                    : 'bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-gray-200 hover:bg-amber-50 dark:hover:bg-amber-900/30'
+                }`}
+              >
+                <Globe size={15} className="group-hover:scale-110 transition-transform duration-200" />
+                {labels.heroCtaDigitalization}
               </button>
               <button
                 onClick={() => setActiveProfile('teaching')}
