@@ -148,7 +148,7 @@ const ImageConverter: React.FC<ImageConverterProps> = ({ lang, labels }) => {
           const ctx = canvas.getContext("2d");
 
           if (!ctx) {
-            throw new Error("Impossible d'initialiser le contexte graphique.");
+            throw new Error(t("converterUnexpectedError"));
           }
 
           // White background for JPEGs (remove transparency)
@@ -187,8 +187,7 @@ const ImageConverter: React.FC<ImageConverterProps> = ({ lang, labels }) => {
                       ? {
                           ...f,
                           status: "error",
-                          errorMessage:
-                            "\u00C9chec de la conversion du fichier.",
+                          errorMessage: t("converterFailed"),
                         }
                       : f,
                   ),
@@ -345,7 +344,7 @@ const ImageConverter: React.FC<ImageConverterProps> = ({ lang, labels }) => {
         className="flex items-center gap-2 text-gray-500 hover:text-indigo-600 mb-6 transition-colors"
       >
         <ArrowLeft size={20} />
-        <span>Retour aux outils</span>
+        <span>{t("backToTools")}</span>
       </Link>
 
       <div className="bg-white dark:bg-[#0d1117] border border-gray-200 dark:border-gray-800 rounded-2xl shadow-sm overflow-hidden">
@@ -355,10 +354,10 @@ const ImageConverter: React.FC<ImageConverterProps> = ({ lang, labels }) => {
             <div>
               <h1 className="text-2xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
                 <RefreshCw className="text-blue-500" />
-                Convertisseur d&apos;Images
+                {t("converterTitle")}
               </h1>
               <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-                Convertissez vos images localement, sans envoi vers un serveur.
+                {t("converterSubtitle")}
               </p>
             </div>
 
@@ -394,7 +393,7 @@ const ImageConverter: React.FC<ImageConverterProps> = ({ lang, labels }) => {
                   <div className="flex items-center gap-2 border-l border-gray-200 dark:border-gray-700 pl-4">
                     <Settings size={16} className="text-gray-400" />
                     <label className="text-xs font-medium text-gray-500 mr-2 whitespace-nowrap">
-                      Qualit&eacute;: {Math.round(quality * 100)}%
+                      {t("qualityLabel")} {Math.round(quality * 100)}%
                     </label>
                     <input
                       type="range"
@@ -424,8 +423,8 @@ const ImageConverter: React.FC<ImageConverterProps> = ({ lang, labels }) => {
                   }
                 />
                 {files.some((f) => f.status === "error")
-                  ? "R\u00E9essayer"
-                  : "Convertir Tout"}
+                  ? t("retry")
+                  : t("convertAll")}
               </button>
 
               {hasConvertedFiles && (
@@ -440,7 +439,7 @@ const ImageConverter: React.FC<ImageConverterProps> = ({ lang, labels }) => {
                     <Archive size={16} />
                   )}
                   <span className="hidden sm:inline">
-                    Tout t&eacute;l&eacute;charger (.zip)
+                    {t("downloadAllZip")}
                   </span>
                   <span className="sm:hidden">.zip</span>
                 </button>
@@ -469,16 +468,16 @@ const ImageConverter: React.FC<ImageConverterProps> = ({ lang, labels }) => {
               <Upload size={32} />
             </div>
             <p className="text-lg font-medium text-gray-900 dark:text-white mb-1">
-              Glissez vos images ici
+              {t("dropImagesHere")}
             </p>
             <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
-              JPG, PNG, WEBP, GIF, SVG support&eacute;s
+              {t("supportedFormats")}
             </p>
             <button
               onClick={() => fileInputRef.current?.click()}
               className="px-6 py-2.5 bg-white dark:bg-slate-800 border border-gray-200 dark:border-gray-700 rounded-xl text-sm font-medium hover:bg-gray-50 dark:hover:bg-slate-700 transition-colors shadow-sm"
             >
-              S&eacute;lectionner des fichiers
+              {t("selectFiles")}
             </button>
           </div>
         </div>
