@@ -24,6 +24,8 @@ const FONTS = [
   'lexend', 'noto', 'pop', 'roboto'
 ];
 
+const USERNAME_PLACEHOLDER = 'your-username';
+
 // Mapping for SkillIcons.dev
 const SKILL_ICONS_MAP: Record<string, string> = {
   'JavaScript': 'js', 'TypeScript': 'ts', 'Python': 'python', 'PHP': 'php', 'Java': 'java', 'C++': 'cpp', 'Go': 'go', 'Rust': 'rust', 'Swift': 'swift',
@@ -107,7 +109,7 @@ const ReadmeGenerator: React.FC<ReadmeGeneratorProps> = ({ lang, labels }) => {
 
   const [formData, setFormData] = useState({
     // #28 \u2014 d\u00e9fauts NEUTRES : l'aper\u00e7u n'appartient \u00e0 personne tant que le visiteur n'a pas saisi son pseudo
-    username: 'your-username',
+    username: '',
     theme: 'radical',
     font: 'inter',
     alignment: 'center' as 'left' | 'center' | 'right',
@@ -141,6 +143,26 @@ const ReadmeGenerator: React.FC<ReadmeGeneratorProps> = ({ lang, labels }) => {
   const [markdown, setMarkdown] = useState('');
   const [workflowCode, setWorkflowCode] = useState('');
   const [copied, setCopied] = useState(false);
+  const [failedPreviewImages, setFailedPreviewImages] = useState<string[]>([]);
+  const githubUsername = formData.username.trim();
+  const hasGithubUsername = githubUsername.length > 0 && githubUsername !== USERNAME_PLACEHOLDER;
+
+  const handlePreviewImageError = (src: string) => {
+    setFailedPreviewImages((prev) => (prev.includes(src) ? prev : [...prev, src]));
+  };
+
+  const renderPreviewImage = (src: string, alt: string, className?: string) => {
+    if (failedPreviewImages.includes(src)) return null;
+
+    return (
+      <img
+        src={src}
+        className={className}
+        alt={alt}
+        onError={() => handlePreviewImageError(src)}
+      />
+    );
+  };
 
   // Track tool launch on mount
   useEffect(() => {
@@ -156,7 +178,7 @@ const ReadmeGenerator: React.FC<ReadmeGeneratorProps> = ({ lang, labels }) => {
   };
 
   const getStatsUrls = () => {
-    const user = formData.username || 'your-username';
+    const user = hasGithubUsername ? githubUsername : USERNAME_PLACEHOLDER;
     return {
        stats: `https://github-readme-stats.vercel.app/api?username=${user}&show_icons=true&theme=${formData.theme}&font=${formData.font}`,
        streaks: `https://github-readme-streak-stats.herokuapp.com/?user=${user}&theme=${formData.theme}&font=${formData.font}`,
@@ -196,7 +218,7 @@ jobs:
       - name: generate github-contribution-grid-snake.svg
         uses: Platane/snk/svg-only@v3
         with:
-          github_user_name: ${formData.username}
+          github_user_name: ${githubUsername || USERNAME_PLACEHOLDER}
           outputs: |
             dist/github-contribution-grid-snake.svg
             dist/github-contribution-grid-snake-dark.svg?palette=github-dark
@@ -292,32 +314,38 @@ jobs:
     }
 
     // 8. Stats Graphs
-    md += `  ### \u{1F4CA} GitHub Stats\n`;
+    if (hasGithubUsername && (formData.showStats || formData.showStreaks || formData.showTopLangs || formData.showActivity)) {
+      md += `  ### \u{1F4CA} GitHub Stats\n`;
 
-    if (formData.showStats) {
-      md += `  <img src="${urls.stats}" height="180" alt="stats graph" />\n`;
-    }
-    if (formData.showStreaks) {
-      md += `  <img src="${urls.streaks}" height="180" alt="streak graph" />\n`;
-    }
+      if (formData.showStats) {
+        md += `  <img src="${urls.stats}" height="180" alt="stats graph" />\n`;
+      }
+      if (formData.showStreaks) {
+        md += `  <img src="${urls.streaks}" height="180" alt="streak graph" />\n`;
+      }
 
-    md += `\n`;
+      md += `\n`;
 
-    if (formData.showTopLangs) {
-       md += `  <img src="${urls.langs}" height="180" alt="top languages" />\n`;
-    }
-    md += `\n`;
+      if (formData.showTopLangs) {
+         md += `  <img src="${urls.langs}" height="180" alt="top languages" />\n`;
+      }
+      md += `\n`;
 
-    // 9. Activity Graph
-    if (formData.showActivity) {
-       md += `  <br/>\n  <img src="${urls.activity}" alt="activity graph" />\n`;
+      // 9. Activity Graph
+      if (formData.showActivity) {
+         md += `  <br/>\n  <img src="${urls.activity}" alt="activity graph" />\n`;
+      }
+    } else if (formData.showStats || formData.showStreaks || formData.showTopLangs || formData.showActivity) {
+      md += `  <!-- Add your GitHub username to enable stats widgets. -->\n`;
     }
 
     // 10. Snake
-    if (formData.showSnake) {
+    if (formData.showSnake && hasGithubUsername) {
         md += `\n  <!-- Snake Animation -->\n`;
         md += `  <br/>\n`;
-        md += `  <img src="https://github.com/${formData.username}/${formData.username}/blob/output/github-contribution-grid-snake.svg" alt="snake animation" />\n`;
+        md += `  <img src="https://github.com/${githubUsername}/${githubUsername}/blob/output/github-contribution-grid-snake.svg" alt="snake animation" />\n`;
+    } else if (formData.showSnake) {
+        md += `\n  <!-- Add your GitHub username to enable the snake animation. -->\n`;
     }
 
     // CLOSE ALIGNMENT
@@ -453,20 +481,20 @@ jobs:
                 </div>
              )}
 
-             {(formData.showStats || formData.showStreaks || formData.showTopLangs || formData.showActivity) && (
+             {hasGithubUsername && (formData.showStats || formData.showStreaks || formData.showTopLangs || formData.showActivity) && (
                  <div className="space-y-4 w-full pt-4">
                      <div className={`flex flex-wrap gap-4 items-center ${formData.alignment === 'center' ? 'justify-center' : formData.alignment === 'right' ? 'justify-end' : 'justify-start'}`}>
-                         {formData.showStats && <img src={statsUrls.stats} className="h-[160px] md:h-[180px] w-auto rounded-lg shadow-sm" alt="Stats" />}
-                         {formData.showStreaks && <img src={statsUrls.streaks} className="h-[160px] md:h-[180px] w-auto rounded-lg shadow-sm" alt="Streaks" />}
+                         {formData.showStats && renderPreviewImage(statsUrls.stats, 'Stats', 'h-[160px] md:h-[180px] w-auto rounded-lg shadow-sm')}
+                         {formData.showStreaks && renderPreviewImage(statsUrls.streaks, 'Streaks', 'h-[160px] md:h-[180px] w-auto rounded-lg shadow-sm')}
                      </div>
                      {formData.showTopLangs && (
                          <div className={`flex mt-4 ${formData.alignment === 'center' ? 'justify-center' : formData.alignment === 'right' ? 'justify-end' : 'justify-start'}`}>
-                             <img src={statsUrls.langs} className="h-[160px] md:h-[180px] w-auto rounded-lg shadow-sm" alt="Langs" />
+                             {renderPreviewImage(statsUrls.langs, 'Langs', 'h-[160px] md:h-[180px] w-auto rounded-lg shadow-sm')}
                          </div>
                      )}
                      {formData.showActivity && (
                          <div className={`flex mt-4 ${formData.alignment === 'center' ? 'justify-center' : formData.alignment === 'right' ? 'justify-end' : 'justify-start'}`}>
-                             <img src={statsUrls.activity} className="w-full max-w-3xl rounded-lg shadow-sm" alt="Activity" />
+                             {renderPreviewImage(statsUrls.activity, 'Activity', 'w-full max-w-3xl rounded-lg shadow-sm')}
                          </div>
                      )}
                  </div>

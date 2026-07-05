@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion } from 'framer-motion';
 import { usePathname } from 'next/navigation';
-import { useCallback, Suspense } from 'react';
+import { useCallback, useEffect, Suspense } from 'react';
 import Navbar from '@/components/layout/Navbar';
 import DesktopNav from '@/components/layout/DesktopNav';
 import Footer from '@/components/layout/Footer';
@@ -27,6 +27,10 @@ export function LangLayoutClient({ lang, children }: LangLayoutClientProps) {
 
   const labels = getLabels(lang);
   const data = getResumeData(lang);
+
+  useEffect(() => {
+    document.documentElement.lang = lang;
+  }, [lang]);
 
   const handleIntroComplete = useCallback(() => setShowIntro(false), [setShowIntro]);
 
