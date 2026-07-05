@@ -74,7 +74,12 @@ export default function HomePageClient({ lang }: HomePageClientProps) {
             {labels.available}
           </div>
           <h1 className="text-4xl lg:text-6xl font-extrabold text-gray-900 dark:text-white tracking-tight leading-[1.1] mb-6">
-            {labels.role}{' '}
+            {(() => {
+              if (activeProfile === 'software') return labels.roleSoftware;
+              if (activeProfile === 'network') return labels.roleNetwork;
+              if (activeProfile === 'teaching') return labels.roleTeaching;
+              return labels.role;
+            })()}{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400">
               {activeProfile === 'software' ? labels.roleSoftware : activeProfile === 'network' ? labels.roleNetwork : activeProfile === 'teaching' ? labels.roleTeaching : 'Full-Stack'}
             </span>
