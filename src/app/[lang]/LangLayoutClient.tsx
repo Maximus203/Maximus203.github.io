@@ -1,6 +1,6 @@
 'use client';
 
-import { AnimatePresence, motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { usePathname } from 'next/navigation';
 import { useCallback, useEffect, Suspense } from 'react';
 import Navbar from '@/components/layout/Navbar';
@@ -15,6 +15,8 @@ import { Analytics } from '@/components/shared/Analytics';
 import { useAppStore } from '@/store/store';
 import { getLabels, getResumeData } from '@/lib/i18n';
 import type { Language } from '@/types';
+
+const INTRO_SAFETY_TIMEOUT_MS = 4000;
 
 interface LangLayoutClientProps {
   lang: Language;
@@ -32,6 +34,26 @@ export function LangLayoutClient({ lang, children }: LangLayoutClientProps) {
     document.documentElement.lang = lang;
   }, [lang]);
 
+  useEffect(() => {
+    try {
+      if (sessionStorage.getItem('introShown')) {
+        setShowIntro(false);
+      }
+    } catch {
+      // Restricted storage should not block the portfolio content.
+    }
+  }, [setShowIntro]);
+
+  useEffect(() => {
+    if (!showIntro) return;
+
+    const timeoutId = window.setTimeout(() => {
+      setShowIntro(false);
+    }, INTRO_SAFETY_TIMEOUT_MS);
+
+    return () => window.clearTimeout(timeoutId);
+  }, [setShowIntro, showIntro]);
+
   const handleIntroComplete = useCallback(() => setShowIntro(false), [setShowIntro]);
 
   const isHome = pathname === `/${lang}` || pathname === `/${lang}/`;
@@ -42,9 +64,7 @@ export function LangLayoutClient({ lang, children }: LangLayoutClientProps) {
   return (
     <>
       <Analytics />
-      <AnimatePresence mode="wait">
-        {showIntro && <IntroAnimation onComplete={handleIntroComplete} labels={labels} />}
-      </AnimatePresence>
+      {showIntro && <IntroAnimation onComplete={handleIntroComplete} labels={labels} />}
 
       <ProjectRequestModal
         isOpen={isProjectModalOpen}
