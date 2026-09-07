@@ -5,8 +5,6 @@ import { UI_LABELS } from '@/lib/constants/ui-labels';
 import type { Language } from '@/types';
 import ImageConverterClient from './ImageConverterClient';
 
-export const dynamicParams = false;
-
 export function generateStaticParams() {
   return SUPPORTED_LANGUAGES.map((lang) => ({ lang }));
 }

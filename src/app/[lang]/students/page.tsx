@@ -4,8 +4,6 @@ import { buildPageMetadata } from '@/lib/metadata';
 import type { Language } from '@/types';
 import StudentsPageClient from './StudentsPageClient';
 
-export const dynamicParams = false;
-
 export function generateStaticParams() {
   return SUPPORTED_LANGUAGES.map((lang) => ({ lang }));
 }
