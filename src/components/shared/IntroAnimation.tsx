@@ -11,6 +11,10 @@ interface Star {
   pz: number; // Previous Z
 }
 
+const INTRO_ANIMATION_DURATION_MS = 2500;
+// Filet de sécurité si requestAnimationFrame ne se déclenche pas de façon fiable.
+export const INTRO_FALLBACK_TIMEOUT_MS = INTRO_ANIMATION_DURATION_MS + 500;
+
 interface IntroAnimationProps {
   onComplete: () => void;
   labels: Record<string, string>;
@@ -87,7 +91,7 @@ const IntroAnimation: React.FC<IntroAnimationProps> = ({ onComplete, labels }) =
 
     let animationFrameId: number;
     const startTime = Date.now();
-    const duration = 2500; // Durée
+    const duration = INTRO_ANIMATION_DURATION_MS;
 
     // Redimensionnement
     const resize = () => {
@@ -188,7 +192,7 @@ const IntroAnimation: React.FC<IntroAnimationProps> = ({ onComplete, labels }) =
     // Fallback timeout in case requestAnimationFrame doesn't fire reliably
     const fallbackTimeout = setTimeout(() => {
       onComplete();
-    }, duration + 500);
+    }, INTRO_FALLBACK_TIMEOUT_MS);
 
     return () => {
       window.removeEventListener('resize', resize);

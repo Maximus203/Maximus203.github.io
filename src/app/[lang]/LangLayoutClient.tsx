@@ -1,6 +1,6 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { usePathname } from 'next/navigation';
 import { useCallback, useEffect, Suspense } from 'react';
 import Navbar from '@/components/layout/Navbar';
@@ -9,14 +9,16 @@ import Footer from '@/components/layout/Footer';
 import StickySidebar from '@/components/layout/StickySidebar';
 import LangSwitcher from '@/components/shared/LangSwitcher';
 import ThemeToggle from '@/components/shared/ThemeToggle';
-import IntroAnimation from '@/components/shared/IntroAnimation';
+import IntroAnimation, { INTRO_FALLBACK_TIMEOUT_MS } from '@/components/shared/IntroAnimation';
 import ProjectRequestModal from '@/components/shared/ProjectRequestModal';
 import { Analytics } from '@/components/shared/Analytics';
 import { useAppStore } from '@/store/store';
 import { getLabels, getResumeData } from '@/lib/i18n';
 import type { Language } from '@/types';
 
-const INTRO_SAFETY_TIMEOUT_MS = 4000;
+// Marge de sécurité au-delà du fallback interne d'IntroAnimation, pour couvrir le cas
+// où son effet retourne avant même de programmer ce fallback (canvas/contexte indisponible).
+const INTRO_SAFETY_TIMEOUT_MS = INTRO_FALLBACK_TIMEOUT_MS + 1000;
 
 interface LangLayoutClientProps {
   lang: Language;
@@ -33,16 +35,6 @@ export function LangLayoutClient({ lang, children }: LangLayoutClientProps) {
   useEffect(() => {
     document.documentElement.lang = lang;
   }, [lang]);
-
-  useEffect(() => {
-    try {
-      if (sessionStorage.getItem('introShown')) {
-        setShowIntro(false);
-      }
-    } catch {
-      // Restricted storage should not block the portfolio content.
-    }
-  }, [setShowIntro]);
 
   useEffect(() => {
     if (!showIntro) return;
@@ -64,7 +56,9 @@ export function LangLayoutClient({ lang, children }: LangLayoutClientProps) {
   return (
     <>
       <Analytics />
-      {showIntro && <IntroAnimation onComplete={handleIntroComplete} labels={labels} />}
+      <AnimatePresence mode="wait">
+        {showIntro && <IntroAnimation onComplete={handleIntroComplete} labels={labels} />}
+      </AnimatePresence>
 
       <ProjectRequestModal
         isOpen={isProjectModalOpen}

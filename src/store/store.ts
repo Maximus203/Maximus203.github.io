@@ -7,11 +7,13 @@ const getSystemTheme = (): 'light' | 'dark' => {
   return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
 };
 
+const INTRO_SHOWN_SESSION_KEY = 'introShown';
+
 // Check if intro has been shown this session
 const getInitialShowIntro = (): boolean => {
   if (typeof window === 'undefined') return true;
   try {
-    return !sessionStorage.getItem('introShown');
+    return !sessionStorage.getItem(INTRO_SHOWN_SESSION_KEY);
   } catch {
     return true;
   }
@@ -45,7 +47,7 @@ export const useAppStore = create<AppState>((set) => ({
   setShowIntro: (showIntro) => {
     if (typeof window !== 'undefined' && !showIntro) {
       try {
-        sessionStorage.setItem('introShown', 'true');
+        sessionStorage.setItem(INTRO_SHOWN_SESSION_KEY, 'true');
       } catch {
         // storage unavailable (private browsing, restricted context) — non-fatal
       }
