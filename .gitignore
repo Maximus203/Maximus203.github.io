@@ -31,3 +31,14 @@ pnpm-debug.log*
 # TypeScript
 *.tsbuildinfo
 next-env.d.ts
+
+# AI assistant config (local only, never publish)
+.claude/
+CLAUDE.md
+AGENTS.md
+.github/instructions/
+.github/prompts/
+.codex/
+.cursor/
+.windsurf/
+.mcp.json
