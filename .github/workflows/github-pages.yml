@@ -45,6 +45,7 @@ jobs:
         run: npm run build
         env:
           NEXT_OUTPUT: export
+          NEXT_PUBLIC_ASSET_PREFIX: https://maximus203.github.io
 
   build:
     name: Build
@@ -69,6 +70,7 @@ jobs:
         run: npm run build
         env:
           NEXT_OUTPUT: export
+          NEXT_PUBLIC_ASSET_PREFIX: https://maximus203.github.io
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v4
