@@ -1,33 +1,18 @@
-# Cherif Diouf | Portfolio
+# Cherif Diouf — Portfolio immersif
 
-Portfolio personnel construit avec **Next.js 16**, **TypeScript**, **Tailwind CSS v4**, **Framer Motion** et **Supabase**.
+Portfolio multilingue construit avec **Next.js 16**, **TypeScript**, **GSAP** et une direction artistique sur mesure. L'interface associe narration, animations dimensionnelles, galerie, projets, outils et assistant conversationnel local.
 
 ## Stack technique
 
 - **Frontend** : Next.js (App Router, static export), React 19, TypeScript
-- **Styling** : Tailwind CSS v4, Framer Motion
-- **Backend** : Supabase (PostgreSQL, Storage, RLS)
-- **State** : Zustand
+- **Motion** : GSAP, CSS 3D et mode 2D accessible sur mobile
+- **Assistant** : réponses locales fondées sur les données publiques du portfolio
 - **i18n** : 4 langues (FR, EN, ZH, JA)
 - **Deploiement** : GitHub Pages + cPanel (static export)
 
 ## Architecture
 
-```
-src/
-├── app/[lang]/          # Pages avec SEO par langue (28 pages statiques)
-│   ├── page.tsx         # Home (hero, experience, projets, skills, education)
-│   ├── gallery/         # Galerie evenements
-│   ├── tools/           # Grille outils + 3 pages dediees
-│   │   ├── readme-generator/
-│   │   ├── image-converter/
-│   │   └── meme-generator/
-│   └── contact/         # Formulaire de demande de projet
-├── components/          # 16 composants React (layout, home, gallery, tools, shared)
-├── lib/                 # Constants i18n, metadata SEO, client Supabase
-├── store/               # Zustand (theme, UI state)
-└── styles/              # Tailwind globals + custom styles
-```
+Le contenu applicatif vit dans `app/`, `components/`, `lib/` et `styles/`. Les médias optimisés sont dans `public/media/`. Les parcours de régression sont documentés dans `test-playbooks/`.
 
 ## Lancer en local
 
@@ -40,28 +25,8 @@ npm install
 # Lancer le serveur de developpement
 npm run dev
 
-# Build de production (static export)
-npm run build
-```
-
-## Variables d'environnement
-
-Copier `.env.local.example` ou creer `.env.local` :
-
-```env
-NEXT_PUBLIC_SUPABASE_URL=https://xxx.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=sb_publishable_xxx
-SUPABASE_SERVICE_KEY=eyJ...  # uniquement pour le seed
-```
-
-## Base de donnees
-
-```bash
-# Executer le schema dans le SQL Editor Supabase
-# Fichier: supabase/schema.sql
-
-# Seed les projets
-npm run seed
+# Build de production statique
+$env:NEXT_OUTPUT="export"; npm run build
 ```
 
 ## Scripts
@@ -69,6 +34,7 @@ npm run seed
 | Commande | Description |
 |----------|-------------|
 | `npm run dev` | Serveur de developpement |
-| `npm run build` | Build static (output: `out/`) |
-| `npm run seed` | Inserer les projets dans Supabase |
-| `npm run generate-sitemap` | Generer sitemap.xml |
+| `npm run build` | Build Next.js |
+| `npm run typecheck` | Verification TypeScript |
+| `npm run test:theme` | Regression claire/sombre, persistance et accessibilite |
+| `npm run test:regression` | Regression fonctionnelle du portfolio |

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 600" role="img" aria-labelledby="title desc">
+  <title id="title">Architecture de la bibliothèque de compétences IA</title>
+  <desc id="desc">Un routeur relie des agents à une bibliothèque de plus de quatre-vingts compétences, une mémoire d’expérience et une couche de validation.</desc>
+  <rect width="960" height="600" fill="#07111f"/>
+  <g fill="none" stroke="#5d7cfa" stroke-width="2"><path d="M190 300H370M590 300H770M480 190V110M480 410V490"/><circle cx="480" cy="300" r="112"/><circle cx="480" cy="300" r="154" stroke-dasharray="8 14" opacity=".45"/></g>
+  <g font-family="IBM Plex Mono,monospace" text-anchor="middle"><text x="480" y="280" fill="#f2f5ff" font-size="30" font-weight="700">80+ SKILLS</text><text x="480" y="318" fill="#aab8d0" font-size="17">routage · contexte · outils</text><text x="480" y="344" fill="#f0b35b" font-size="14">bibliothèque privée</text></g>
+  <g font-family="IBM Plex Mono,monospace" font-size="17" text-anchor="middle"><rect x="55" y="245" width="135" height="110" rx="14" fill="#12243e" stroke="#5d7cfa"/><text x="122" y="294" fill="#f2f5ff">AGENTS</text><text x="122" y="321" fill="#aab8d0" font-size="13">Cherif · Sofia</text><text x="122" y="342" fill="#aab8d0" font-size="13">Ibrahima · QA</text><rect x="770" y="245" width="135" height="110" rx="14" fill="#12243e" stroke="#5d7cfa"/><text x="837" y="294" fill="#f2f5ff">VALIDATION</text><text x="837" y="323" fill="#aab8d0" font-size="13">preuves · tests</text><rect x="385" y="50" width="190" height="60" rx="30" fill="#12243e" stroke="#f0b35b"/><text x="480" y="86" fill="#f2f5ff">EXPÉRIENCE</text><rect x="385" y="490" width="190" height="60" rx="30" fill="#12243e" stroke="#f0b35b"/><text x="480" y="526" fill="#f2f5ff">GOUVERNANCE</text></g>
+  <text x="50" y="565" fill="#aab8d0" font-family="IBM Plex Mono,monospace" font-size="13">SCHÉMA D’ARCHITECTURE · AUCUNE DONNÉE PRIVÉE EXPOSÉE</text>
+</svg>

@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 460" role="img" aria-labelledby="title desc">
+  <title id="title">Composition du laboratoire IA</title>
+  <desc id="desc">Réseau abstrait bleu nuit reliant un noyau central à des points de contexte, outils et mémoire.</desc>
+  <rect width="640" height="460" rx="28" fill="#0d0e1e"/>
+  <g fill="none" stroke-linecap="round">
+    <ellipse cx="320" cy="230" rx="220" ry="104" stroke="#6145ff" stroke-width="2" opacity=".75"/>
+    <ellipse cx="320" cy="230" rx="145" ry="190" stroke="#52d3ff" stroke-width="2" opacity=".45" transform="rotate(24 320 230)"/>
+    <path d="M118 112 254 204M522 112 386 204M112 348 254 257M528 348 386 257" stroke="#36e78e" stroke-width="2" opacity=".7"/>
+  </g>
+  <g fill="#52d3ff">
+    <circle cx="108" cy="106" r="7"/><circle cx="532" cy="106" r="7"/>
+    <circle cx="102" cy="354" r="7"/><circle cx="538" cy="354" r="7"/>
+  </g>
+  <circle cx="320" cy="230" r="66" fill="#6145ff" opacity=".95"/>
+  <circle cx="320" cy="230" r="46" fill="#111326" stroke="#36e78e" stroke-width="2"/>
+  <path d="M291 230h58M320 201v58" stroke="#f4f3f8" stroke-width="4" opacity=".9"/>
+  <g fill="#f4f3f8" font-family="monospace" font-size="15" letter-spacing="2">
+    <text x="72" y="82">CONTEXT</text><text x="472" y="82">TOOLS</text>
+    <text x="78" y="400">MEMORY</text><text x="480" y="400">HUMAN LOOP</text>
+  </g>
+</svg>
