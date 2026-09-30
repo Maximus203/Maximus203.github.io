@@ -7,6 +7,7 @@ import { profile } from '@/lib/site-data';
 import { AmbientFlow } from '@/components/ambient-flow';
 import { CherifChat } from '@/components/cherif-chat';
 import { getDictionary, localePath, type Locale, locales } from '@/lib/i18n';
+import { assetUrl } from '@/lib/assets';
 
 const THEME_STORAGE_KEY = 'cherif-portfolio-theme';
 
@@ -172,7 +173,7 @@ export function SiteShell({ children, locale }: { children: React.ReactNode; loc
       </div>
       <header className="site-header">
         <a className="wordmark" href={localePath(locale)} onClick={() => setMenuOpen(false)}>
-          <img className="wordmark-avatar" src="/media/photo.webp" alt="" />
+          <img className="wordmark-avatar" src={assetUrl('/media/photo.webp')} alt="" />
           <span>{profile.shortName}<i>.</i></span>
         </a>
         <button className="menu-toggle" type="button" aria-expanded={menuOpen} aria-controls="main-nav" onClick={() => setMenuOpen((value) => !value)}>
@@ -191,7 +192,7 @@ export function SiteShell({ children, locale }: { children: React.ReactNode; loc
       <CherifChat locale={locale} />
       <footer id="contact" className="site-footer">
         <div className="footer-heading">
-          <div className="footer-identity"><img src="/media/photo.webp" alt="" /><span><b>{profile.shortName}</b><small>{profile.role}</small></span></div>
+          <div className="footer-identity"><img src={assetUrl('/media/photo.webp')} alt="" /><span><b>{profile.shortName}</b><small>{profile.role}</small></span></div>
           <span className="eyebrow">{copy.footer.eyebrow}</span>
           <h2>{copy.footer.title}</h2>
           <a className="footer-primary-link" href={`mailto:${profile.email}`}>{profile.email}<span aria-hidden="true">↗</span></a>

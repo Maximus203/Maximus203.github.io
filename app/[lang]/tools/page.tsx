@@ -3,11 +3,12 @@ import Image from 'next/image';
 import { PageIntro } from '@/components/page-intro';
 import { tools } from '@/lib/site-data';
 import { getDictionary, isLocale, languageAlternates, localePath, type Locale } from '@/lib/i18n';
+import { assetUrl } from '@/lib/assets';
 
 type Params = { params: Promise<{ lang: string }> };
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { lang } = await params; const locale = isLocale(lang) ? lang : 'fr'; const [title, description] = getDictionary(locale).seo.tools;
-  return { title, description, alternates: { canonical: localePath(locale, '/tools'), languages: languageAlternates('/tools') }, openGraph: { title, description, url: localePath(locale, '/tools'), images: ['/media/previews/image-converter.webp'] } };
+  return { title, description, alternates: { canonical: localePath(locale, '/tools'), languages: languageAlternates('/tools') }, openGraph: { title, description, url: localePath(locale, '/tools'), images: [assetUrl('/media/previews/image-converter.webp')] } };
 }
 export default async function ToolsPage({ params }: Params) {
   const { lang } = await params; const locale: Locale = isLocale(lang) ? lang : 'fr'; const copy = getDictionary(locale).tools;

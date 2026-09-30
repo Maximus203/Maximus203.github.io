@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { useEffect, useMemo, useRef, useState, type CSSProperties, type KeyboardEvent } from 'react';
 import gsap from 'gsap';
 import type { Locale } from '@/lib/i18n';
+import { assetUrl } from '@/lib/assets';
 
 type Dimension = 1 | 2 | 3 | 4;
 
@@ -187,11 +188,11 @@ export function DimensionalPortrait({ locale, identity }: { locale: Locale; iden
         <div className="dimension-orbit orbit-two" aria-hidden="true" />
         <div className="portrait-stack" ref={stackRef}>
           <div className="portrait-motion" ref={motionRef}>
-            <img className="temporal-ghost ghost-one" src="/media/photo.webp" alt="" aria-hidden="true" />
-            <img className="temporal-ghost ghost-two" src="/media/photo.webp" alt="" aria-hidden="true" />
-            <img className="temporal-ghost ghost-three" src="/media/photo.webp" alt="" aria-hidden="true" />
+            <img className="temporal-ghost ghost-one" src={assetUrl('/media/photo.webp')} alt="" aria-hidden="true" />
+            <img className="temporal-ghost ghost-two" src={assetUrl('/media/photo.webp')} alt="" aria-hidden="true" />
+            <img className="temporal-ghost ghost-three" src={assetUrl('/media/photo.webp')} alt="" aria-hidden="true" />
             <div className="portrait-surface">
-              <Image src="/media/photo.webp" alt="Portrait de Cherif Diouf" fill priority sizes="(max-width: 820px) 100vw, 45vw" />
+              <Image src={assetUrl('/media/photo.webp')} alt="Portrait de Cherif Diouf" fill priority sizes="(max-width: 820px) 100vw, 45vw" />
               <span className="portrait-scan" aria-hidden="true" />
             </div>
           </div>

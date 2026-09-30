@@ -4,6 +4,7 @@ import { useLayoutEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { experiences, profile, projects, skills } from '@/lib/site-data';
 import { getDictionary, localePath, type Locale } from '@/lib/i18n';
+import { assetUrl } from '@/lib/assets';
 
 type Message = { role: 'assistant' | 'user'; text: string; sources?: string[] };
 type Answer = { text: string; sources: string[] };
@@ -67,7 +68,7 @@ function answerFor(question: string, locale: Locale): Answer {
 function sourceHref(source: string, locale: Locale, copy: ReturnType<typeof getDictionary>) {
   if (source === copy.chat.sourceProfile) return profile.linkedin;
   if (source === copy.chat.sourceProjects) return profile.github;
-  if (source === copy.chat.sourceExperience) return '/documents/CV-Cherif-Diouf.pdf';
+  if (source === copy.chat.sourceExperience) return assetUrl('/documents/CV-Cherif-Diouf.pdf');
   if (source === copy.chat.sourceTools) return localePath(locale, '/tools');
   if (source === copy.chat.sourceSkills) return `${localePath(locale)}#projects`;
 }
@@ -99,8 +100,8 @@ export function CherifChat({ locale }: { locale: Locale }) {
       <span>+</span> {copy.chat.title}
     </button>
     {open && <section className="chat-panel" id="cherif-chat-panel" ref={panelRef} role="dialog" aria-modal="false" aria-labelledby="cherif-chat-title">
-      <div className="chat-panel-head"><div className="chat-identity"><img src="/media/photo.webp" alt="" /><div><span className="chat-status"><i /> {copy.chat.available}</span><strong id="cherif-chat-title">{copy.chat.title}</strong><small>{copy.chat.local} · CV · GitHub · projets</small></div></div><button type="button" aria-label={copy.chat.close} onClick={() => setOpen(false)}>×</button></div>
-      <div className="chat-messages" aria-live="polite">{messages.map((message, index) => <div className={`chat-message ${message.role}`} key={`${message.role}-${index}`}><span className="chat-avatar" aria-hidden="true">{message.role === 'assistant' ? <img src="/media/photo.webp" alt="" /> : '→'}</span><div className="chat-message-body"><p>{message.text}</p>{message.sources && <div className="chat-sources"><small>{copy.chat.source}</small>{message.sources.map((source) => { const href = sourceHref(source, locale, copy); return href ? <a href={href} key={source} target={href.startsWith('http') || href.endsWith('.pdf') ? '_blank' : undefined} rel={href.startsWith('http') ? 'noreferrer' : undefined}>{source} ↗</a> : <span key={source}>{source}</span>; })}</div>}</div></div>)}</div>
+      <div className="chat-panel-head"><div className="chat-identity"><img src={assetUrl('/media/photo.webp')} alt="" /><div><span className="chat-status"><i /> {copy.chat.available}</span><strong id="cherif-chat-title">{copy.chat.title}</strong><small>{copy.chat.local} · CV · GitHub · projets</small></div></div><button type="button" aria-label={copy.chat.close} onClick={() => setOpen(false)}>×</button></div>
+      <div className="chat-messages" aria-live="polite">{messages.map((message, index) => <div className={`chat-message ${message.role}`} key={`${message.role}-${index}`}><span className="chat-avatar" aria-hidden="true">{message.role === 'assistant' ? <img src={assetUrl('/media/photo.webp')} alt="" /> : '→'}</span><div className="chat-message-body"><p>{message.text}</p>{message.sources && <div className="chat-sources"><small>{copy.chat.source}</small>{message.sources.map((source) => { const href = sourceHref(source, locale, copy); return href ? <a href={href} key={source} target={href.startsWith('http') || href.endsWith('.pdf') ? '_blank' : undefined} rel={href.startsWith('http') ? 'noreferrer' : undefined}>{source} ↗</a> : <span key={source}>{source}</span>; })}</div>}</div></div>)}</div>
       <div className="chat-suggestions">{copy.chat.suggestions.map((suggestion) => <button key={suggestion} type="button" onClick={() => ask(suggestion)}>{suggestion}</button>)}</div>
       <form className="chat-form" onSubmit={(event) => { event.preventDefault(); ask(draft); }}><input aria-label={copy.chat.placeholder} value={draft} onChange={(event) => setDraft(event.target.value)} placeholder={copy.chat.placeholder} /><button type="submit" aria-label={copy.chat.send}>↗</button></form>
       <small>{copy.chat.local} · {copy.chat.sourceProfile}</small>

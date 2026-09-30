@@ -6,6 +6,7 @@ import { ScrollReveal } from '@/components/scroll-reveal';
 import { Lab3DObject } from '@/components/lab-3d-object';
 import { experiences, profile, projects, skills } from '@/lib/site-data';
 import { getDictionary, isLocale, languageAlternates, localePath, type Locale } from '@/lib/i18n';
+import { assetUrl } from '@/lib/assets';
 
 type Params = { params: Promise<{ lang: string }> };
 
@@ -13,7 +14,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { lang } = await params;
   const locale = isLocale(lang) ? lang : 'fr';
   const [title, description] = getDictionary(locale).seo.home;
-  return { title, description, alternates: { canonical: localePath(locale), languages: languageAlternates() }, openGraph: { title, description, url: localePath(locale), images: ['/media/photo.webp'] } };
+  return { title, description, alternates: { canonical: localePath(locale), languages: languageAlternates() }, openGraph: { title, description, url: localePath(locale), images: [assetUrl('/media/photo.webp')] } };
 }
 
 export default async function HomePage({ params }: Params) {
