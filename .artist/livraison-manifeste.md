@@ -42,3 +42,29 @@
 ## Décisions parquées (irréversibles)
 
 - _(aucune pour l'instant)_
+
+---
+
+# Manifeste de livraison — Portfolio immersif
+
+Date : 2026-09-30
+
+## Périmètre
+
+- Remplacement de l'ancienne application par le prototype Next.js validé.
+- Conservation des quatre langues, des pages projets, galerie, outils et étudiants.
+- Publication du système clair/sombre, des animations GSAP, de l'expérience dimensionnelle et du chatbot local.
+- Déploiement statique vers GitHub Pages et `cherif-diouf.artist-dev.com` via cPanel.
+
+## Contrôles obligatoires
+
+- `npm ci`
+- `npm run typecheck`
+- `NEXT_OUTPUT=export npm run build`
+- régressions thème et portfolio sur le serveur construit
+- vérification des workflows GitHub Actions
+- vérification visuelle et fonctionnelle du site public
+
+## État
+
+Préparé pour validation et publication.

@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Prototype du portfolio conversationnel de Cherif Diouf." />
+    <title>Cherif Diouf — Portfolio conversationnel</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="noise" aria-hidden="true"></div>
+    <div class="orb orb-a" aria-hidden="true"></div>
+    <div class="orb orb-b" aria-hidden="true"></div>
+
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="Accueil Cherif Diouf">
+        <span class="brand-mark">C</span>
+        <span>CHERIF DIOUF<span class="brand-dot">.</span></span>
+      </a>
+      <nav class="nav-links" aria-label="Navigation principale">
+        <a class="active" href="#top">Accueil</a>
+        <a href="#experience">Parcours</a>
+        <a href="#lab">IA Lab</a>
+        <a href="#projects">Projets</a>
+      </nav>
+      <button class="theme-button" type="button" aria-label="Changer de thème">◌</button>
+      <span class="availability"><i></i> Disponible pour nouveaux projets</span>
+    </header>
+
+    <main id="top" class="shell">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <p class="eyebrow"><span class="eyebrow-dot"></span> portfolio / interface personnelle</p>
+          <h1 id="hero-title">Développeur<br /><em>Full-Stack</em><br />&amp; Formateur.</h1>
+          <p class="intro">J’automatise vos process. Je conçois des systèmes qui font gagner du temps, réduisent les coûts opérationnels et transforment l’expertise en résultats.</p>
+          <div class="hero-actions">
+            <button class="primary-button open-chat" type="button"><span>⌁</span> Interroger mon portfolio <b>↗</b></button>
+            <a class="secondary-button" href="#projects">Explorer mes réalisations <b>→</b></a>
+          </div>
+          <div class="signal-row"><span>BASE</span><strong>Dakar, SN</strong><span class="signal-line"></span><span>REMOTE</span><strong>Ouvert</strong><span class="signal-line"></span><span>FR / EN / WO</span></div>
+        </div>
+
+        <div class="hero-visual">
+          <div class="visual-label">01 / IDENTITY CORE</div>
+          <div class="profile-card tilt-card">
+            <div class="card-grid"></div>
+            <div class="profile-top"><span>CHERIF DIOUF</span><span>2026</span></div>
+          <div class="profile-center"><img class="profile-art" src="./profile-art.svg" alt="Composition du laboratoire IA de Cherif Diouf" width="320" height="230" /><div class="monogram">C<span>.</span></div><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div></div>
+            <div class="profile-bottom"><span>Ingénieur Full-Stack<br />&amp; Formateur</span><span class="card-code">AVAILABLE<br /><i></i></span></div>
+          </div>
+          <div class="floating-chip chip-stack"><small>STACK PRINCIPALE</small><strong>Laravel / React / Docker</strong></div>
+          <div class="floating-chip chip-ai"><span>✦</span><small>IA READY</small><strong>Human-centered systems</strong></div>
+        </div>
+      </section>
+
+      <section class="metrics-strip" aria-label="Chiffres clés">
+        <div><strong>80<span>+</span></strong><small>skills IA conçues<br />et maintenues</small></div>
+        <div><strong>6h<span>→</span>35m</strong><small>gain sur la génération<br />d’états financiers</small></div>
+        <div><strong>4</strong><small>domaines : produit,<br />infra, IA, transmission</small></div>
+        <div><strong>3</strong><small>langues de travail<br />FR · EN · WO</small></div>
+      </section>
+
+      <section class="terminal-section" id="proof">
+        <div class="section-kicker"><span>02</span><span>ce que je construis</span></div>
+        <div class="terminal-window">
+          <div class="terminal-bar"><span class="traffic"><i></i><i></i><i></i></span><span>cherif@dev:~/profile</span><span>⌁</span></div>
+          <div class="terminal-body"><p><b class="purple">const</b> <b class="white">user</b> = {</p><p class="indent"><b class="red">name</b>: <b class="green">"El Hadji Ahmadou CHERIF DIOUF"</b>,</p><p class="indent"><b class="red">role</b>: <b class="green">"Ingénieur Full-Stack &amp; Formateur"</b>,</p><p class="indent"><b class="red">focus</b>: [ <b class="green">"Digitalisation"</b>, <b class="green">"IA"</b>, <b class="green">"Pédagogie"</b> ],</p><p class="indent"><b class="red">impact</b>: <b class="green">"6h → 35min"</b></p><p>};<span class="cursor"></span></p></div>
+        </div>
+        <div class="proof-copy"><p class="eyebrow">pas une vitrine. une conversation.</p><h2>Les bonnes questions<br /><em>déverrouillent</em> les bonnes preuves.</h2><p>Chaque réponse du portfolio renvoie vers une expérience, un projet ou une compétence concrète.</p><button class="text-button open-chat" type="button">Commencer l’entretien <b>↗</b></button></div>
+      </section>
+
+      <section class="experience-section" id="experience">
+        <div class="section-kicker"><span>04</span><span>trajectoire / terrain</span></div>
+        <div class="experience-heading"><h2>Des systèmes qui<br /><em>laissent une trace.</em></h2><p>De l’intégration de services chez Integratop IT au pilotage de produits digitaux, chaque étape ajoute une couche : méthode, sécurité, automatisation, transmission.</p></div>
+        <div class="timeline">
+          <article class="timeline-item current"><div class="timeline-year">2024 — 2026</div><div class="timeline-dot"></div><div class="timeline-card"><span class="role-tag">CHEF DE PROJET DIGITAL</span><h3>TérangaDev</h3><p>Pilotage de projets web et mobiles, specs, Kanban et coordination des équipes techniques et créatives.</p><b>Produit · Agile · Leadership</b></div></article>
+          <article class="timeline-item"><div class="timeline-year">2024 — 2026</div><div class="timeline-dot"></div><div class="timeline-card"><span class="role-tag">FULL-STACK / RESPONSABLE SI</span><h3>FIDECA</h3><p>Logiciel d’états financiers avec FastAPI, React et Tauri. Supervision du SI, sécurité des accès et sauvegardes.</p><b>FastAPI · React · Tauri · Linux</b></div></article>
+          <article class="timeline-item"><div class="timeline-year">2021 — 2024</div><div class="timeline-dot"></div><div class="timeline-card"><span class="role-tag">SUPPORT PERFORMANCE &amp; PROJET</span><h3>Orange — Sonatel</h3><p>Suivi des KPI, reporting, coordination des mises en production et sécurisation des opérations.</p><b>KPI · Reporting · Conformité</b></div></article>
+          <article class="timeline-item"><div class="timeline-year">2022</div><div class="timeline-dot"></div><div class="timeline-card"><span class="role-tag">INTÉGRATEUR DE SERVICES</span><h3>Integratop IT</h3><p>Installation, paramétrage et tests d’une solution chez le client, avec traitement des anomalies et stabilisation de l’environnement.</p><b>Intégration · Tests · Support</b></div></article>
+        </div>
+      </section>
+
+      <section class="lab-section" id="lab">
+        <div class="section-kicker"><span>05</span><span>the intelligence layer</span></div>
+        <div class="lab-layout"><div><p class="eyebrow">mon laboratoire</p><h2>Je ne me contente pas<br />d’utiliser l’IA. Je <em>l’orchestre.</em></h2><p class="lab-lead">Un écosystème autonome pour transformer une intention en système : contexte, outils, mémoire, contrôle humain et livraison.</p><a class="secondary-button" href="#projects">Voir les preuves <b>→</b></a></div><div class="lab-orbit"><div class="lab-core">IA<br /><span>HUMAN<br />LOOP</span></div><div class="lab-node node-a"><b>01</b><span>RAG &amp; bases<br />de connaissances</span></div><div class="lab-node node-b"><b>02</b><span>Agents &amp;<br />automatisation</span></div><div class="lab-node node-c"><b>03</b><span>Homelab &amp;<br />infrastructure</span></div></div></div>
+      </section>
+
+      <section class="skills-section" id="skills">
+        <div class="section-kicker"><span>06</span><span>toolbox / compétences</span></div>
+        <div class="skills-grid"><div class="skill-column"><span class="skill-index">01</span><h3>Construire</h3><p>JavaScript · React · Laravel · PHP · Node.js · Express · FastAPI · Python · APIs Web</p></div><div class="skill-column"><span class="skill-index">02</span><h3>Structurer</h3><p>SQL · MySQL · PostgreSQL · MongoDB · UML · Git · GitHub · Linux · Docker</p></div><div class="skill-column"><span class="skill-index">03</span><h3>Augmenter</h3><p>RAG · prompt engineering · skills · agents · automatisation · n8n · OpenRouter</p></div><div class="skill-column"><span class="skill-index">04</span><h3>Transmettre</h3><p>Frontend · backend · méthode · code review · pédagogie par le projet · data literacy</p></div></div>
+      </section>
+
+      <section class="projects-section" id="projects"><div class="section-kicker"><span>07</span><span>projets sélectionnés</span></div><div class="project-grid"><article><span>01 / ENTERPRISE</span><h3>App SAP</h3><p>Application commerciale de gestion interne pour stocks, RH et finance.</p><b>Laravel · React · MySQL</b></article><article><span>02 / CRM</span><h3>Artist Digital</h3><p>Automatisation du cycle de vie client : contrats, prospects et alertes d’échéances.</p><b>CRM · Automatisation · Process</b></article><article><span>03 / AUTONOMY</span><h3>Homelab IA</h3><p>Serveur sécurisé avec SSO, VPN, automatisations et bases vectorielles.</p><b>Linux · Agents · RAG</b></article><article><span>04 / PUBLIC</span><h3>Ndougalma &amp; Murabbi</h3><p>Une plateforme de vente de produits locaux et une application de suivi des habitudes.</p><b>Mobile · Produit · Impact</b></article><article><span>05 / AUTOMATION</span><h3>Nanobrowser Bridge</h3><p>Pont HTTP local pour piloter un agent IA Chrome avec validation humaine.</p><b>TypeScript · Ollama · IA</b></article><article><span>06 / KNOWLEDGE</span><h3>Bibliothèque Skills IA</h3><p>Répertoire de 80 compétences avancées pour développer, créer et transmettre.</p><b>Claude · Codex · Agents</b></article></div></section>
+
+      <section class="education-strip"><div><span>FORMATION</span><strong>Doctorat STN</strong><small>UN-CHK · 2025 — en cours</small></div><div><span>FORMATION</span><strong>Master Génie Logiciel</strong><small>ESTM · Mention Très bien</small></div><div><span>LANGUES</span><strong>FR C2 · EN B2 · WO natif</strong><small>Travail local, remote et multiculturel</small></div></section>
+    </main>
+
+    <div class="chat-overlay" aria-hidden="true"><div class="chat-panel" role="dialog" aria-modal="true" aria-labelledby="chat-title"><div class="chat-header"><div><span class="status"><i></i> système en ligne</span><h2 id="chat-title">Parlons de Cherif.</h2></div><button class="close-chat" type="button" aria-label="Fermer">×</button></div><div class="chat-meta"><span>PORTFOLIO AI / v0.1</span><span>réponses personnalisées</span></div><div class="messages" aria-live="polite"><div class="message assistant"><span class="avatar">C.</span><div><small>CHERIF.AI</small><p>Bonjour. Je peux vous parler de son parcours, de ses projets, de sa façon de travailler ou de ses compétences en IA. Que souhaitez-vous savoir ?</p></div></div></div><div class="suggestions"><button type="button" data-question="Qui est Cherif Diouf ?">Qui est Cherif ?</button><button type="button" data-question="Quels sont ses projets les plus importants ?">Ses projets</button><button type="button" data-question="Quelles sont ses compétences en IA ?">Son rapport à l’IA</button></div><form class="chat-form"><input aria-label="Votre question" placeholder="Posez une question sur Cherif…" autocomplete="off" /><button aria-label="Envoyer" type="submit">↗</button></form><p class="chat-disclaimer">Prototype — réponses locales basées sur le profil public.</p></div></div>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>

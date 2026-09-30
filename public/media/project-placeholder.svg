@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
+  <title id="title">Aperçu non disponible</title>
+  <desc id="desc">Visuel neutre indiquant qu’aucune image exacte n’est disponible.</desc>
+  <rect width="1200" height="720" fill="#0b1a31"/>
+  <path d="M80 610h1040M80 110h1040" stroke="#5d7cfa" stroke-opacity=".45"/>
+  <circle cx="600" cy="360" r="112" fill="none" stroke="#5d7cfa" stroke-width="2"/>
+  <path d="M540 360h120M600 300v120" stroke="#f0b35b" stroke-width="3"/>
+  <text x="600" y="540" text-anchor="middle" fill="#f2f5ff" font-family="IBM Plex Sans, Arial, sans-serif" font-size="34" letter-spacing="4">APERÇU NON DISPONIBLE</text>
+</svg>

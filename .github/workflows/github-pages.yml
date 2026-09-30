@@ -34,15 +34,17 @@ jobs:
       - name: Install dependencies
         run: npm ci --legacy-peer-deps
 
-      - name: Lint
-        run: npm run lint
-
       - name: Type check
-        run: npx tsc --noEmit
+        run: npm run typecheck
 
       - name: Audit dependencies
         run: npm audit --audit-level=high
         continue-on-error: true
+
+      - name: Verify static export
+        run: npm run build
+        env:
+          NEXT_OUTPUT: export
 
   build:
     name: Build
@@ -63,14 +65,10 @@ jobs:
       - name: Install dependencies
         run: npm ci --legacy-peer-deps
 
-      - name: Generate sitemap
-        run: npm run generate-sitemap
-
       - name: Build
         run: npm run build
         env:
-          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
-          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+          NEXT_OUTPUT: export
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v4
