@@ -37,6 +37,7 @@ jobs:
         env:
           NEXT_OUTPUT: export
           NEXT_PUBLIC_ASSET_PREFIX: https://maximus203.github.io
+          NEXT_PUBLIC_ASSET_ORIGIN: https://maximus203.github.io
 
   build:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
@@ -62,6 +63,7 @@ jobs:
         env:
           NEXT_OUTPUT: export
           NEXT_PUBLIC_ASSET_PREFIX: https://maximus203.github.io
+          NEXT_PUBLIC_ASSET_ORIGIN: https://maximus203.github.io
 
       - name: Prepare deployment package
         run: |

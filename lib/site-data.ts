@@ -1,3 +1,5 @@
+import { assetUrl } from '@/lib/assets';
+
 export type Project = {
   title: string;
   description: string;
@@ -26,21 +28,21 @@ export const experiences = [
     company: 'TérangaDev',
     role: 'Chef de projet digital',
     period: '2024 — 2026',
-    logo: '/media/entreprises/teranga-dev.webp',
+    logo: assetUrl('/media/entreprises/teranga-dev.webp'),
     summary: 'Pilotage de projets web et mobiles, specs, Kanban et coordination des équipes techniques et créatives.',
   },
   {
     company: 'FIDECA',
     role: 'Ingénieur Full-Stack · Responsable informatique',
     period: '2024 — 2026',
-    logo: '/media/entreprises/fideca.webp',
+    logo: assetUrl('/media/entreprises/fideca.webp'),
     summary: 'Générateur d’états financiers avec FastAPI, React et Tauri. Supervision du SI, accès, sauvegardes et sécurité.',
   },
   {
     company: 'Orange — Sonatel',
     role: 'Assistant support performance & projet',
     period: '2021 — 2024',
-    logo: '/media/entreprises/Orange-sonatel.webp',
+    logo: assetUrl('/media/entreprises/Orange-sonatel.webp'),
     summary: 'KPI, reporting, coordination des mises en production et sécurisation des opérations.',
   },
   {
@@ -55,7 +57,7 @@ export const projects: Project[] = [
   {
     title: 'Image Converter',
     description: 'Service logiciel libre de conversion d’images en WebP, pensé pour la performance et l’éco-conception.',
-    image: '/media/previews/image-converter.webp',
+    image: assetUrl('/media/previews/image-converter.webp'),
     tags: ['Logiciel libre', 'WebP', 'Performance'],
     link: 'https://github.com/Maximus203/image-converter',
     access: 'Lien public vérifié',
@@ -63,7 +65,7 @@ export const projects: Project[] = [
   {
     title: 'MyEvent',
     description: 'Application de création et de gestion d’événements, avec un parcours de bout en bout.',
-    image: '/media/previews/my-event.webp',
+    image: assetUrl('/media/previews/my-event.webp'),
     tags: ['Laravel', 'React', 'Management'],
     link: 'https://github.com/Maximus203/my-event-app',
     access: 'Lien public vérifié',
@@ -71,70 +73,70 @@ export const projects: Project[] = [
   {
     title: 'Nanobrowser Bridge',
     description: 'Pont HTTP local pour piloter un agent IA Chrome avec un LLM local et validation humaine.',
-    image: '/media/project-placeholder.svg',
+    image: assetUrl('/media/project-placeholder.svg'),
     tags: ['IA', 'TypeScript', 'Automatisation'],
     access: 'Projet présenté · démo sur demande',
   },
   {
     title: 'SAP Commercial',
     description: 'Application interne de gestion des stocks, RH et finance pour la Société Africaine de Pétrole.',
-    image: '/media/previews/sap.webp',
+    image: assetUrl('/media/previews/sap.webp'),
     tags: ['Laravel', 'React', 'MySQL'],
     access: 'Projet présenté · accès non public',
   },
   {
     title: 'Archive ESTM',
     description: 'Plateforme d’archivage des mémoires avec ancrage blockchain pour renforcer l’intégrité des dépôts.',
-    image: '/media/projets/Archive-ESTM.webp',
+    image: assetUrl('/media/projets/Archive-ESTM.webp'),
     tags: ['Archive', 'Blockchain', 'Éducation'],
     access: 'Démo visuelle',
   },
   {
     title: 'Momentum',
     description: 'Plateforme de quiz interactifs en temps réel avec classement instantané pour cours et événements.',
-    image: '/media/projets/momentum.webp',
+    image: assetUrl('/media/projets/momentum.webp'),
     tags: ['React', 'Temps réel', 'Pédagogie'],
     access: 'Démo visuelle',
   },
   {
     title: 'Cynoia Spaces',
     description: 'SaaS de gestion d’espaces collaboratifs, présenté dans le corpus public historique.',
-    image: '/media/previews/cynoia-spaces.webp',
+    image: assetUrl('/media/previews/cynoia-spaces.webp'),
     tags: ['Symfony', 'React', 'Docker'],
     access: 'Référence visuelle',
   },
   {
     title: 'Bibliothèque de compétences IA',
     description: 'Système privé de plus de 80 compétences spécialisées, avec routage, gouvernance, mémoire d’expérience et variantes ciblées selon les agents.',
-    image: '/media/architecture/skills-library.svg',
+    image: assetUrl('/media/architecture/skills-library.svg'),
     tags: ['Agents', 'Skills', 'Gouvernance'],
     access: 'Architecture documentée · dépôt privé',
   },
   {
     title: 'Artist Digital',
     description: 'Automatisation du cycle de vie client : contrats, prospects et alertes d’échéances.',
-    image: '/media/project-placeholder.svg',
+    image: assetUrl('/media/project-placeholder.svg'),
     tags: ['CRM', 'Automatisation', 'Process'],
     access: 'Corpus historique · aperçu non disponible',
   },
   {
     title: 'Atlas Automation',
     description: 'Socle d’automatisation auto-hébergé : orchestration d’agents, SSO, VPN, supervision, sauvegardes et bases vectorielles.',
-    image: '/media/architecture/atlas-automation.svg',
+    image: assetUrl('/media/architecture/atlas-automation.svg'),
     tags: ['Linux', 'Automatisation', 'RAG'],
     access: 'Architecture documentée · infrastructure privée',
   },
   {
     title: 'Bots Telegram Ops',
     description: 'Bots privés de contrôle et de notification pour suivre les tâches, recevoir les alertes d’Atlas et piloter des opérations à distance.',
-    image: '/media/architecture/telegram-ops.svg',
+    image: assetUrl('/media/architecture/telegram-ops.svg'),
     tags: ['Telegram', 'Alertes', 'Contrôle'],
     access: 'Architecture documentée · secrets exclus',
   },
   {
     title: 'Murabbi Landing',
     description: 'Expérience Next.js orientée habitudes et progression, avec une direction visuelle 3D et un déploiement public vérifié.',
-    image: '/media/generated/murabbi-landing-demo.gif',
+    image: assetUrl('/media/generated/murabbi-landing-demo.gif'),
     tags: ['Next.js', 'Three.js', 'Produit'],
     link: 'https://github.com/Maximus203/murabbi-landing',
     live: 'https://murabbi-landing.vercel.app',
@@ -143,7 +145,7 @@ export const projects: Project[] = [
   {
     title: 'Les chats sont mignons',
     description: 'Projet pédagogique HTML/CSS finalisé : une démonstration simple, lisible et réellement exécutable du travail de transmission.',
-    image: '/media/generated/les-chats-demo.gif',
+    image: assetUrl('/media/generated/les-chats-demo.gif'),
     tags: ['HTML', 'CSS', 'Pédagogie'],
     link: 'https://github.com/Maximus203/Les-chats-sont-mignons',
     access: 'Démo locale 15 s · dépôt public',
@@ -151,7 +153,7 @@ export const projects: Project[] = [
   {
     title: 'Mbaye Laravel Chatbot',
     description: 'Assistant conversationnel Laravel et Livewire, documenté et conservé avec sa démonstration animée historique.',
-    image: '/media/projets/mbaye-chatbot-demo.gif',
+    image: assetUrl('/media/projets/mbaye-chatbot-demo.gif'),
     tags: ['Laravel', 'Livewire', 'Chatbot'],
     link: 'https://github.com/Maximus203/Mbaye-laravel-chatbot-app',
     access: 'Démo historique · dépôt public',
@@ -171,7 +173,7 @@ const series = (title: string, category: GalleryCategory, prefix: string, count:
   Array.from({ length: count }, (_, index) => ({
     title,
     category,
-    image: `/media/galerie/${prefix}-${index + 1}.webp`,
+    image: assetUrl(`/media/galerie/${prefix}-${index + 1}.webp`),
     alt: `${alt} — photo ${index + 1} sur ${count}`,
   }));
 
@@ -181,11 +183,11 @@ export const galleryItems = [
   ...series('Laravel Sénégal', 'Communauté', 'laravel-senegal', 5, 'Rencontre de la communauté Laravel Sénégal'),
   ...series('Hacktoberfest Galsen Dev', 'Logiciel libre', 'hacktoberfest', 4, 'Participation à Hacktoberfest avec Galsen Dev'),
   ...series('Atelier ESTM', 'Transmission', 'estm-workshop', 2, 'Atelier et accompagnement des étudiants à l’ESTM'),
-  { title: 'Edacy', category: 'Transmission' as const, image: '/media/galerie/edacy-2.webp', alt: 'Cherif Diouf lors d’un moment de transmission avec Edacy' },
+  { title: 'Edacy', category: 'Transmission' as const, image: assetUrl('/media/galerie/edacy-2.webp'), alt: 'Cherif Diouf lors d’un moment de transmission avec Edacy' },
 ];
 
 export const tools = [
-  { slug: 'image-converter', title: 'Convertisseur WebP', text: 'Convertir une image en WebP côté navigateur.', image: '/media/previews/image-converter.webp' },
-  { slug: 'meme-generator', title: 'Générateur de mèmes', text: 'Composer un visuel simple à partir d’un média local.', image: '/media/project-placeholder.svg' },
-  { slug: 'readme-generator', title: 'Générateur de README', text: 'Structurer rapidement la documentation d’un projet.', image: '/media/project-placeholder.svg' },
+  { slug: 'image-converter', title: 'Convertisseur WebP', text: 'Convertir une image en WebP côté navigateur.', image: assetUrl('/media/previews/image-converter.webp') },
+  { slug: 'meme-generator', title: 'Générateur de mèmes', text: 'Composer un visuel simple à partir d’un média local.', image: assetUrl('/media/project-placeholder.svg') },
+  { slug: 'readme-generator', title: 'Générateur de README', text: 'Structurer rapidement la documentation d’un projet.', image: assetUrl('/media/project-placeholder.svg') },
 ];

@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { SiteShell } from '@/components/site-shell';
 import { isLocale, locales, type Locale } from '@/lib/i18n';
+import { assetUrl } from '@/lib/assets';
 import '@fontsource/ibm-plex-mono/400.css';
 import '@fontsource/ibm-plex-sans/400.css';
 import '@fontsource/ibm-plex-sans/500.css';
@@ -13,11 +14,11 @@ export const metadata: Metadata = {
   title: 'Cherif Diouf — Ingénieur Full-Stack & Formateur',
   description: 'Portfolio public de Cherif Diouf : systèmes utiles, automatisation, IA et transmission.',
   icons: {
-    icon: [{ url: '/media/photo.webp', type: 'image/webp' }],
-    shortcut: ['/media/photo.webp'],
-    apple: [{ url: '/media/photo.webp' }],
+    icon: [{ url: assetUrl('/media/photo.webp'), type: 'image/webp' }],
+    shortcut: [assetUrl('/media/photo.webp')],
+    apple: [{ url: assetUrl('/media/photo.webp') }],
   },
-  openGraph: { images: ['/media/photo.webp'], siteName: 'Cherif Diouf' },
+  openGraph: { images: [assetUrl('/media/photo.webp')], siteName: 'Cherif Diouf' },
 };
 
 export function generateStaticParams() { return locales.map((lang) => ({ lang })); }

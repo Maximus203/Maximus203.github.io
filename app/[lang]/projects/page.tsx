@@ -3,6 +3,7 @@ import { PageIntro } from '@/components/page-intro';
 import { ProjectCard } from '@/components/project-card';
 import { projects } from '@/lib/site-data';
 import { getDictionary, isLocale, languageAlternates, localePath, type Locale } from '@/lib/i18n';
+import { assetUrl } from '@/lib/assets';
 
 type Params = { params: Promise<{ lang: string }> };
 
@@ -17,7 +18,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { lang } = await params;
   const locale = isLocale(lang) ? lang : 'fr';
   const [title, description] = getDictionary(locale).seo.projects;
-  return { title, description, alternates: { canonical: localePath(locale, '/projects'), languages: languageAlternates('/projects') }, openGraph: { title, description, url: localePath(locale, '/projects'), images: ['/media/generated/murabbi-landing-demo.gif'] } };
+  return { title, description, alternates: { canonical: localePath(locale, '/projects'), languages: languageAlternates('/projects') }, openGraph: { title, description, url: localePath(locale, '/projects'), images: [assetUrl('/media/generated/murabbi-landing-demo.gif')] } };
 }
 
 export default async function ProjectsPage({ params }: Params) {

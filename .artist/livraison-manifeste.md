@@ -72,5 +72,5 @@ Préparé pour validation et publication.
 ## Correctif post-déploiement
 
 - Le test public initial a reproduit une limitation `429` de cPanel lors du pic de chargement des chunks Next.js.
-- Les chunks compilés sont servis par GitHub Pages comme CDN sur le build cPanel ; le HTML, les médias et le domaine public restent inchangés.
+- Les chunks compilés et les médias sont servis par GitHub Pages comme CDN sur le build cPanel ; le HTML et le domaine public restent inchangés.
 - Gate : nouvelle campagne publique obligatoire avec zéro `429`, zéro erreur console et zéro échec réseau.

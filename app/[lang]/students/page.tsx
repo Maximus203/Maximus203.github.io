@@ -2,15 +2,16 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import { PageIntro } from '@/components/page-intro';
 import { getDictionary, isLocale, languageAlternates, localePath, type Locale } from '@/lib/i18n';
+import { assetUrl } from '@/lib/assets';
 
 type Params = { params: Promise<{ lang: string }> };
 
 const students = [
-  { name: 'Mouhamed Gaye', url: 'https://mouhamedgaye.github.io/Mon-portefolio/', image: '/media/students/mouhamed-gaye.jpg' },
-  { name: 'El Hadji Ismael Diallo', url: 'https://elijahdev.me/', image: '/media/students/ismael-diallo.png' },
-  { name: 'Mamadou Dieye', url: 'https://mamado886.github.io/Mamadou-Dieye/', image: '/media/students/mamadou-dieye.jpg' },
-  { name: 'Fatou Kine Dione', url: 'https://kine54.github.io/Mon-portofolio/', image: '/media/students/fatou-kine-dione.jpg' },
-  { name: 'Adja Abibatou Diop', url: 'https://adjaabibatoudiop-bit.github.io/Abibatou-Portfolio/', image: '/media/students/adja-abibatou-diop.jpg' },
+  { name: 'Mouhamed Gaye', url: 'https://mouhamedgaye.github.io/Mon-portefolio/', image: assetUrl('/media/students/mouhamed-gaye.jpg') },
+  { name: 'El Hadji Ismael Diallo', url: 'https://elijahdev.me/', image: assetUrl('/media/students/ismael-diallo.png') },
+  { name: 'Mamadou Dieye', url: 'https://mamado886.github.io/Mamadou-Dieye/', image: assetUrl('/media/students/mamadou-dieye.jpg') },
+  { name: 'Fatou Kine Dione', url: 'https://kine54.github.io/Mon-portofolio/', image: assetUrl('/media/students/fatou-kine-dione.jpg') },
+  { name: 'Adja Abibatou Diop', url: 'https://adjaabibatoudiop-bit.github.io/Abibatou-Portfolio/', image: assetUrl('/media/students/adja-abibatou-diop.jpg') },
 ];
 
 const pageCopy: Record<Locale, { kicker: string; title: string; text: string; count: string; highlight: string; visit: string; source: string }> = {
@@ -24,7 +25,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { lang } = await params;
   const locale = isLocale(lang) ? lang : 'fr';
   const [title, description] = getDictionary(locale).seo.students;
-  return { title, description, alternates: { canonical: localePath(locale, '/students'), languages: languageAlternates('/students') }, openGraph: { title, description, url: localePath(locale, '/students'), images: ['/media/students/mouhamed-gaye.jpg'] } };
+  return { title, description, alternates: { canonical: localePath(locale, '/students'), languages: languageAlternates('/students') }, openGraph: { title, description, url: localePath(locale, '/students'), images: [assetUrl('/media/students/mouhamed-gaye.jpg')] } };
 }
 
 export default async function StudentsPage({ params }: Params) {
