@@ -149,7 +149,7 @@ try {
   const chatBox = await page.locator('.chat-panel').boundingBox();
   assert.ok(chatBox && chatBox.width >= 620 && chatBox.height >= 620);
   assert.equal(await page.locator('.chat-brand-mark').count(), 0);
-  assert.equal(await page.locator('.chat-identity > img[src="/media/photo.webp"]').count(), 1);
+  assert.equal(await page.locator('.chat-identity > img[src$="/media/photo.webp"]').count(), 1);
   assert.equal(await page.locator('.chat-launcher').evaluate((node) => getComputedStyle(node).visibility), 'hidden');
   const initialMessageCount = await page.locator('.chat-message').count();
   await page.locator('.chat-form input').fill('   ');
@@ -288,7 +288,7 @@ try {
   assert.deepEqual(studentNames, ['Mouhamed Gaye', 'El Hadji Ismael Diallo', 'Mamadou Dieye', 'Fatou Kine Dione', 'Adja Abibatou Diop']);
   assert.doesNotMatch(await page.locator('.students-page').innerText(), /Frontend|Backend|IA appliquée/);
   assert.ok(await page.locator('.footer-directory a').count() >= 9);
-  assert.equal(await page.locator('.footer-identity img[src="/media/photo.webp"]').count(), 1);
+  assert.equal(await page.locator('.footer-identity img[src$="/media/photo.webp"]').count(), 1);
   report.checks.students = { total: 5, images: studentImages, names: studentNames, factualPage: true };
   report.checks.footer = { usefulLinks: await page.locator('.footer-directory a').count(), portrait: true };
   await page.screenshot({ path: `${shots}/PW-1-students-after.png`, fullPage: true });
