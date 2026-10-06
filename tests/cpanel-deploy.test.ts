@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { DeploymentError, catalogDigest, DOMAIN, ORIGIN, CDN, deploymentPaths, assertDeploymentPath, extractionQuery, parseApiResponse, validateUpload, validateExtraction, referencedAssets, verifyReleaseOnce, waitForRelease, deployWithTransport, type Fetcher } from '../scripts/deploy-cpanel';
+import { DeploymentError, catalogDigest, DOMAIN, ORIGIN, CDN, deploymentPaths, assertDeploymentPath, extractionQuery, parseApiResponse, validateUpload, validateExtraction, referencedAssets, verifyCdnReleaseOnce, waitForCdnRelease, verifyReleaseOnce, waitForRelease, deployWithTransport, type Fetcher } from '../scripts/deploy-cpanel';
 
 const sha = 'a'.repeat(40);
 const uploaded = { status: 1, errors: null, data: { failed: 0, succeeded: 1, uploads: [{ status: 1 }] } };
@@ -13,7 +13,8 @@ function responder(options: { marker?: unknown; html?: string; pageStatus?: numb
     if (url.includes('/fr/applications/')) return new Response(options.html ?? html, { status: options.pageStatus ?? 200, headers: { 'content-type': 'text/html' } });
     assert.equal(init?.method, 'HEAD');
     assert.ok(url.startsWith(CDN));
-    return new Response(null, { status: options.assetStatus ?? 200, headers: { 'content-type': options.assetMime ?? (url.endsWith('.css') ? 'text/css' : url.endsWith('.js') ? 'application/javascript' : 'image/webp') } });
+    const pathname = new URL(url).pathname;
+    return new Response(null, { status: options.assetStatus ?? 200, headers: { 'content-type': options.assetMime ?? (pathname.endsWith('.css') ? 'text/css' : pathname.endsWith('.js') ? 'application/javascript' : 'image/webp') } });
   };
 }
 
@@ -76,6 +77,19 @@ test('post-publication gate identifies the exact release, new catalog and real a
   assert.throws(() => referencedAssets(html.replace('a.css', 'a.png')), /CSS\/JS/);
 });
 
+test('CDN assets converge before cPanel extraction without priming bare asset URLs', async () => {
+  const urls: string[] = [];
+  const good = responder();
+  const capture: Fetcher = async (url, init) => { urls.push(url); return good(url, init); };
+  assert.equal(await verifyCdnReleaseOnce(sha, html, capture, 7), 3);
+  assert.equal(urls.length, 3);
+  for (const value of urls) assert.equal(new URL(value).searchParams.get('release'), `${sha}-7`);
+  let attempts = 0;
+  const transient: Fetcher = async (url, init) => ++attempts <= 3 ? new Response(null, { status: 404 }) : good(url, init);
+  assert.equal(await waitForCdnRelease(sha, html, { attempts: 3, fetcher: transient, sleep: async () => {} }), 3);
+  await assert.rejects(verifyCdnReleaseOnce(sha, html.replace(CDN, ORIGIN), responder(), 1), /outside the expected CDN/);
+});
+
 test('a transient CDN mismatch can recover, but stale content cannot yield a green result', async () => {
   let markers = 0; let sleeps = 0;
   const good = responder();
@@ -90,12 +104,16 @@ test('a transient CDN mismatch can recover, but stale content cannot yield a gre
 
 test('failed upload/extraction stops before public success checks; no cleanup API is called', async () => {
   const calls: string[] = [];
-  await assert.rejects(deployWithTransport({ upload: async () => { calls.push('upload'); return { status: 0 }; }, extract: async () => { calls.push('extract'); return extracted; }, verify: async () => { calls.push('verify'); return 3; } }));
+  const preflight = async () => { calls.push('preflight'); return 3; };
+  await assert.rejects(deployWithTransport({ upload: async () => { calls.push('upload'); return { status: 0 }; }, preflight, extract: async () => { calls.push('extract'); return extracted; }, verify: async () => { calls.push('verify'); return 3; } }));
   assert.deepEqual(calls, ['upload']);
   calls.length = 0;
-  await assert.rejects(deployWithTransport({ upload: async () => { calls.push('upload'); return uploaded; }, extract: async () => { calls.push('extract'); return {}; }, verify: async () => { calls.push('verify'); return 3; } }));
-  assert.deepEqual(calls, ['upload', 'extract']);
+  await assert.rejects(deployWithTransport({ upload: async () => { calls.push('upload'); return uploaded; }, preflight, extract: async () => { calls.push('extract'); return {}; }, verify: async () => { calls.push('verify'); return 3; } }));
+  assert.deepEqual(calls, ['upload', 'preflight', 'extract']);
   calls.length = 0;
-  assert.equal(await deployWithTransport({ upload: async () => { calls.push('upload'); return uploaded; }, extract: async () => { calls.push('extract'); return extracted; }, verify: async () => { calls.push('verify'); return 3; } }), 3);
-  assert.deepEqual(calls, ['upload', 'extract', 'verify']);
+  await assert.rejects(deployWithTransport({ upload: async () => { calls.push('upload'); return uploaded; }, preflight: async () => { calls.push('preflight'); throw new DeploymentError('CDN unavailable'); }, extract: async () => { calls.push('extract'); return extracted; }, verify: async () => { calls.push('verify'); return 3; } }));
+  assert.deepEqual(calls, ['upload', 'preflight']);
+  calls.length = 0;
+  assert.equal(await deployWithTransport({ upload: async () => { calls.push('upload'); return uploaded; }, preflight, extract: async () => { calls.push('extract'); return extracted; }, verify: async () => { calls.push('verify'); return 3; } }), 3);
+  assert.deepEqual(calls, ['upload', 'preflight', 'extract', 'verify']);
 });
