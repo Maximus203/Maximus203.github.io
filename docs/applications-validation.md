@@ -12,11 +12,22 @@ Date: 2026-10-06. Review branch only; production publication is not approved by 
 - Static export inspection: 32 Applications and legacy routes have expected language and new canonical URLs
 - Independent code review: fixed sparse-table amplification, deeply nested JSON pretty-print amplification, stale clipboard feedback and primary-button contrast
 
-## Not yet verified in a browser
+## Browser validation executed in CI
 
-The available execution environment could not launch Chromium (socket operation denied). Its managed browser also refused the local development URL. This is an environment blocker, not a passing E2E result. No screenshots are claimed as visual proof. GitHub Actions availability may be constrained by account quota; a workflow that never starts is not a test result.
+The local environment could not launch Chromium and its managed browser refused the development URL. A real GitHub-hosted Chromium run subsequently removed that blocker for this PR.
 
-The runnable browser suite is `scripts/applications-browser-qa.mjs`. It covers route and language contracts, real PNG/JPEG/WebP/PDF/ZIP downloads, MIME signatures, repeated inputs and stale state, corrupt-file recovery, data conversion, meme output, README safety/privacy/downloads, clipboard failures and races, responsive widths, themes and keyboard focus. It must run successfully on a permitted browser before approving publication.
+- Commit tested: `e264e31d1d1114eaa4a65e25d03d7e3539cba0ff`
+- [Successful GitHub Pages validation run](https://github.com/Maximus203/Maximus203.github.io/actions/runs/37450255454)
+- [Successful cPanel validation run](https://github.com/Maximus203/Maximus203.github.io/actions/runs/37450255266)
+- `npm run test:applications`: **13 acceptance groups passed, zero failed**
+- Real JPEG/PNG/WebP/PDF/ZIP downloads and signatures verified, plus CSV/JSON, image limits/error recovery, meme PNG, README Markdown/YAML, clipboard failure/races, preview privacy and URL reapproval
+- 32 Applications/legacy language routes visited; all three apps checked at phone/tablet/desktop widths and in FR/EN/ZH/JA
+- No uncaught browser errors or file-upload network requests observed
+- Screenshots and downloaded evidence retained in the run's `application-qa` artifact. Hub desktop, French converter mobile and Japanese README mobile screenshots were also manually inspected
+
+The first CI browser run found test-harness defects: a stale JPEG reset expectation, an alert selector also matching the Next.js route announcer, and Playwright's in-memory upload limit. They were corrected without weakening application assertions; the complete suite then passed.
+
+The existing `test:theme` and `test:regression` scripts were made portable and updated for the new application controls. Those older full-site suites were **not** executed here; the successful E2E result applies to the new Applications suite, not every historical test.
 
 ## Reproduce on a permitted computer
 
@@ -74,4 +85,4 @@ Word/Excel faithful import/export, PDF→editable documents and audio/video code
 
 ## Publication gate
 
-A separate draft PR is the deliverable. Both existing workflows still require a push to `main` for deployment. Do not merge, push `main`, or publish until review and authorization are complete, including the outstanding browser validation.
+A separate draft PR is the deliverable. Both existing workflows still require a push to `main` for deployment. Do not merge, push `main`, or publish until review and authorization are complete, with the browser evidence above available for review.

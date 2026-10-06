@@ -20,7 +20,7 @@ Sous PowerShell : `$env:NEXT_OUTPUT="export"; npm run build`.
 
 Le catalogue `/fr/applications/` permet la recherche et le filtrage par catégories. Les anciennes routes `/[lang]/tools/*` restent accessibles et déclarent les nouvelles routes comme URL canonique.
 
-| Application | Capacités prévues pour validation |
+| Application | Capacités |
 | --- | --- |
 | Convertisseur | Lots JPEG/PNG/WebP, qualité JPEG/WebP, ZIP, images vers PDF, CSV ↔ JSON |
 | Studio de mèmes | Image locale, texte haut/bas, taille/couleurs/contour, véritable export PNG |
@@ -47,6 +47,8 @@ npm run test:regression
 ```
 
 Les scripts utilisent Playwright installé dans le projet, pas un chemin d’ordinateur personnel. Installer son navigateur avec `npx playwright install chromium`, ou définir `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH` vers un Chromium déjà installé. `PORTFOLIO_BASE_URL` permet de tester un autre serveur. Les captures/rapports locaux sont exclus de Git.
+
+Validation CI observée le 6 octobre 2026 : 25 tests unitaires/contrats et 13 groupes E2E Applications réussis. Détails, preuves et limites : [rapport de validation](docs/applications-validation.md).
 
 La stratégie de tests couvre : signature des fichiers, réutilisation des outils, erreurs et reset, sécurité du Markdown et des URL, absence d’envoi de fichiers, navigation clavier, quatre langues, mobile/tablette/desktop, thèmes et export statique.
 
