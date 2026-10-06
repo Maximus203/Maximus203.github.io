@@ -3,10 +3,11 @@
 import { usePathname } from 'next/navigation';
 import { useLayoutEffect, useRef, useState, type MouseEvent } from 'react';
 import gsap from 'gsap';
-import { profile } from '@/lib/site-data';
+import { getPortfolioData } from '@/lib/portfolio-content';
 import { AmbientFlow } from '@/components/ambient-flow';
 import { CherifChat } from '@/components/cherif-chat';
 import { getDictionary, localePath, type Locale, locales } from '@/lib/i18n';
+import { getApplicationCopy } from '@/lib/applications/catalog';
 import { assetUrl } from '@/lib/assets';
 
 const THEME_STORAGE_KEY = 'cherif-portfolio-theme';
@@ -22,6 +23,7 @@ const shellCopy: Record<Locale, { theme: string; light: string; dark: string; ex
 
 export function SiteShell({ children, locale }: { children: React.ReactNode; locale: Locale }) {
   const pathname = usePathname();
+  const { profile } = getPortfolioData(locale);
   const [menuOpen, setMenuOpen] = useState(false);
   const [lightMode, setLightMode] = useState(false);
   const mainRef = useRef<HTMLElement>(null);
@@ -36,7 +38,7 @@ export function SiteShell({ children, locale }: { children: React.ReactNode; loc
     { href: localePath(locale), label: copy.nav.home },
     { href: localePath(locale, '/projects'), label: copy.nav.projects },
     { href: localePath(locale, '/gallery'), label: copy.nav.gallery },
-    { href: localePath(locale, '/tools'), label: copy.nav.tools },
+    { href: localePath(locale, '/applications'), label: getApplicationCopy(locale).label },
     { href: localePath(locale, '/students'), label: copy.nav.students },
   ];
 
@@ -177,13 +179,13 @@ export function SiteShell({ children, locale }: { children: React.ReactNode; loc
           <span>{profile.shortName}<i>.</i></span>
         </a>
         <button className="menu-toggle" type="button" aria-expanded={menuOpen} aria-controls="main-nav" onClick={() => setMenuOpen((value) => !value)}>
-          <span /> <span /> <span /> <b>Menu</b>
+          <span /> <span /> <span /> <b>{{ fr: 'Menu', en: 'Menu', zh: '菜单', ja: 'メニュー' }[locale]}</b>
         </button>
         <nav id="main-nav" className={menuOpen ? 'main-nav is-open' : 'main-nav'} aria-label={copy.nav.home}>
-          {navItems.map((item) => <a key={item.href} className={pathname === item.href ? 'is-active' : ''} href={item.href} onClick={() => setMenuOpen(false)}>{item.label}</a>)}
+          {navItems.map((item) => <a key={item.href} className={(pathname === item.href || (item.href.endsWith('/applications') && /\/(applications|tools)(\/|$)/.test(pathname))) ? 'is-active' : ''} href={item.href} onClick={() => setMenuOpen(false)}>{item.label}</a>)}
           <a href="#contact" onClick={() => setMenuOpen(false)}>{copy.nav.contact}</a>
         </nav>
-        <nav className="locale-nav" aria-label="Language selector">{locales.map((item) => <a className={item === locale ? 'is-active' : ''} href={localePath(item, pathTail)} key={item}>{item.toUpperCase()}</a>)}</nav>
+        <nav className="locale-nav" aria-label={{ fr: 'Choisir la langue', en: 'Choose language', zh: '选择语言', ja: '言語を選択' }[locale]}>{locales.map((item) => <a className={item === locale ? 'is-active' : ''} href={localePath(item, pathTail)} key={item}>{item.toUpperCase()}</a>)}</nav>
         <button className="mode-toggle" type="button" aria-pressed={lightMode} aria-label={`${chrome.theme} · ${lightMode ? chrome.dark : chrome.light}`} title={lightMode ? chrome.dark : chrome.light} onClick={changeTheme}>
           <span aria-hidden="true">{lightMode ? '☼' : '◐'}</span>
         </button>

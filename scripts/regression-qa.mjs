@@ -1,18 +1,18 @@
 import assert from 'node:assert/strict';
 import { mkdirSync, writeFileSync } from 'node:fs';
-import { chromium } from 'file:///C:/Users/diouf/.agents/skills/local-demo-video-recorder/node_modules/playwright/index.mjs';
+import { chromium } from '@playwright/test';
 
 const base = process.env.PORTFOLIO_BASE_URL || 'http://localhost:4178';
-const root = 'D:/01-Dev/Perso/Maximus203.github.io/prototype-next';
+const root = process.cwd();
 const shots = `${root}/.test-shots`;
 const artifacts = `${root}/artifacts`;
 mkdirSync(shots, { recursive: true });
 mkdirSync(artifacts, { recursive: true });
 
 const locales = ['fr', 'en', 'zh', 'ja'];
-const tails = ['', '/projects', '/gallery', '/tools', '/tools/image-converter', '/tools/meme-generator', '/tools/readme-generator', '/students'];
+const tails = ['', '/projects', '/gallery', '/tools', '/tools/image-converter', '/tools/meme-generator', '/tools/readme-generator', '/students', '/applications', '/applications/file-converter', '/applications/meme-generator', '/applications/readme-generator'];
 const report = { startedAt: new Date().toISOString(), base, checks: {}, errors: [], networkFailures: [], timings: {} };
-const browser = await chromium.launch({ headless: true });
+const browser = await chromium.launch({ headless: true, ...(process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH ? { executablePath: process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH } : {}) });
 
 function observe(page, scope) {
   page.on('console', (message) => {
@@ -46,7 +46,7 @@ try {
       routeResults.push({ route: `/${locale}${tail}`, status: response.status() });
     }
   }
-  assert.equal(routeResults.length, 32);
+  assert.equal(routeResults.length, 48);
   assert.deepEqual([...new Set(routeResults.map((item) => item.status))], [200]);
   const invalidLocale = await page.request.get(`${base}/de`);
   assert.equal(invalidLocale.status(), 404);
@@ -256,7 +256,7 @@ try {
   report.checks.gallery = { total: 27, filtered: filteredCount, escapeClosed: true };
 
   await page.goto(`${base}/fr/projects`, { waitUntil: 'networkidle' });
-  assert.equal(await page.locator('.project-card').count(), 14);
+  assert.equal(await page.locator('.project-card').count(), 17);
   for (const heading of ['Bibliothèque de compétences IA', 'Atlas Automation', 'Bots Telegram Ops']) {
     assert.equal(await page.getByRole('heading', { name: heading }).count(), 1);
   }
@@ -265,20 +265,23 @@ try {
     .map((img) => ({ src: img.getAttribute('src'), width: img.naturalWidth, height: img.naturalHeight })));
   assert.equal(gifs.length, 3);
   assert.ok(gifs.every((item) => item.width > 0 && item.height > 0));
-  report.checks.projects = { total: 14, gifs };
+  report.checks.projects = { total: 17, gifs };
   await page.screenshot({ path: `${shots}/PW-1-projects-after.png`, fullPage: true });
 
+  // Rich application behavior and downloaded bytes have a dedicated test:applications suite.
   await page.goto(`${base}/fr/tools/meme-generator`, { waitUntil: 'networkidle' });
-  const longUnicode = 'É—界🙂'.repeat(500);
+  const longUnicode = 'É—界'.repeat(50);
   await page.locator('#meme-top').fill(longUnicode);
-  assert.equal((await page.locator('.meme-preview strong').first().textContent())?.length, longUnicode.length);
+  assert.equal(await page.locator('#meme-top').inputValue(), longUnicode);
+  assert.equal(await page.locator('#meme-canvas').count(), 1);
   await page.goto(`${base}/fr/tools/readme-generator`, { waitUntil: 'networkidle' });
-  await page.locator('#readme-project-name').fill('Atlas Regression');
-  assert.match(await page.locator('.readme-output').innerText(), /Atlas Regression/);
+  await page.locator('input[placeholder="your-username"]').fill('portfolio-regression');
+  assert.equal(await page.getByTestId('readme-workbench').count(), 1);
+  assert.equal(await page.getByTestId('readme-download').isEnabled(), true);
   await page.goto(`${base}/fr/tools/image-converter`, { waitUntil: 'networkidle' });
-  assert.equal(await page.locator('input[type="file"]').count(), 1);
+  assert.equal(await page.locator('#conversion-files').count(), 1);
   assert.equal(await page.locator('iframe').count(), 0);
-  report.checks.tools = { unicodeLength: longUnicode.length, readmeUpdated: true, fileInput: true, iframeCount: 0 };
+  report.checks.tools = { unicodeLength: longUnicode.length, readmeEditor: true, fileInput: true, iframeCount: 0 };
 
   await page.goto(`${base}/fr/students`, { waitUntil: 'networkidle' });
   assert.equal(await page.locator('.student-portfolio-card').count(), 5);

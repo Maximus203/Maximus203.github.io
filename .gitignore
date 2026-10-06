@@ -42,3 +42,9 @@ AGENTS.md
 .cursor/
 .windsurf/
 .mcp.json
+
+# Local QA evidence
+.test-shots/
+artifacts/
+test-results/
+playwright-report/

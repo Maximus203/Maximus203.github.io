@@ -108,10 +108,13 @@ export function DimensionalPortrait({ locale, identity }: { locale: Locale; iden
     if (!desktop || !rootRef.current) return;
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const context = gsap.context(() => {
-      const readout = rootRef.current?.querySelector('.dimension-readout');
-      const surface = rootRef.current?.querySelector('.portrait-surface');
-      const ghosts = rootRef.current?.querySelectorAll('.temporal-ghost');
-      const lines = rootRef.current?.querySelectorAll('.field-line');
+      const root = rootRef.current;
+      if (!root) return;
+      const readout = root.querySelector('.dimension-readout');
+      const surface = root.querySelector('.portrait-surface');
+      const ghosts = root.querySelectorAll('.temporal-ghost');
+      const lines = root.querySelectorAll('.field-line');
+      if (!readout || !surface) return;
       if (reduced) {
         gsap.set([readout, surface, ghosts, lines], { clearProps: 'all' });
         return;
