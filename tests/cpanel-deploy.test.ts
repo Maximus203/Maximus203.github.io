@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { DeploymentError, catalogDigest, DOMAIN, ORIGIN, CDN, deploymentPaths, assertDeploymentPath, parseApiResponse, validateUpload, validateExtraction, referencedAssets, verifyReleaseOnce, waitForRelease, deployWithTransport, type Fetcher } from '../scripts/deploy-cpanel';
+import { DeploymentError, catalogDigest, DOMAIN, ORIGIN, CDN, deploymentPaths, assertDeploymentPath, extractionQuery, parseApiResponse, validateUpload, validateExtraction, referencedAssets, verifyReleaseOnce, waitForRelease, deployWithTransport, type Fetcher } from '../scripts/deploy-cpanel';
 
 const sha = 'a'.repeat(40);
 const uploaded = { status: 1, errors: null, data: { failed: 0, succeeded: 1, uploads: [{ status: 1 }] } };
@@ -28,6 +28,16 @@ test('cPanel deployment paths are account-relative and unique to the attempt', (
   for (const bad of ['../' + DOMAIN, DOMAIN + '/', '/home/user/' + DOMAIN, 'another-domain.example']) assert.throws(() => assertDeploymentPath(bad, false), DeploymentError);
   assert.throws(() => deploymentPaths('wrong', '123', '1'), DeploymentError);
   assert.throws(() => deploymentPaths(sha, '1;pwd', '1'), DeploymentError);
+});
+
+test('archive extraction stays in the upload directory instead of nesting the domain', () => {
+  const archive = deploymentPaths(sha, '123', '1').archive;
+  const query = extractionQuery('account', archive);
+  assert.equal(query.get('op'), 'extract');
+  assert.equal(query.get('sourcefiles'), archive);
+  assert.equal(query.has('destfiles'), false);
+  assert.throws(() => extractionQuery('', archive), DeploymentError);
+  assert.throws(() => extractionQuery('account', `${DOMAIN}/site.tar.gz`), DeploymentError);
 });
 
 test('HTTP errors and non-JSON cPanel responses cannot become a successful deployment', () => {
