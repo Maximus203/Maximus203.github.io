@@ -97,6 +97,36 @@ export async function verifyReleaseOnce(commit: string, fetcher: Fetcher = fetch
   }));
   return assets.length;
 }
+export async function verifyCdnReleaseOnce(commit: string, html: string, fetcher: Fetcher = fetch, nonce = Date.now()): Promise<number> {
+  if (!/^[a-f0-9]{40}$/.test(commit) || !Number.isSafeInteger(nonce) || nonce < 0) throw new DeploymentError('Invalid CDN verification release');
+  const assets = referencedAssets(html);
+  await Promise.all(assets.map(async asset => {
+    const url = new URL(asset);
+    if (url.origin !== CDN) throw new DeploymentError('A release asset is outside the expected CDN');
+    url.searchParams.set('release', `${commit}-${nonce}`);
+    const response = await publicResponse(fetcher, url.href, 'HEAD');
+    const type = response.headers.get('content-type') || '';
+    const valid = url.pathname.endsWith('.css') ? type.includes('text/css') : url.pathname.endsWith('.js') ? /(?:javascript|ecmascript)/i.test(type) : type.startsWith('image/');
+    await response.body?.cancel();
+    if (!valid) throw new DeploymentError('A CDN asset has an unexpected content type');
+  }));
+  return assets.length;
+}
+export async function waitForCdnRelease(commit: string, html: string, options: { attempts?: number; delayMs?: number; fetcher?: Fetcher; sleep?: (ms: number) => Promise<void>; log?: (message: string) => void } = {}) {
+  const attempts = options.attempts ?? 30;
+  const sleep = options.sleep ?? ((ms: number) => new Promise<void>(resolve => setTimeout(resolve, ms)));
+  if (!Number.isInteger(attempts) || attempts < 1 || attempts > 60) throw new DeploymentError('Invalid CDN verification budget');
+  const deadline = Date.now() + 6 * 60_000;
+  for (let attempt = 1; attempt <= attempts; attempt++) {
+    try { return await verifyCdnReleaseOnce(commit, html, options.fetcher, Date.now() + attempt); }
+    catch {
+      options.log?.(`CDN release verification ${attempt}/${attempts} not ready`);
+      if (attempt === attempts || Date.now() >= deadline) throw new DeploymentError('CDN assets did not converge before cPanel publication');
+      await sleep(options.delayMs ?? 10_000);
+    }
+  }
+  throw new DeploymentError('CDN release verification incomplete');
+}
 export async function waitForRelease(commit: string, options: { attempts?: number; delayMs?: number; fetcher?: Fetcher; sleep?: (ms: number) => Promise<void>; log?: (message: string) => void } = {}) {
   const attempts = options.attempts ?? 30;
   const sleep = options.sleep ?? ((ms: number) => new Promise<void>(resolve => setTimeout(resolve, ms)));
@@ -113,9 +143,10 @@ export async function waitForRelease(commit: string, options: { attempts?: numbe
   throw new DeploymentError('Release verification incomplete');
 }
 
-type DeploymentTransport = { upload: () => Promise<unknown>; extract: () => Promise<unknown>; verify: () => Promise<number> };
+type DeploymentTransport = { upload: () => Promise<unknown>; preflight: () => Promise<number>; extract: () => Promise<unknown>; verify: () => Promise<number> };
 export async function deployWithTransport(transport: DeploymentTransport): Promise<number> {
   validateUpload(await transport.upload());
+  await transport.preflight();
   validateExtraction(await transport.extract());
   return transport.verify();
 }
@@ -151,7 +182,12 @@ async function main() {
     const response = await fetch(`${api}/json-api/cpanel?${query}`, { headers: { Authorization: authorization }, redirect: 'error', signal: AbortSignal.timeout(120_000) });
     return parseApiResponse(await response.text(), response.status);
   };
-  const assets = await deployWithTransport({ upload, extract, verify: () => waitForRelease(GITHUB_SHA, { log: console.log }) });
+  const assets = await deployWithTransport({
+    upload,
+    preflight: async () => waitForCdnRelease(GITHUB_SHA, await readFile('deploy/fr/applications/index.html', 'utf8'), { log: console.log }),
+    extract,
+    verify: () => waitForRelease(GITHUB_SHA, { log: console.log }),
+  });
   console.log(`Primary domain verified at ${GITHUB_SHA}; ${assets} referenced assets available. Archive retained; no server files purged.`);
 }
 if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) {
