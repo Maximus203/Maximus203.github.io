@@ -21,6 +21,13 @@ await mkdir(output, { recursive: true });
 const report = { testedAt: new Date().toISOString(), base, checks: [], pageErrors: [], externalRequests: [], mutationRequests: [] };
 const isSelected = name => !only || only.some(part => name.includes(part));
 const external = url => /^https?:/.test(url) && new URL(url).origin !== new URL(base).origin;
+
+// The Clipboard API normalizes line endings to the host platform (CRLF on Windows).
+// Compare content semantics while keeping the generated/downloaded source strict.
+function normalizeClipboardText(value) {
+  return value.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+}
+
 let browser;
 try {
   browser = await chromium.launch({ headless: true, ...(process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH ? { executablePath: process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH } : {}), args: ['--no-sandbox'] });
@@ -358,7 +365,7 @@ try {
     await context.grantPermissions(['clipboard-read', 'clipboard-write']);
     await page.getByRole('button', { name: 'Copy source', exact: true }).click();
     await expect(page.getByRole('status', { name: 'Export status', exact: true })).toContainText('Copied to clipboard');
-    assert.equal(await page.evaluate(() => navigator.clipboard.readText()), text);
+    assert.equal(normalizeClipboardText(await page.evaluate(() => navigator.clipboard.readText())), text);
     await page.getByRole('button', { name: 'Snake workflow', exact: true }).click();
     const workflow = await page.getByRole('textbox', { name: 'Snake workflow', exact: true }).inputValue();
     assert.ok(workflow.includes('github_user_name: "octocat"'));
@@ -455,7 +462,7 @@ try {
       const current = await page.getByRole('textbox', { name: 'Markdown', exact: true }).inputValue();
       await page.getByRole('button', { name: 'Copy source', exact: true }).click();
       await expect(page.getByRole('status', { name: 'Export status', exact: true })).toContainText('Copied to clipboard');
-      assert.equal(await page.evaluate(() => navigator.clipboard.readText()), current);
+      assert.equal(normalizeClipboardText(await page.evaluate(() => navigator.clipboard.readText())), current);
       observed.push({ interruption, staleStatus: false, staleNavigation: false, nextRealCopy: true });
     }
     return { delayedPromiseInjected: true, observed };
