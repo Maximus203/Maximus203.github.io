@@ -5,7 +5,8 @@
  * No application methods or mocked successful exports are called by the test.
  */
 import assert from 'node:assert/strict';
-import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { deflateSync } from 'node:zlib';
 import { createHash } from 'node:crypto';
@@ -195,7 +196,7 @@ try {
     await upload.setInputFiles(imageB);
     await expect(links).toHaveCount(1);
     await expect(convert).toBeEnabled();
-    signature((await download(links.first(), /\.jpg$/)).bytes, 'jpeg');
+    signature((await download(links.first(), /\.webp$/)).bytes, 'webp');
     return { exported, screenshot, repeatedUploads: 'unique names; invalid input preserved prior valid results; reset recovered' };
   });
 
@@ -203,7 +204,7 @@ try {
     await go('/en/applications/file-converter');
     const upload = page.locator('input[type=file][multiple]');
     await upload.setInputFiles(Array.from({ length: 21 }, (_, index) => ({ ...imageA, name: `image-${index}.png` })));
-    await expect(page.getByRole('alert')).toContainText('20 images');
+    await expect(page.locator('.application-workspace').getByRole('alert')).toContainText('20 images');
     await expect(page.locator('a[download]')).toHaveCount(0);
     await page.getByRole('button', { name: 'Reset all', exact: true }).first().click();
     await upload.setInputFiles({ name: 'damaged.png', mimeType: 'image/png', buffer: imageA.buffer.subarray(0, 40) });
@@ -219,8 +220,15 @@ try {
     const paddedPng = Buffer.alloc(26 * 1024 * 1024);
     imageA.buffer.copy(paddedPng);
     const upload = page.locator('#conversion-files');
-    await upload.setInputFiles(Array.from({ length: 4 }, (_, index) => ({ name: `large-${index}.png`, mimeType: 'image/png', buffer: paddedPng })), { timeout: 60_000 });
-    await expect(page.getByRole('alert')).toContainText('This batch exceeds 100 MB');
+    // Playwright caps combined in-memory payloads at 50 MB; real filesystem inputs
+    // exercise the application's 100 MiB limit without weakening the test.
+    const fixtureDir = await mkdtemp(path.join(tmpdir(), 'portfolio-qa-'));
+    try {
+      const filePaths = Array.from({ length: 4 }, (_, index) => path.join(fixtureDir, `large-${index}.png`));
+      await Promise.all(filePaths.map(file => writeFile(file, paddedPng)));
+      await upload.setInputFiles(filePaths, { timeout: 60_000 });
+    } finally { await rm(fixtureDir, { recursive: true, force: true }); }
+    await expect(page.locator('.application-workspace').getByRole('alert')).toContainText('This batch exceeds 100 MB');
     await expect(page.locator('a[download]')).toHaveCount(0);
     await expect(page.getByRole('button', { name: 'Convert files', exact: true })).toBeDisabled();
     await page.getByRole('button', { name: 'Reset all', exact: true }).first().click();
@@ -246,7 +254,7 @@ try {
     await expect(result).toHaveValue('');
     await expect(save).toBeDisabled();
     await convert.click();
-    await expect(page.getByRole('alert')).toContainText('Invalid CSV quoting');
+    await expect(page.locator('.application-workspace').getByRole('alert')).toContainText('Invalid CSV quoting');
     await source.fill('[{"name":"=1+1","city":"東京"}]');
     await page.locator('#data-operation').selectOption('json-csv');
     await expect(save).toBeDisabled();
@@ -261,7 +269,7 @@ try {
     await convert.click();
     assert.match(await result.inputValue(), /\r?\n=1\+1,/);
     await page.locator('input[type=file]:not([multiple])').setInputFiles({ name: 'bad-utf8.csv', mimeType: 'text/csv', buffer: Buffer.from([0xc3, 0x28]) });
-    await expect(page.getByRole('alert')).toContainText('not valid UTF-8');
+    await expect(page.locator('.application-workspace').getByRole('alert')).toContainText('not valid UTF-8');
     await expect(result).toHaveValue('');
     await expect(save).toBeDisabled();
     await page.locator('input[type=file]:not([multiple])').setInputFiles({ name: 'fresh.json', mimeType: 'application/json', buffer: Buffer.from('[{"fresh":true}]') });
@@ -303,11 +311,11 @@ try {
     assert.equal(second.bytes.readUInt32BE(16), 320);
     assert.equal(second.bytes.readUInt32BE(20), 240);
     await upload.setInputFiles(invalidImage);
-    await expect(page.getByRole('alert')).toContainText('Unsupported file');
+    await expect(page.locator('.application-workspace').getByRole('alert')).toContainText('Unsupported file');
     await expect(canvas).toHaveAttribute('width', '320');
     await upload.setInputFiles(imageA);
     await expect(canvas).toHaveAttribute('width', '640');
-    await expect(page.getByRole('alert')).toHaveCount(0);
+    await expect(page.locator('.application-workspace').getByRole('alert')).toHaveCount(0);
     const screenshot = await shot('meme-custom-caption-desktop');
     await page.getByRole('button', { name: 'Reset composition', exact: true }).click();
     await expect(canvas).toHaveAttribute('width', '1200');
