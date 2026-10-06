@@ -32,12 +32,13 @@ test('cPanel deployment paths are account-relative and unique to the attempt', (
 
 test('archive extraction stays in the upload directory instead of nesting the domain', () => {
   const archive = deploymentPaths(sha, '123', '1').archive;
-  const query = extractionQuery('account', archive);
+  const query = extractionQuery('account', archive, DOMAIN);
   assert.equal(query.get('op'), 'extract');
   assert.equal(query.get('sourcefiles'), archive);
-  assert.equal(query.has('destfiles'), false);
-  assert.throws(() => extractionQuery('', archive), DeploymentError);
-  assert.throws(() => extractionQuery('account', `${DOMAIN}/site.tar.gz`), DeploymentError);
+  assert.equal(query.get('destfiles'), `/${DOMAIN}`);
+  assert.throws(() => extractionQuery('', archive, DOMAIN), DeploymentError);
+  assert.throws(() => extractionQuery('account', `${DOMAIN}/site.tar.gz`, DOMAIN), DeploymentError);
+  assert.throws(() => extractionQuery('account', archive, `${DOMAIN}/nested`), DeploymentError);
 });
 
 test('HTTP errors and non-JSON cPanel responses cannot become a successful deployment', () => {

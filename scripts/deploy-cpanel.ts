@@ -25,10 +25,11 @@ export function assertDeploymentPath(path: string, archive: boolean): void {
   const valid = archive ? new RegExp(`^${DOMAIN.replace(/\./g, '\\.')}\/site-[a-f0-9]{40}-\\d+-\\d+\\.tar\\.gz$`).test(path) : path === DOMAIN;
   if (!valid) throw new DeploymentError('Deployment path is outside the expected relative directory');
 }
-export function extractionQuery(user: string, archive: string): URLSearchParams {
+export function extractionQuery(user: string, archive: string, destination: string): URLSearchParams {
   if (!user || /[\r\n]/.test(user)) throw new DeploymentError('Missing or invalid cPanel deployment configuration');
   assertDeploymentPath(archive, true);
-  return new URLSearchParams({ cpanel_jsonapi_user: user, cpanel_jsonapi_apiversion: '2', cpanel_jsonapi_module: 'Fileman', cpanel_jsonapi_func: 'fileop', op: 'extract', sourcefiles: archive, doubledecode: '1' });
+  assertDeploymentPath(destination, false);
+  return new URLSearchParams({ cpanel_jsonapi_user: user, cpanel_jsonapi_apiversion: '2', cpanel_jsonapi_module: 'Fileman', cpanel_jsonapi_func: 'fileop', op: 'extract', sourcefiles: archive, destfiles: `/${destination}`, doubledecode: '1' });
 }
 export function parseApiResponse(body: string, status: number): unknown {
   if (!Number.isInteger(status) || status < 200 || status >= 300) throw new DeploymentError(`cPanel HTTP failure (${status})`);
@@ -144,9 +145,9 @@ async function main() {
     return parseApiResponse(stdout.slice(0, split), Number(stdout.slice(split + 1)));
   };
   const extract = async () => {
-    // Fileman extracts beside the archive. Passing destfiles here makes cPanel
-    // create a second DOMAIN directory inside the document root.
-    const query = extractionQuery(CPANEL_USER, paths.archive);
+    // API2 resolves a relative destfiles from the source directory. The leading
+    // slash is cPanel's account-root notation and avoids DOMAIN/DOMAIN nesting.
+    const query = extractionQuery(CPANEL_USER, paths.archive, paths.destination);
     const response = await fetch(`${api}/json-api/cpanel?${query}`, { headers: { Authorization: authorization }, redirect: 'error', signal: AbortSignal.timeout(120_000) });
     return parseApiResponse(await response.text(), response.status);
   };
