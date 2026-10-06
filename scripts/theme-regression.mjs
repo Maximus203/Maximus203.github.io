@@ -1,12 +1,13 @@
 import assert from 'node:assert/strict';
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
-import { chromium } from 'file:///C:/Users/diouf/.agents/skills/local-demo-video-recorder/node_modules/playwright/index.mjs';
+import { chromium } from '@playwright/test';
 
 const base = process.env.PORTFOLIO_BASE_URL || 'http://localhost:4178';
-const root = 'D:/01-Dev/Perso/Maximus203.github.io/prototype-next';
+const root = process.cwd();
 const shots = `${root}/.test-shots`;
 const reportPath = `${root}/artifacts/theme-regression-report.json`;
 mkdirSync(shots, { recursive: true });
+mkdirSync(`${root}/artifacts`, { recursive: true });
 
 const report = {
   startedAt: new Date().toISOString(),
@@ -54,7 +55,7 @@ async function snapshot(page, selector) {
   });
 }
 
-const browser = await chromium.launch({ headless: true });
+const browser = await chromium.launch({ headless: true, ...(process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH ? { executablePath: process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH } : {}) });
 
 try {
   const desktop = await browser.newContext({ viewport: { width: 1440, height: 1000 }, reducedMotion: 'no-preference' });
@@ -126,10 +127,10 @@ try {
   report.checks.lab = { themed: true, fullscreen: expanded, scene: labLight, panel: labPanelLight };
 
   await page.goto(`${base}/fr/tools/readme-generator`, { waitUntil: 'networkidle' });
-  const readme = await snapshot(page, '.readme-output');
+  const readme = await snapshot(page, '[data-testid="readme-workbench"]');
   assert.notEqual(readme.background, 'rgb(8, 10, 16)');
   await page.goto(`${base}/fr/tools/meme-generator`, { waitUntil: 'networkidle' });
-  const meme = await snapshot(page, '.meme-preview');
+  const meme = await snapshot(page, '[data-testid="meme-workbench"]');
   assert.notEqual(meme.background, 'rgb(21, 24, 32)');
   report.checks.tools = { readme, meme };
 

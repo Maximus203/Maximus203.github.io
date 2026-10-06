@@ -1,40 +1,61 @@
-# Cherif Diouf — Portfolio immersif
+# Cherif Diouf — Portfolio & Applications
 
-Portfolio multilingue construit avec **Next.js 16**, **TypeScript**, **GSAP** et une direction artistique sur mesure. L'interface associe narration, animations dimensionnelles, galerie, projets, outils et assistant conversationnel local.
+Portfolio FR / EN / ZH / JA en Next.js App Router, React et TypeScript strict. Export statique compatible GitHub Pages et cPanel. Les expériences, projets, études et compétences sont localisés, avec priorité au CV fourni pour les dates.
 
-## Stack technique
+## Développement
 
-- **Frontend** : Next.js (App Router, static export), React 19, TypeScript
-- **Motion** : GSAP, CSS 3D et mode 2D accessible sur mobile
-- **Assistant** : réponses locales fondées sur les données publiques du portfolio
-- **i18n** : 4 langues (FR, EN, ZH, JA)
-- **Deploiement** : GitHub Pages + cPanel (static export)
+Node.js 20.9+ (Node 24 utilisé pour cette refonte), npm.
 
-## Architecture
-
-Le contenu applicatif vit dans `app/`, `components/`, `lib/` et `styles/`. Les médias optimisés sont dans `public/media/`. Les parcours de régression sont documentés dans `test-playbooks/`.
-
-## Lancer en local
-
-**Prerequis** : Node.js 20+
-
-```bash
-# Installer les dependances
-npm install
-
-# Lancer le serveur de developpement
+```sh
+npm ci
 npm run dev
-
-# Build de production statique
-$env:NEXT_OUTPUT="export"; npm run build
+npm run typecheck
+NEXT_OUTPUT=export npm run build
+npm run test:unit
 ```
 
-## Scripts
+Sous PowerShell : `$env:NEXT_OUTPUT="export"; npm run build`.
 
-| Commande | Description |
-|----------|-------------|
-| `npm run dev` | Serveur de developpement |
-| `npm run build` | Build Next.js |
-| `npm run typecheck` | Verification TypeScript |
-| `npm run test:theme` | Regression claire/sombre, persistance et accessibilite |
-| `npm run test:regression` | Regression fonctionnelle du portfolio |
+## Applications
+
+Le catalogue `/fr/applications/` permet la recherche et le filtrage par catégories. Les anciennes routes `/[lang]/tools/*` restent accessibles et déclarent les nouvelles routes comme URL canonique.
+
+| Application | Capacités |
+| --- | --- |
+| Convertisseur | Lots JPEG/PNG/WebP, qualité JPEG/WebP, ZIP, images vers PDF, CSV ↔ JSON |
+| Studio de mèmes | Image locale, texte haut/bas, taille/couleurs/contour, véritable export PNG |
+| README Studio | Profil GitHub, compétences, badges/icônes, thèmes, statistiques optionnelles, trophées, snake et workflow YAML |
+
+Les fichiers sont traités dans le navigateur. Aucune conversion externe, aucun compte ou téléversement de document n’est nécessaire. Les images de fournisseurs tiers dans le README sont facultatives et demandent une activation explicite de l’aperçu. Leur disponibilité n’est pas garantie.
+
+### Limites de conversion
+
+- Les résultats sont de vrais fichiers : une extension n’est jamais changée pour simuler une conversion.
+- Images → PDF ne signifie pas PDF → Word ou extraction fidèle de tableaux.
+- CSV ↔ JSON gère des données tabulaires ; cela n’est pas une conversion de classeur Excel avec formules et mise en page.
+- DOC/DOCX, XLS/XLSX, l’import PDF éditable et les codecs audio/vidéo ne sont pas pris en charge dans cette version.
+- Google Docs est un service. Exporter un document dans un format pris en charge ne donne pas automatiquement accès à ce service.
+- Les bibliothèques de conversion lourdes sont chargées à la demande. Les limites de fichiers et les erreurs restent visibles dans chaque application.
+
+## Validation
+
+```sh
+# Après lancement du site sur http://localhost:4178
+npm run test:applications
+npm run test:theme
+npm run test:regression
+```
+
+Les scripts utilisent Playwright installé dans le projet, pas un chemin d’ordinateur personnel. Installer son navigateur avec `npx playwright install chromium`, ou définir `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH` vers un Chromium déjà installé. `PORTFOLIO_BASE_URL` permet de tester un autre serveur. Les captures/rapports locaux sont exclus de Git.
+
+Validation CI observée le 6 octobre 2026 : 25 tests unitaires/contrats et 13 groupes E2E Applications réussis. Détails, preuves et limites : [rapport de validation](docs/applications-validation.md).
+
+La stratégie de tests couvre : signature des fichiers, réutilisation des outils, erreurs et reset, sécurité du Markdown et des URL, absence d’envoi de fichiers, navigation clavier, quatre langues, mobile/tablette/desktop, thèmes et export statique.
+
+## Sources éditoriales
+
+Le CV fourni et l’historique du portfolio servent de sources. Les écarts de dates ont été résolus provisoirement en faveur du CV : doctorat à partir de 2025 et TérangaDev 2024–2026. UpgradeTech est décrit d’après le propriétaire comme un e-commerce client en ligne de matériel informatique, téléphones et accessoires, sans indicateurs inventés ni lien supposé. Les projets privés n’exposent pas de détails internes.
+
+## Publication
+
+Une PR ne publie pas le site. Les deux workflows déploient uniquement sur un push de `main`. La refonte doit rester en PR brouillon jusqu’à la revue et l’autorisation de fusion/publication. Ne jamais pousser directement sur `main` pour tester.

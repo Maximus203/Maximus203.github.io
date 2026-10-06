@@ -1,11 +1,11 @@
 import { mkdirSync } from 'node:fs';
-import { chromium } from 'file:///C:/Users/diouf/.agents/skills/local-demo-video-recorder/node_modules/playwright/index.mjs';
+import { chromium } from '@playwright/test';
 
-const base = 'http://localhost:4178';
-const output = 'D:/01-Dev/Perso/Maximus203.github.io/prototype-next/artifacts';
+const base = process.env.PORTFOLIO_BASE_URL || 'http://localhost:4178';
+const output = `${process.cwd()}/artifacts`;
 mkdirSync(output, { recursive: true });
 
-const browser = await chromium.launch({ headless: true });
+const browser = await chromium.launch({ headless: true, ...(process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH ? { executablePath: process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH } : {}) });
 const report = { checks: {}, consoleErrors: [] };
 const context = await browser.newContext({ viewport: { width: 1440, height: 1000 }, reducedMotion: 'no-preference' });
 const page = await context.newPage();
