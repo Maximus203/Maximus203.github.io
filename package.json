@@ -10,7 +10,9 @@
     "test:regression": "node scripts/regression-qa.mjs",
     "test:theme": "node scripts/theme-regression.mjs",
     "test:unit": "node --import tsx --test tests/*.test.ts",
-    "test:applications": "node scripts/applications-browser-qa.mjs"
+    "test:applications": "node scripts/applications-browser-qa.mjs",
+    "test:tictactoe": "node --import tsx --test tests/tictactoe.test.ts",
+    "test:tictactoe:browser": "node scripts/tictactoe-browser-qa.mjs"
   },
   "dependencies": {
     "@fontsource/ibm-plex-mono": "^5.3.0",
