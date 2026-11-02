@@ -46,6 +46,8 @@ npm run test:theme
 npm run test:regression
 ```
 
+`npm run test:regression:local` construit le site sans préfixe distant (`NEXT_PUBLIC_ASSET_PREFIX` vide), lance le serveur sur le port 4178, exécute `test:regression`, puis arrête le serveur. Le port 4178 doit être libre. Le build de production garde le préfixe pour cPanel.
+
 Les scripts utilisent Playwright installé dans le projet, pas un chemin d’ordinateur personnel. Installer son navigateur avec `npx playwright install chromium`, ou définir `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH` vers un Chromium déjà installé. `PORTFOLIO_BASE_URL` permet de tester un autre serveur. Les captures/rapports locaux sont exclus de Git.
 
 Validation CI observée le 6 octobre 2026 : 25 tests unitaires/contrats et 13 groupes E2E Applications réussis. Détails, preuves et limites : [rapport de validation](docs/applications-validation.md).

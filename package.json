@@ -8,6 +8,7 @@
     "start": "next start -p 4178",
     "typecheck": "tsc --noEmit",
     "test:regression": "node scripts/regression-qa.mjs",
+    "test:regression:local": "node scripts/regression-local.mjs",
     "test:theme": "node scripts/theme-regression.mjs",
     "test:unit": "node --import tsx --test tests/*.test.ts",
     "test:applications": "node scripts/applications-browser-qa.mjs"
