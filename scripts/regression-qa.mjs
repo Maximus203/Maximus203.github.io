@@ -260,6 +260,12 @@ try {
   for (const heading of ['Bibliothèque de compétences IA', 'Atlas Automation', 'Bots Telegram Ops']) {
     assert.equal(await page.getByRole('heading', { name: heading }).count(), 1);
   }
+  const gifLocators = page.locator('.project-card img[src*=".gif"]');
+  assert.equal(await gifLocators.count(), 3);
+  for (let i = 0; i < 3; i++) await gifLocators.nth(i).scrollIntoViewIfNeeded();
+  await page.waitForFunction(() => [...document.querySelectorAll('.project-card img')]
+    .filter((img) => (img.getAttribute('src') || '').includes('.gif'))
+    .every((img) => img.complete && img.naturalWidth > 0), null, { timeout: 10000 });
   const gifs = await page.locator('.project-card img').evaluateAll((images) => images
     .filter((img) => (img.getAttribute('src') || '').includes('.gif'))
     .map((img) => ({ src: img.getAttribute('src'), width: img.naturalWidth, height: img.naturalHeight })));
