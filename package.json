@@ -8,6 +8,7 @@
     "start": "next start -p 4178",
     "typecheck": "tsc --noEmit",
     "test:regression": "node scripts/regression-qa.mjs",
+    "test:regression:local": "node scripts/regression-local.mjs",
     "test:theme": "node scripts/theme-regression.mjs",
     "test:unit": "node --import tsx --test tests/*.test.ts",
     "test:applications": "node scripts/applications-browser-qa.mjs"
@@ -18,7 +19,7 @@
     "gsap": "^3.15.0",
     "jszip": "^3.10.2",
     "lucide-react": "^1.52.0",
-    "next": "^16.2.1",
+    "next": "^16.4.3",
     "pdf-lib": "^1.17.1",
     "react": "^19.2.3",
     "react-dom": "^19.2.3"
