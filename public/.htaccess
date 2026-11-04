@@ -22,4 +22,6 @@ RewriteRule ^(.*)$ /$1/index.html [L]
   Header always set Referrer-Policy "strict-origin-when-cross-origin"
   Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
   Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+  # Next.js injects page-specific inline scripts, requiring 'unsafe-inline' without application server nonces
+  Header always set Content-Security-Policy "default-src 'self'; script-src 'self' https://maximus203.github.io 'unsafe-inline'; style-src 'self' https://maximus203.github.io 'unsafe-inline'; img-src 'self' https://maximus203.github.io data:; font-src 'self' https://maximus203.github.io data:; media-src 'self' https://maximus203.github.io; connect-src 'self' https://maximus203.github.io; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'"
 </IfModule>
