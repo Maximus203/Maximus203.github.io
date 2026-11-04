@@ -48,3 +48,6 @@ AGENTS.md
 artifacts/
 test-results/
 playwright-report/
+
+# Internal delivery content (artist playbooks)
+.artist/
