@@ -22,4 +22,6 @@ RewriteRule ^(.*)$ /$1/index.html [L]
   Header always set Referrer-Policy "strict-origin-when-cross-origin"
   Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
   Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+  Header always set Content-Security-Policy "default-src 'self'; script-src 'self' sha256-VcfHd7pEoOndkWBO+ev4mi5L6SRm9FPHLXEtrgjAaYo' sha256-OWYUgJSp85+9j0kp4h0qgpuPX4p+Z9bhYEu6ErKOPsU'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data:; connect-src 'self'; frame-ancestors 'none'"
+# If the inline scripts in app/[lang]/layout.tsx change, update the hashes above
 </IfModule>
