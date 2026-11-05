@@ -109,12 +109,12 @@ const invalidImage = { name: 'not-really.png', mimeType: 'image/png', buffer: Bu
 try {
   await check('hub-search-categories-empty-reset', async () => {
     await go('/en/applications');
-    await expect(page.locator('.application-card')).toHaveCount(3);
+    await expect(page.locator('.application-card')).toHaveCount(4);
     await page.getByRole('searchbox', { name: 'Search applications' }).fill('PDF');
     await expect(page.locator('.application-card')).toHaveCount(1);
     await expect(page.locator('.application-card h2')).toHaveText('File Converter');
     await page.getByRole('searchbox').fill('');
-    for (const [category, expected] of [['Files & data', 'File Converter'], ['Creative', 'Meme Studio'], ['Development', 'README Studio']]) {
+    for (const [category, expected] of [['Files & data', 'File Converter'], ['Creative', 'Meme Studio'], ['Development', 'README Studio'], ['Games', 'TicTacToe']]) {
       await page.getByRole('button', { name: category, exact: true }).click();
       await expect(page.locator('.application-card')).toHaveCount(1);
       await expect(page.locator('.application-card h2')).toHaveText(expected);
@@ -123,7 +123,7 @@ try {
     await expect(page.locator('.application-card')).toHaveCount(0);
     await expect(page.getByText('No applications match this search.', { exact: true })).toBeVisible();
     await page.getByRole('button', { name: 'Clear filters', exact: true }).click();
-    await expect(page.locator('.application-card')).toHaveCount(3);
+    await expect(page.locator('.application-card')).toHaveCount(4);
     await expect(page.getByRole('searchbox')).toHaveValue('');
     return { screenshot: await shot('applications-hub-desktop') };
   });
@@ -131,7 +131,7 @@ try {
   await check('all-language-application-and-legacy-routes', async () => {
     const results = [];
     for (const locale of ['fr', 'en', 'zh', 'ja']) {
-      for (const suffix of ['/applications', '/applications/file-converter', '/applications/meme-generator', '/applications/readme-generator', '/tools', '/tools/image-converter', '/tools/meme-generator', '/tools/readme-generator']) {
+      for (const suffix of ['/applications', '/applications/file-converter', '/applications/meme-generator', '/applications/readme-generator', '/applications/tic-tac-toe', '/tools', '/tools/image-converter', '/tools/meme-generator', '/tools/readme-generator', '/tools/tic-tac-toe']) {
         await go(`/${locale}${suffix}`);
         assert.equal(await page.locator('html').getAttribute('lang'), locale);
         const title = await page.locator('h1').first().innerText();
@@ -472,7 +472,7 @@ try {
     const observations = [];
     for (const width of [390, 768, 1440]) {
       await page.setViewportSize({ width, height: width === 390 ? 844 : 1000 });
-      for (const app of ['file-converter', 'meme-generator', 'readme-generator']) {
+    for (const app of ['file-converter', 'meme-generator', 'readme-generator', 'tic-tac-toe']) {
         for (const locale of width === 390 ? ['fr', 'en', 'zh', 'ja'] : ['en']) {
           await go(`/${locale}/applications/${app}`);
           const dimensions = await page.evaluate(() => ({ client: document.documentElement.clientWidth, scroll: document.documentElement.scrollWidth }));

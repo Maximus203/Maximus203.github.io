@@ -1,0 +1,11 @@
+import assert from 'node:assert/strict';
+import { bestMove, createGame, isDraw, legalMoves, playMove, winnerFor, type Board } from '../lib/tictactoe';
+const board = (...cells: ('X' | 'O' | null)[]) => cells as unknown as Board;
+const expectError = (code: string, action: () => unknown) => assert.throws(action, new RegExp(code));
+const winning = [['X','X','X',null,'O',null,null,null,'O'], ['O','O','O','X',null,null,null,'X',null], ['X',null,null,'X','O',null,'X',null,'O'], ['O','X',null,'O','X',null,'O',null,null], ['X','O',null,null,'X','O',null,null,'X'], [null,'X','O',null,'X','O','X',null,'O'], ['X','O',null,null,'X','O','O',null,'X'], ['O',null,'X',null,'O','X','X','X','O']] as const;
+for (const [index, line] of winning.entries()) assert.equal(winnerFor(line), index % 2 ? 'O' : 'X');
+assert.equal(isDraw(board('X','O','X','X','O','O','O','X','X')), true); assert.deepEqual(legalMoves(board('X',null,'O',null,null,'X',null,'O',null)), [1,3,4,6,8]);
+let state = createGame('X'); state = playMove(state, 0); expectError('OCCUPIED', () => playMove(state, 0)); expectError('OUT_OF_RANGE', () => playMove(state, 9)); expectError('GAME_OVER', () => playMove({ ...state, status: 'won', winner: 'X' }, 1)); assert.equal(Object.isFrozen(state.board), true);
+const aiNeverLoses = (ai: 'X' | 'O', initial = createGame('X')) => { const visit = (current: typeof initial): boolean => current.status === 'won' ? current.winner === ai : current.status === 'draw' ? true : current.currentPlayer === ai ? visit(playMove(current, bestMove(current.board, ai, current.currentPlayer)!)) : legalMoves(current.board).every((move) => visit(playMove(current, move))); return visit(initial); };
+assert.equal(aiNeverLoses('X'), true); assert.equal(aiNeverLoses('O', createGame('O')), true); assert.equal(bestMove(board('X','O','X','X','O','O','O','X','X'), 'X'), null);
+const perfectGame = (current: ReturnType<typeof createGame>): string => current.status !== 'playing' ? current.status : perfectGame(playMove(current, bestMove(current.board, current.currentPlayer)!)); assert.equal(perfectGame(createGame('X')), 'draw');

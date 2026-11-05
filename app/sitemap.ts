@@ -4,7 +4,7 @@ import { locales } from '@/lib/i18n';
 export const dynamic = 'force-static';
 
 const baseUrl = 'https://cherif-diouf.artist-dev.com';
-const paths = ['', '/projects', '/gallery', '/applications', '/applications/file-converter', '/applications/meme-generator', '/applications/readme-generator', '/students'];
+const paths = ['', '/projects', '/gallery', '/applications', '/applications/file-converter', '/applications/meme-generator', '/applications/readme-generator', '/applications/tic-tac-toe', '/students'];
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return locales.flatMap((locale) => paths.map((path) => ({

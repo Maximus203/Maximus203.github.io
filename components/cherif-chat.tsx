@@ -23,7 +23,7 @@ function answerFor(question: string, locale: Locale): Answer {
       atlas: projects.find((project) => /Atlas|homelab/i.test(project.title))?.description || profile.bio,
       telegram: projects.find((project) => /Telegram/i.test(project.title))?.description || profile.bio,
       contact: `Pour collaborer, écrivez à ${profile.email}. ${profile.bio}`,
-      tools: 'Trois applications sont disponibles : conversion de fichiers, studio de mèmes et générateur de README GitHub. Les fichiers sont traités localement ; les aperçus README externes sont facultatifs.',
+      tools: 'Quatre applications sont disponibles : conversion de fichiers, studio de mèmes, générateur de README GitHub et TicTacToe avec une IA locale. Les fichiers et les parties sont traités localement ; les aperçus README externes sont facultatifs.',
       fallback: `Je peux vous renseigner sur le parcours, les projets publics, la bibliothèque de Skills, Atlas, les bots Telegram, les outils ou le contact de ${profile.shortName}.`,
     },
     en: {
@@ -33,7 +33,7 @@ function answerFor(question: string, locale: Locale): Answer {
       atlas: projects.find((project) => /Atlas|homelab/i.test(project.title))?.description || profile.bio,
       telegram: projects.find((project) => /Telegram/i.test(project.title))?.description || profile.bio,
       contact: `To collaborate, write to ${profile.email}. He designs systems that save time, reduce operating costs and make expertise transferable.`,
-      tools: 'Three applications are available: file conversion, meme creation and GitHub README generation. Files are processed locally; external README previews are optional.',
+      tools: 'Four applications are available: file conversion, meme creation, GitHub README generation and TicTacToe with a local AI. Files and games are processed locally; external README previews are optional.',
       fallback: `Ask me about Cherif’s path, public projects, Skills library, Atlas, Telegram bots, tools or contact details.`,
     },
     zh: {
@@ -43,7 +43,7 @@ function answerFor(question: string, locale: Locale): Answer {
       atlas: projects.find((project) => /Atlas|homelab/i.test(project.title))?.description || profile.bio,
       telegram: projects.find((project) => /Telegram/i.test(project.title))?.description || profile.bio,
       contact: `如需合作，请联系 ${profile.email}。`,
-      tools: '提供文件转换、表情包制作和 GitHub README 生成三个应用。文件在本地处理，外部 README 预览由用户选择启用。',
+      tools: '提供文件转换、表情包制作、GitHub README 生成和井字棋四个应用。文件和对局在本地处理，外部 README 预览由用户选择启用。',
       fallback: '你可以询问 Cherif 的经历、公开项目、Skills 库、Atlas、Telegram 机器人、工具或联系方式。',
     },
     ja: {
@@ -53,7 +53,7 @@ function answerFor(question: string, locale: Locale): Answer {
       atlas: projects.find((project) => /Atlas|homelab/i.test(project.title))?.description || profile.bio,
       telegram: projects.find((project) => /Telegram/i.test(project.title))?.description || profile.bio,
       contact: `協業については ${profile.email} までご連絡ください。`,
-      tools: 'ファイル変換、ミーム作成、GitHub README 作成の3つのアプリがあります。ファイルはローカル処理で、外部プレビューは任意です。',
+      tools: 'ファイル変換、ミーム作成、GitHub README 作成、三目並べの4つのアプリがあります。ファイルと対局はローカル処理で、外部プレビューは任意です。',
       fallback: 'Cherif の経歴、公開プロジェクト、Skills ライブラリ、Atlas、Telegram ボット、ツール、連絡先について質問できます。',
     },
   }[locale];
